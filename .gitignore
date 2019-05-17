@@ -90,5 +90,5 @@ typings/
 # Visual Studio Code local settings
 .vscode
 
-# React App
-public 
+# Local files
+local
