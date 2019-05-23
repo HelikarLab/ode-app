@@ -10,12 +10,21 @@ The app consists of 2 components; the React Client and Backend Node server. All 
 
 Follow the below instructions to get the app up and running:
 
-- You need Node & Yarn to run this application. Download them here - [Node](https://nodejs.org/), [Yarn](https://yarnpkg.com).
+- You need Node & Yarn to run this application. Download them here - [Node](https://nodejs.org/), [Yarn](https://yarnpkg.com). Further you also need a server of a postgresql database running. Learn more about postgresql [here](https://www.postgresql.org/).
 
 - First you will need to install the dependencies of the project. Do that by running this:
 
   ```bash
   yarn
+  ```
+
+- Next you have to setup an environment file (.env) with the appropriate variables, an example .env would look like this:
+
+  ```js
+  SERVER_PORT = /* Specifiy a port here */
+  DB_NAME = /* Your database name */
+  DB_USER = /* Your database user */
+  DB_PASSWORD = /* Your database user's password */
   ```
 
 - Then run the following command to start the React Client and Node server simultaneously:
