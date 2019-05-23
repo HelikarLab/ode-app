@@ -14,10 +14,17 @@
     "dev": "concurrently \"yarn client\" \"yarn server\""
   },
   "dependencies": {
+    "axios": "^0.18.0",
+    "bootstrap": "^4.3.1",
     "dotenv": "^8.0.0",
     "express": "^4.16.4",
+    "formik": "^1.5.7",
     "helmet": "^3.18.0",
     "morgan": "^1.9.1",
+    "multer": "^1.4.1",
+    "pg": "^7.11.0",
+    "pg-hstore": "^2.3.2",
+    "python-shell": "^1.0.7",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-redux": "^7.0.3",
@@ -25,7 +32,8 @@
     "react-scripts": "3.0.1",
     "redux": "^4.0.1",
     "redux-persist": "^5.10.0",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "sequelize": "^5.8.6"
   },
   "devDependencies": {
     "concurrently": "^4.1.0",

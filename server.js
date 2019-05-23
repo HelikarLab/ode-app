@@ -2,9 +2,13 @@
 const express = require('express')
 const morgan = require('morgan')
 const helmet = require('helmet')
+const db = require('./config/database')
 require('dotenv').config()
 
 const app = express()
+
+// API Route Imports
+const uploadSbmlApi = require('./api/routes/uploadSbml')
 
 // Sanitize Data
 app.use(helmet())
@@ -14,6 +18,12 @@ app.use(morgan('tiny'))
 
 // JSON Payload Parser
 app.use(express.json())
+
+// Establishing and testing database connection
+db.authenticate().then(() => console.log('Database connected...')).catch((err) => console.log(err))
+
+// APIs
+app.use('/api/uploadSbml', uploadSbmlApi)
 
 // Error Handling
 app.use((err, req, res, next) => {
