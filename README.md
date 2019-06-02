@@ -18,7 +18,7 @@ Follow the below instructions to get the app up and running:
   yarn
   ```
 
-- Next you have to setup an environment file (.env) with the appropriate variables, an example .env would look like this:
+- Next you have to setup an environment file (.env) with appropriate variables, an example .env would look like this:
 
   ```js
   SERVER_PORT = /* Specifiy a port here */
@@ -59,7 +59,7 @@ Follow the below instructions to get the app up and running:
   yarn client-build
   ```
 
-- To eject the configuartiona and scripts from the react-scripts package, use:
+- To eject the configuartion and scripts from the react-scripts package, use:
 
   ```bash
   yarn client-eject

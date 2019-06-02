@@ -1,5 +1,6 @@
 const multer = require('multer')
 const { PythonShell } = require('python-shell')
+const fs = require('fs')
 
 let filename
 const storage = multer.diskStorage({
@@ -25,9 +26,10 @@ module.exports = async function (req, res) {
   PythonShell.run('sbmlParser.py', options, function (err, data) {
     if (err) {
       console.error(err)
+      res.status(500).send('Something went wrong in the python script.')
     } else {
-      console.log(data)
+      fs.unlinkSync('./uploads/' + filename)
+      res.status(200).send(data)
     }
   })
-  res.end('Success')
 }
