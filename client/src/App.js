@@ -10,30 +10,43 @@ import NodeGraph from './components/NodeGraph'
 import ReactionsList from './components/ReactionsList'
 import SpeciesList from './components/SpeciesList'
 
-function App () {
+function App() {
   const [modal, setModal] = React.useState(false)
 
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <NavBar importModel={() => {
-          setModal(!modal)
-        }} />
-        <Modal isOpen={modal} toggle={() => {
-          setModal(!modal)
-        }}>
-          <ModalHeader toggle={() => {
+        <NavBar
+          importModel={() => {
             setModal(!modal)
-          }}>Import an existing SBML Model</ModalHeader>
-          <ModalBody>
-            <ImportSbmlForm closeModal={() => {
+          }}
+        />
+        <Modal
+          isOpen={modal}
+          toggle={() => {
+            setModal(!modal)
+          }}
+        >
+          <ModalHeader
+            toggle={() => {
               setModal(!modal)
-            }} />
+            }}
+          >
+            Import an existing SBML Model
+          </ModalHeader>
+          <ModalBody>
+            <ImportSbmlForm
+              closeModal={() => {
+                setModal(!modal)
+              }}
+            />
           </ModalBody>
         </Modal>
         <div>
           <Row>
-            <Col><NodeGraph /></Col>
+            <Col>
+              <NodeGraph />
+            </Col>
             <Col>
               <Row>
                 <ReactionsList />
