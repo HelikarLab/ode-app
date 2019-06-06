@@ -34,7 +34,7 @@ After this open up a browser and go to http://localhost:3000
 
 ## Development
 
-Follow the below instructions to get the app up and running:
+Follow the instructions below to get the app up and running in development:
 
 - You need Node & Yarn to run this application. Download them here - [Node](https://nodejs.org/), [Yarn](https://yarnpkg.com). Further you also need a server of a postgresql database running. Learn more about postgresql [here](https://www.postgresql.org/).
 
@@ -98,5 +98,5 @@ Follow the below instructions to get the app up and running:
 
   ```bash
   # In /client
-  yarn client-eject
+  yarn eject
   ```
