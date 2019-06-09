@@ -1,0 +1,30 @@
+version: "3"
+
+services:
+  db:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: ode-app
+    ports:
+      - 5432:5432
+
+  server:
+    build: server/
+    environment:
+      DB_PASSWORD: postgres
+      DB_USER: postgres
+      DB_NAME: ode-app
+      DB_HOST: db
+    command: yarn start
+    depends_on:
+      - db
+    ports:
+      - 5000:5000
+
+  client:
+    build: client/
+    command: yarn start
+    ports:
+      - 3000:3000

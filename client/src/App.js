@@ -3,37 +3,56 @@ import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 import { store, persistor } from './store'
 import { Modal, ModalHeader, ModalBody, Row, Col } from 'reactstrap'
+import { Helmet } from 'react-helmet'
 import NavBar from './components/NavBar'
 import ImportSbmlForm from './components/ImportSbmlForm'
-import 'bootstrap/dist/css/bootstrap.min.css'
-import NodeGraph from './components/NodeGraph'
 import ReactionsList from './components/ReactionsList'
 import SpeciesList from './components/SpeciesList'
+import Graph from './components/Graph'
+import MetaDisplay from './components/MetaDisplay'
+import 'bootstrap/dist/css/bootstrap.min.css'
 
-function App () {
+function App() {
   const [modal, setModal] = React.useState(false)
 
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <NavBar importModel={() => {
-          setModal(!modal)
-        }} />
-        <Modal isOpen={modal} toggle={() => {
-          setModal(!modal)
-        }}>
-          <ModalHeader toggle={() => {
+        <Helmet>
+          <meta charSet="utf-8" />
+          <title>ODE-APP</title>
+        </Helmet>
+        <NavBar
+          importModel={() => {
             setModal(!modal)
-          }}>Import an existing SBML Model</ModalHeader>
-          <ModalBody>
-            <ImportSbmlForm closeModal={() => {
+          }}
+        />
+        <Modal
+          isOpen={modal}
+          toggle={() => {
+            setModal(!modal)
+          }}
+        >
+          <ModalHeader
+            toggle={() => {
               setModal(!modal)
-            }} />
+            }}
+          >
+            Import an existing SBML Model
+          </ModalHeader>
+          <ModalBody>
+            <ImportSbmlForm
+              closeModal={() => {
+                setModal(!modal)
+              }}
+            />
           </ModalBody>
         </Modal>
         <div>
           <Row>
-            <Col><NodeGraph /></Col>
+            <Col>
+              <Graph />
+            </Col>
             <Col>
               <Row>
                 <ReactionsList />
@@ -42,6 +61,11 @@ function App () {
                 <SpeciesList />
               </Row>
             </Col>
+          </Row>
+          <Row>
+            <div className="container">
+              <MetaDisplay />
+            </div>
           </Row>
         </div>
       </PersistGate>

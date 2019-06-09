@@ -2,32 +2,70 @@
 
 Web Pipeline For Kinetic (ODE-Based) Models.
 
+## To start the application
+
+This application makes use of docker and docker compose, so first install them. Learn more about this [here](https://www.docker.com/get-started).
+
+Run the following commands to start the application:
+
+```bash
+docker-compose build
+docker-compose up
+```
+
+After this open up a browser and go to http://localhost:3000
+
+## Repository Structure
+
+```
+ |- client              -> Contains the code of the react client
+    |- src              -> Source files of the react client
+        |- components   -> React components
+        |- store        -> Redux store
+ |- server              -> Contains the code of the node server
+    |- routes           -> API routes
+    |- controllers      -> API controllers
+    |- models           -> Sequelize(SQL) models
+    |- config           -> Configuration files for the database
+    |- sbmlParser.py    -> Python script to parse a SBML file into a JSON object using libsbml
+ |- docker-compose.yml  -> Docker Compose files that runs the application using docker
+ |- package.json        -> The main package.json governing the yarn workspaces
+ |- README.md           -> The main documentation file. Also this file :)
+```
+
 ## Development
 
-> This project uses StandardJS for styling, linting and formatting purposes. Please find more documentation related to that [here](https://standardjs.com/).
-
-The app consists of 2 components; the React Client and Backend Node server. All the react components go into the src folder where as the backend has its independent folders for controllers and api routes.
-
-Follow the below instructions to get the app up and running:
+Follow the instructions below to get the app up and running in development:
 
 - You need Node & Yarn to run this application. Download them here - [Node](https://nodejs.org/), [Yarn](https://yarnpkg.com). Further you also need a server of a postgresql database running. Learn more about postgresql [here](https://www.postgresql.org/).
 
 - First you will need to install the dependencies of the project. Do that by running this:
 
-  ```bash
-  yarn
-  ```
+  - For the client
 
-- Next you have to setup an environment file (.env) with appropriate variables, an example .env would look like this:
+    ```bash
+    cd client
+    yarn
+    ```
+
+  - For the server
+
+    ```bash
+    cd server
+    yarn
+    ```
+
+- Next you have to setup an environment file (.env) with appropriate variables in the /server folder, an example .env would look like this:
 
   ```js
-  SERVER_PORT = /* Specifiy a port here */
+  SERVER_PORT = /* Specifiy a port here (Optional) */
   DB_NAME = /* Your database name */
   DB_USER = /* Your database user */
   DB_PASSWORD = /* Your database user's password */
+  DB_HOST = /* Your database host (Optional) */
   ```
 
-- Then run the following command to start the React Client and Node server simultaneously:
+- Then run the following command to start both the React Client and Node Server(concurrently):
 
   ```bash
   yarn dev
@@ -35,32 +73,49 @@ Follow the below instructions to get the app up and running:
 
 ## Other Scripts
 
-- To run the node server independently, use:
+- To run the node server individually, use:
 
   ```bash
   yarn server
   ```
 
-- To run the react client independently, use:
+  ---OR---
+
+  ```bash
+  # In /server
+  yarn start
+  ```
+
+- To run the react client individually, use:
 
   ```bash
   yarn client
   ```
 
+  ---OR---
+
+  ```bash
+  # In /client
+  yarn start
+  ```
+
 - To run tests on the react client, use:
 
   ```bash
-  yarn client-test
+  # In /client
+  yarn test
   ```
 
 - To build a production react client, use:
 
   ```bash
-  yarn client-build
+  # In /client
+  yarn build
   ```
 
 - To eject the configuartion and scripts from the react-scripts package, use:
 
   ```bash
-  yarn client-eject
+  # In /client
+  yarn eject
   ```
