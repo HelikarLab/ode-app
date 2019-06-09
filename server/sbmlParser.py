@@ -17,7 +17,6 @@ for specie in listOfSpecies:
         {
             "id": specie.getId(),
             "name": specie.getName(),
-            "compartment": specie.getCompartment(),
             "charge": specie.getCharge(),
             "initialConcentration": specie.getInitialConcentration(),
         }
@@ -30,26 +29,37 @@ for reaction in listOfReactions:
         "id": reaction.getId(),
         "name": reaction.getName(),
         "reversible": reaction.getReversible(),
-        "products": [],
         "reactants": [],
-        "kineticLaw": {"parameters": []},
+        "products": [],
+        "reactionString": "",
     }
     listOfProducts = reaction.getListOfProducts()
-    for product in listOfProducts:
-        tempObject["products"].append(product.getSpecies())
     listOfReactants = reaction.getListOfReactants()
     for reactant in listOfReactants:
         tempObject["reactants"].append(reactant.getSpecies())
-    listOfParameters = reaction.getKineticLaw().getListOfParameters()
-    for parameter in listOfParameters:
-        tempObject["kineticLaw"]["parameters"].append(
-            {
-                "name": parameter.getName(),
-                "id": parameter.getId(),
-                "value": parameter.getValue(),
-            }
-        )
+    for product in listOfProducts:
+        tempObject["products"].append(product.getSpecies())
+    # Formulating the reaction string
+    reactionString = ""
+    for i in range(len(tempObject["reactants"])):
+        if i == (len(tempObject["reactants"]) - 1):
+            reactionString = reactionString + tempObject["reactants"][i] + " "
+        else:
+            reactionString = reactionString + tempObject["reactants"][i] + " + "
+    if tempObject["reversible"]:
+        reactionString = reactionString + "<==> "
+    else:
+        reactionString = reactionString + "==> "
+    for i in range(len(tempObject["products"])):
+        if i == (len(tempObject["products"]) - 1):
+            reactionString = reactionString + tempObject["products"][i]
+        else:
+            reactionString = reactionString + tempObject["products"][i] + " + "
+    tempObject["reactionString"] = reactionString
     reactions.append(tempObject)
+
+reactionString = ""
+
 
 data = {
     "model": {

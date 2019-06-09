@@ -2,11 +2,10 @@ const Sequelize = require('sequelize')
 const db = require('../config/database')
 
 module.exports = db.define(
-  'model',
+  'reaction',
   {
     id: {
       type: Sequelize.BIGINT,
-      primaryKey: true,
       allowNull: false,
       field: 'id',
     },
@@ -15,18 +14,22 @@ module.exports = db.define(
       allowNull: false,
       field: 'name',
     },
-    sbmlLevel: {
-      type: Sequelize.STRING,
+    reversible: {
+      type: Sequelize.BOOLEAN,
       allowNull: false,
-      field: 'sbml_level',
+      field: 'reversible',
     },
-    sbmlVersion: {
-      type: Sequelize.STRING,
+    modelId: {
+      type: Sequelize.BIGINT,
       allowNull: false,
-      field: 'sbml_version',
+      references: {
+        model: 'model',
+        key: 'id',
+      },
+      field: 'model_id',
     },
   },
   {
-    tableName: 'models',
+    tableName: 'reactions',
   }
 )

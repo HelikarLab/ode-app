@@ -15,7 +15,7 @@ docker-compose up
 
 After this open up a browser and go to http://localhost:3000
 
-## Project Structure
+## Repository Structure
 
 ```
  |- client              -> Contains the code of the react client
@@ -29,6 +29,7 @@ After this open up a browser and go to http://localhost:3000
     |- config           -> Configuration files for the database
     |- sbmlParser.py    -> Python script to parse a SBML file into a JSON object using libsbml
  |- docker-compose.yml  -> Docker Compose files that runs the application using docker
+ |- package.json        -> The main package.json governing the yarn workspaces
  |- README.md           -> The main documentation file. Also this file :)
 ```
 
@@ -64,21 +65,39 @@ Follow the instructions below to get the app up and running in development:
   DB_HOST = /* Your database host (Optional) */
   ```
 
-- Then run the following command to start the React Client:
+- Then run the following command to start both the React Client and Node Server(concurrently):
 
   ```bash
-  # In /client
-  yarn start
+  yarn dev
   ```
 
-- Then run the following command to start the Node server:
+## Other Scripts
+
+- To run the node server individually, use:
+
+  ```bash
+  yarn server
+  ```
+
+  ---OR---
 
   ```bash
   # In /server
   yarn start
   ```
 
-## Other Scripts
+- To run the react client individually, use:
+
+  ```bash
+  yarn client
+  ```
+
+  ---OR---
+
+  ```bash
+  # In /client
+  yarn start
+  ```
 
 - To run tests on the react client, use:
 

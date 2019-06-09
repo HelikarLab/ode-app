@@ -6,8 +6,8 @@ class Graph extends React.Component {
   componentDidMount() {
     this.self = new NetViz(this.refs.graph, {
       styles: {
-        node: { label: { hideSize: 16 } }
-      }
+        node: { label: { hideSize: 16 } },
+      },
     })
   }
 
@@ -18,7 +18,7 @@ class Graph extends React.Component {
       const edges = [
         { source: nodes[0], target: nodes[1] },
         { source: nodes[1], target: nodes[2] },
-        { source: nodes[2], target: nodes[1] }
+        { source: nodes[2], target: nodes[1] },
       ]
       nodes.map(specie => (specie.label = specie.id))
       this.self.set(nodes, edges, 'force')
@@ -38,7 +38,7 @@ class Graph extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    species: state.data.model.species
+    species: state.data.model.species,
   }
 }
 

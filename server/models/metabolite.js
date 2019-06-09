@@ -2,7 +2,7 @@ const Sequelize = require('sequelize')
 const db = require('../config/database')
 
 module.exports = db.define(
-  'model',
+  'metabolite',
   {
     id: {
       type: Sequelize.BIGINT,
@@ -15,18 +15,27 @@ module.exports = db.define(
       allowNull: false,
       field: 'name',
     },
-    sbmlLevel: {
-      type: Sequelize.STRING,
+    charge: {
+      type: Sequelize.BIGINT,
       allowNull: false,
-      field: 'sbml_level',
+      field: 'charge',
     },
-    sbmlVersion: {
-      type: Sequelize.STRING,
+    initialConcentration: {
+      type: Sequelize.BIGINT,
       allowNull: false,
-      field: 'sbml_version',
+      field: 'initial_concentration',
+    },
+    modelId: {
+      type: Sequelize.BIGINT,
+      allowNull: false,
+      references: {
+        model: 'model',
+        key: 'id',
+      },
+      field: 'model_id',
     },
   },
   {
-    tableName: 'models',
+    tableName: 'metabolites',
   }
 )

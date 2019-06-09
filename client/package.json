@@ -3,7 +3,6 @@
   "version": "0.0.1",
   "description": "React Client for Web Pipeline For Kinetic (ODE-Based) Models",
   "main": "index.js",
-  "author": "Mohamed Shadab <mohamedshadab78@gmail.com>",
   "license": "UNLICENSED",
   "scripts": {
     "start": "react-scripts start",
