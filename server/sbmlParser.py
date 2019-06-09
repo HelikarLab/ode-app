@@ -10,10 +10,10 @@ model = document.getModel()
 listOfSpecies = model.getListOfSpecies()
 listOfReactions = model.getListOfReactions()
 
-species = []
+metabolites = []
 
 for specie in listOfSpecies:
-    species.append(
+    metabolites.append(
         {
             "id": specie.getId(),
             "name": specie.getName(),
@@ -67,7 +67,7 @@ data = {
         "name": model.getName(),
         "sbmlLevel": model.getLevel(),
         "sbmlVersion": model.getVersion(),
-        "species": species,
+        "metabolites": metabolites,
         "reactions": reactions,
     }
 }

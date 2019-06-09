@@ -7,7 +7,7 @@ import { Helmet } from 'react-helmet'
 import NavBar from './components/NavBar'
 import ImportSbmlForm from './components/ImportSbmlForm'
 import ReactionsList from './components/ReactionsList'
-import SpeciesList from './components/SpeciesList'
+import MetabolitesList from './components/MetabolitesList'
 import Graph from './components/Graph'
 import MetaDisplay from './components/MetaDisplay'
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -58,7 +58,7 @@ function App() {
                 <ReactionsList />
               </Row>
               <Row>
-                <SpeciesList />
+                <MetabolitesList />
               </Row>
             </Col>
           </Row>

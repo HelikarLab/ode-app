@@ -13,7 +13,6 @@ export function importSbml(formData) {
     request
       .then(res => {
         const payload = JSON.parse(res.data)
-        console.log(payload)
         dispatch({
           type: actions.IMPORT_SBML,
           payload,
