@@ -17,7 +17,7 @@ module.exports = async function(req, res) {
   PythonShell.run('sbmlParser.py', options, function(err, data) {
     if (err) {
       console.error(err)
-      res.status(500).send('Something went wrong in the python script.')
+      res.status(500).send('Something went wrong.')
     } else {
       fs.unlinkSync('./uploads/' + file.name)
       res.status(200).send(data)

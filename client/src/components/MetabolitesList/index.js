@@ -17,7 +17,7 @@ function MetabolitesList(props) {
                 props.setType('metabolite')
               }}
             >
-              {metabolite.name}
+              {metabolite.id} - {metabolite.name}
             </ListGroupItem>
           ))}
         </ListGroup>

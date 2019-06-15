@@ -1,10 +1,7 @@
-/* eslint-env browser */
 import React from 'react'
-import { connect } from 'react-redux'
 import { Formik } from 'formik'
-import { Button, Form, FormText, FormGroup } from 'reactstrap'
-import { importSbml } from '../../store/actions/actionCreators'
 import { useStoreActions } from 'easy-peasy'
+import { Button, Form, FormText, FormGroup } from 'reactstrap'
 
 function ImportSbmlForm({ closeModal }) {
   const importSbml = useStoreActions(action => action.importSbml)
@@ -46,13 +43,4 @@ function ImportSbmlForm({ closeModal }) {
   )
 }
 
-function mapStateToProps(state) {
-  return {
-    state,
-  }
-}
-
-export default connect(
-  mapStateToProps,
-  { importSbml }
-)(ImportSbmlForm)
+export default ImportSbmlForm

@@ -1,28 +1,21 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { StoreProvider } from 'easy-peasy'
+import { store } from './store'
+import { Helmet } from 'react-helmet'
 import App from './App'
 import * as serviceWorker from './serviceWorker'
-import { Provider } from 'react-redux'
-import { StoreProvider } from 'easy-peasy'
-import { store as easyStore } from './store/easyPeasy'
-// import { PersistGate } from 'redux-persist/integration/react'
-import { store, persistor } from './store'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './index.scss'
-import { Helmet } from 'react-helmet'
 
 ReactDOM.render(
-  <Provider store={store}>
-    <StoreProvider store={easyStore}>
-      <Helmet>
-        <meta charSet="utf-8" />
-        <title>ODE-APP</title>
-      </Helmet>
-      {/* <PersistGate loading={null} persistor={persistor}> */}
-      <App />
-      {/* </PersistGate> */}
-    </StoreProvider>
-  </Provider>,
+  <StoreProvider store={store}>
+    <Helmet>
+      <meta charSet="utf-8" />
+      <title>ODE-APP</title>
+    </Helmet>
+    <App />
+  </StoreProvider>,
   document.getElementById('root')
 )
 

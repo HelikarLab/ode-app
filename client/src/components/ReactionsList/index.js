@@ -17,7 +17,7 @@ function ReactionsList(props) {
                 props.setType('reaction')
               }}
             >
-              {reaction.name}
+              {reaction.id} - {reaction.name}
             </ListGroupItem>
           ))}
         </ListGroup>
