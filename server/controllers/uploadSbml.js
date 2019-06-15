@@ -11,7 +11,7 @@ module.exports = async function(req, res) {
   fs.renameSync(file.path, `./uploads/${file.name}`)
 
   const options = {
-    args: [file.name]
+    args: [file.name],
   }
 
   PythonShell.run('sbmlParser.py', options, function(err, data) {

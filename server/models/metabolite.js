@@ -4,16 +4,15 @@ const db = require('../config/database')
 module.exports = db.define(
   'metabolite',
   {
-    id: {
-      type: Sequelize.BIGINT,
-      primaryKey: true,
-      allowNull: false,
-      field: 'id',
-    },
     name: {
       type: Sequelize.STRING,
       allowNull: false,
       field: 'name',
+    },
+    sbmlId: {
+      type: Sequelize.STRING,
+      allowNull: false,
+      field: 'sbml_id',
     },
     charge: {
       type: Sequelize.BIGINT,
@@ -21,7 +20,7 @@ module.exports = db.define(
       field: 'charge',
     },
     initialConcentration: {
-      type: Sequelize.BIGINT,
+      type: Sequelize.STRING,
       allowNull: false,
       field: 'initial_concentration',
     },
@@ -29,7 +28,7 @@ module.exports = db.define(
       type: Sequelize.BIGINT,
       allowNull: false,
       references: {
-        model: 'model',
+        model: 'models',
         key: 'id',
       },
       field: 'model_id',

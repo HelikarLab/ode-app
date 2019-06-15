@@ -1,11 +1,73 @@
 import React from 'react'
 import NetViz from 'ccnetviz'
-import { connect } from 'react-redux'
-import { generateReactionNodes, generateReactionEdges } from '../../utils'
+import { UncontrolledTooltip } from 'reactstrap'
+import { Icon } from 'react-icons-kit'
+import { infoCircle } from 'react-icons-kit/fa/infoCircle'
+import GraphLegend from './GraphLegend'
+import './style.scss'
 class Graph extends React.Component {
   state = {
     nodes: [],
     edges: [],
+  }
+
+  generateReactionNodes = reactions => {
+    const reactionNodes = reactions.map(reaction => {
+      return {
+        label: reaction.id,
+        style: 'reactionNode',
+      }
+    })
+    return reactionNodes
+  }
+
+  findNode = (object, nodes) => {
+    let temp
+    nodes.filter((node, index) => {
+      if (node.label === object.label) {
+        return (temp = index)
+      } else {
+        return false
+      }
+    })
+    return temp
+  }
+
+  generateReactionEdges = (reactions, nodes) => {
+    const reactionsEdges = []
+    reactions.map(reaction => {
+      reaction.reactants.map(reactant => {
+        if (reaction.reversible) {
+          return reactionsEdges.push({
+            source: nodes[this.findNode({ label: reactant }, nodes)],
+            target: nodes[this.findNode({ label: reaction.id }, nodes)],
+            style: 'reversibleReactantEdge',
+          })
+        } else {
+          return reactionsEdges.push({
+            source: nodes[this.findNode({ label: reactant }, nodes)],
+            target: nodes[this.findNode({ label: reaction.id }, nodes)],
+            style: 'reactantEdge',
+          })
+        }
+      })
+      return reaction.products.map(product => {
+        if (reaction.reversible) {
+          return reactionsEdges.push({
+            source: nodes[this.findNode({ label: reaction.id }, nodes)],
+            target: nodes[this.findNode({ label: product }, nodes)],
+            style: 'reversibleProductEdge',
+          })
+        } else {
+          return reactionsEdges.push({
+            source: nodes[this.findNode({ label: reaction.id }, nodes)],
+            target: nodes[this.findNode({ label: product }, nodes)],
+            style: 'productEdge',
+          })
+        }
+      })
+    })
+    return reactionsEdges
   }
 
   componentDidMount() {
@@ -47,29 +109,27 @@ class Graph extends React.Component {
         reversibleReactantEdge: { color: 'rgb(89, 249, 2)', type: 'dashed' },
         reversibleProductEdge: { color: 'rgb(255, 246, 0)', type: 'dashed' },
       },
-      onChangeViewport: function(viewport) {}, //called every time viewport changes
-      onLoad: function() {}, //called when graph loaded
-      getNodesCount() {}, //callback to use if you want to force nodes count into this library (used to calculate curve excentricity and other built in options), expecting number as return value
-      getEdgesCount() {}, //callback to use if you want to force edges count into this library (used to calculate curve excentricity and other built in options), expecting number as return value
-      onDrag: function(viewport) {}, //drag event, disable original event in case of return false
-      onZoom: function(viewport) {}, //zoom event, disable original event in case of return false
+      onChangeViewport: function(viewport) {},
+      onLoad: function() {},
+      getNodesCount() {},
+      getEdgesCount() {},
+      onDrag: function(viewport) {},
+      onZoom: function(viewport) {},
       onClick: function() {
         return false
-      }, //called on click on graph
-      onDblClick: function() {}, //called on double click on graph,
+      },
+      onDblClick: function() {},
       passiveEvts: true,
     })
-    // this.self.set(temp, temp2, 'force')
-    // this.self.draw()
   }
 
-  async componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps, prevState) {
     const { metabolites } = this.props
     if (
       prevProps.reactions !== this.props.reactions ||
       prevProps.metabolites !== this.props.metabolites
     ) {
-      let reactionNodes = generateReactionNodes(this.props.reactions)
+      let reactionNodes = this.generateReactionNodes(this.props.reactions)
       let nodes = []
       for (let i = 0; i < metabolites.length; i++) {
         nodes.push({ label: metabolites[i].id })
@@ -77,7 +137,7 @@ class Graph extends React.Component {
       reactionNodes.map(node => {
         return nodes.push(node)
       })
-      let edges = generateReactionEdges(this.props.reactions, nodes)
+      let edges = this.generateReactionEdges(this.props.reactions, nodes)
       this.setState({ nodes, edges })
     }
     if (prevState !== this.state) {
@@ -88,33 +148,24 @@ class Graph extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    this.self.remove()
+  }
+
   render() {
     return (
       <div>
-        <h3>Graph</h3>
-        <div
-          style={{
-            border: '2px black solid',
-            height: 570,
-            width: 620,
-            margin: 20,
-          }}
-        >
-          <canvas ref="graph" width="600" height="550" />
-        </div>
+        <h4 className="text-muted">
+          Graph{` `}
+          <Icon icon={infoCircle} id="graph-legend-info" />
+          <UncontrolledTooltip placement="right" target="graph-legend-info">
+            <GraphLegend />
+          </UncontrolledTooltip>
+        </h4>
+        <canvas ref="graph" width="600" height="550" className="graph-canvas" />
       </div>
     )
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    metabolites: state.data.model.metabolites,
-    reactions: state.data.model.reactions,
-  }
-}
-
-export default connect(
-  mapStateToProps,
-  {}
-)(Graph)
+export default Graph

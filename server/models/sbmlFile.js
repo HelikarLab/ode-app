@@ -2,28 +2,24 @@ const Sequelize = require('sequelize')
 const db = require('../config/database')
 
 module.exports = db.define(
-  'reactant',
+  'sbmlFile',
   {
-    metaboliteId: {
-      type: Sequelize.BIGINT,
+    fileBytes: {
+      type: Sequelize.BLOB,
       allowNull: false,
-      references: {
-        model: 'metabolite',
-        key: 'id',
-      },
-      field: 'metabolite_id',
+      field: 'file_bytes',
     },
-    reactionId: {
+    modelId: {
       type: Sequelize.BIGINT,
       allowNull: false,
       references: {
-        model: 'reactions',
+        model: 'models',
         key: 'id',
       },
-      field: 'reaction_id',
+      field: 'model_id',
     },
   },
   {
-    tableName: 'reactants',
+    tableName: 'sbml_files',
   }
 )

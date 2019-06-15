@@ -1,76 +1,62 @@
 import React from 'react'
-import { Provider } from 'react-redux'
-import { PersistGate } from 'redux-persist/integration/react'
-import { store, persistor } from './store'
 import { Modal, ModalHeader, ModalBody, Row, Col } from 'reactstrap'
-import { Helmet } from 'react-helmet'
+import { connect } from 'react-redux'
 import NavBar from './components/NavBar'
 import ImportSbmlForm from './components/ImportSbmlForm'
-import ReactionsList from './components/ReactionsList'
-import MetabolitesList from './components/MetabolitesList'
-import Graph from './components/Graph'
-import MetaDisplay from './components/MetaDisplay'
-import 'bootstrap/dist/css/bootstrap.min.css'
+import { useStoreActions, useStore } from 'easy-peasy'
+import { saveModel } from './store/actions/actionCreators'
+import ModelTab from './components/ModelTab'
 
-function App() {
+function App(props) {
   const [modal, setModal] = React.useState(false)
+  // const
 
   return (
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <Helmet>
-          <meta charSet="utf-8" />
-          <title>ODE-APP</title>
-        </Helmet>
-        <NavBar
-          importModel={() => {
-            setModal(!modal)
-          }}
-        />
-        <Modal
-          isOpen={modal}
+    <React.Fragment>
+      <NavBar
+        importModel={() => {
+          setModal(!modal)
+        }}
+        saveModel={() => {
+          props.saveModel(props.model, props.file)
+        }}
+      />
+      <Modal
+        isOpen={modal}
+        toggle={() => {
+          setModal(!modal)
+        }}
+      >
+        <ModalHeader
           toggle={() => {
             setModal(!modal)
           }}
         >
-          <ModalHeader
-            toggle={() => {
+          Import an existing SBML Model
+        </ModalHeader>
+        <ModalBody>
+          <ImportSbmlForm
+            closeModal={() => {
               setModal(!modal)
             }}
-          >
-            Import an existing SBML Model
-          </ModalHeader>
-          <ModalBody>
-            <ImportSbmlForm
-              closeModal={() => {
-                setModal(!modal)
-              }}
-            />
-          </ModalBody>
-        </Modal>
-        <div>
-          <Row>
-            <Col>
-              <Graph />
-            </Col>
-            <Col>
-              <Row>
-                <ReactionsList />
-              </Row>
-              <Row>
-                <MetabolitesList />
-              </Row>
-            </Col>
-          </Row>
-          <Row>
-            <div className="container">
-              <MetaDisplay />
-            </div>
-          </Row>
-        </div>
-      </PersistGate>
-    </Provider>
+          />
+        </ModalBody>
+      </Modal>
+      <ModelTab />
+    </React.Fragment>
   )
 }
 
-export default App
+function mapStateToProps(state) {
+  return {
+    display: state.data.displayData,
+    model: state.data.model,
+    file: state.data.modelFile,
+    imported: state.data.imported,
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  { saveModel }
+)(App)

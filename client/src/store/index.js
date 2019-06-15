@@ -4,17 +4,18 @@ import storageSession from 'redux-persist/lib/storage/session'
 import thunk from 'redux-thunk'
 import dataReducer from './reducers/dataReducer'
 
-const rootPersistConfig = {
-  key: 'root',
-  storage: storageSession
-}
+// const rootPersistConfig = {
+//   key: 'root',
+//   storage: storageSession,
+// }
 
 const rootReducer = combineReducers({ data: dataReducer })
 
-const persistedReducer = persistReducer(rootPersistConfig, rootReducer)
+// const persistedReducer = persistReducer(rootPersistConfig, rootReducer)
 
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore)
 
-export const store = createStoreWithMiddleware(persistedReducer)
+// export const store = createStoreWithMiddleware(persistedReducer)
+export const store = createStoreWithMiddleware(rootReducer)
 
-export const persistor = persistStore(store)
+// export const persistor = persistStore(store)

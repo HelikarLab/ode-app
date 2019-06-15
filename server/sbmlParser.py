@@ -1,9 +1,9 @@
 import sys
 import json
-from libsbml import *
+import libsbml
 
 path = "uploads/" + sys.argv[1]
-reader = SBMLReader()
+reader = libsbml.SBMLReader()
 document = reader.readSBML(path)
 model = document.getModel()
 
@@ -62,14 +62,12 @@ reactionString = ""
 
 
 data = {
-    "model": {
-        "id": model.getId(),
-        "name": model.getName(),
-        "sbmlLevel": model.getLevel(),
-        "sbmlVersion": model.getVersion(),
-        "metabolites": metabolites,
-        "reactions": reactions,
-    }
+    "id": model.getId(),
+    "name": model.getName(),
+    "sbmlLevel": model.getLevel(),
+    "sbmlVersion": model.getVersion(),
+    "metabolites": metabolites,
+    "reactions": reactions,
 }
 
 print(json.dumps(data))

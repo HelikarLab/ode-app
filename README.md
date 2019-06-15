@@ -37,23 +37,14 @@ After this open up a browser and go to http://localhost:3000
 
 Follow the instructions below to get the app up and running in development:
 
-- You need Node & Yarn to run this application. Download them here - [Node](https://nodejs.org/), [Yarn](https://yarnpkg.com). Further you also need a server of a postgresql database running. Learn more about postgresql [here](https://www.postgresql.org/).
+- You need Node, Yarn and Python 3(alongside pip) to run this application. Download them here - [Node](https://nodejs.org/), [Yarn](https://yarnpkg.com) and [Python](https://www.python.org/downloads/). Further you also need a server of a postgresql database running. Learn more about postgresql [here](https://www.postgresql.org/).
 
 - First you will need to install the dependencies of the project. Do that by running this:
 
-  - For the client
-
-    ```bash
-    cd client
-    yarn
-    ```
-
-  - For the server
-
-    ```bash
-    cd server
-    yarn
-    ```
+  ```bash
+  yarn # Node and React dependencies
+  pip install python-libsbml # Python dependency
+  ```
 
 - Next you have to setup an environment file (.env) with appropriate variables in the /server folder, an example .env would look like this:
 
