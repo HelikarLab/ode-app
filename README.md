@@ -2,7 +2,7 @@
 
 Web Pipeline For Kinetic (ODE-Based) Models.
 
-## To start the application
+## To start the application (production)
 
 This application makes use of docker and docker compose, so first install them. Learn more about this [here](https://www.docker.com/get-started).
 

@@ -1,10 +1,12 @@
-FROM node:10
+FROM node:10.16.0-alpine
 
 WORKDIR /usr/src/app/client
+
+RUN apk add yarn
 
 COPY . .
 
 EXPOSE 3000
 
-RUN curl -o- -L https://yarnpkg.com/install.sh | bash
 RUN yarn
+RUN yarn build
