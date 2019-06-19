@@ -1,5 +1,5 @@
 import React from 'react'
-import NetViz from 'ccnetviz'
+import ccNetViz from 'ccnetviz'
 import { UncontrolledTooltip } from 'reactstrap'
 import { Icon } from 'react-icons-kit'
 import { infoCircle } from 'react-icons-kit/fa/infoCircle'
@@ -71,7 +71,7 @@ class Graph extends React.Component {
   }
 
   componentDidMount() {
-    this.self = new NetViz(this.refs.graph, {
+    this.self = new ccNetViz(this.refs.graph, {
       styles: {
         background: {
           color: 'rgb(255, 255, 255)',
@@ -148,9 +148,9 @@ class Graph extends React.Component {
     }
   }
 
-  componentWillUnmount() {
-    this.self.remove()
-  }
+  // componentWillUnmount() {
+  //   this.self.remove()
+  // }
 
   render() {
     return (
