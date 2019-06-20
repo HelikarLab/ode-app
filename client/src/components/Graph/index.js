@@ -11,6 +11,22 @@ class Graph extends React.Component {
     edges: [],
   }
 
+  gen = () => {
+    const { reactions, metabolites } = this.props
+    try {
+      let reactionNodes = this.generateReactionNodes(reactions)
+      let nodes = []
+      for (let i = 0; i < metabolites.length; i++) {
+        nodes.push({ label: metabolites[i].id })
+      }
+      reactionNodes.map(node => {
+        return nodes.push(node)
+      })
+      let edges = this.generateReactionEdges(reactions, nodes)
+      this.setState({ nodes, edges })
+    } catch {}
+  }
+
   generateReactionNodes = reactions => {
     const reactionNodes = reactions.map(reaction => {
       return {
@@ -39,13 +55,13 @@ class Graph extends React.Component {
       reaction.reactants.map(reactant => {
         if (reaction.reversible) {
           return reactionsEdges.push({
-            source: nodes[this.findNode({ label: reactant }, nodes)],
+            source: nodes[this.findNode({ label: reactant.id }, nodes)],
             target: nodes[this.findNode({ label: reaction.id }, nodes)],
             style: 'reversibleReactantEdge',
           })
         } else {
           return reactionsEdges.push({
-            source: nodes[this.findNode({ label: reactant }, nodes)],
+            source: nodes[this.findNode({ label: reactant.id }, nodes)],
             target: nodes[this.findNode({ label: reaction.id }, nodes)],
             style: 'reactantEdge',
           })
@@ -55,13 +71,13 @@ class Graph extends React.Component {
         if (reaction.reversible) {
           return reactionsEdges.push({
             source: nodes[this.findNode({ label: reaction.id }, nodes)],
-            target: nodes[this.findNode({ label: product }, nodes)],
+            target: nodes[this.findNode({ label: product.id }, nodes)],
             style: 'reversibleProductEdge',
           })
         } else {
           return reactionsEdges.push({
             source: nodes[this.findNode({ label: reaction.id }, nodes)],
-            target: nodes[this.findNode({ label: product }, nodes)],
+            target: nodes[this.findNode({ label: product.id }, nodes)],
             style: 'productEdge',
           })
         }
@@ -71,7 +87,7 @@ class Graph extends React.Component {
   }
 
   componentDidMount() {
-    this.self = new ccNetViz(this.refs.graph, {
+    this.graph = new ccNetViz(document.getElementById('graph'), {
       styles: {
         background: {
           color: 'rgb(255, 255, 255)',
@@ -121,36 +137,28 @@ class Graph extends React.Component {
       onDblClick: function() {},
       passiveEvts: true,
     })
+
+    this.gen()
+    this.graph.set(this.state.nodes, this.state.edges, 'force')
+    this.graph.draw()
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { metabolites } = this.props
     if (
       prevProps.reactions !== this.props.reactions ||
       prevProps.metabolites !== this.props.metabolites
     ) {
-      let reactionNodes = this.generateReactionNodes(this.props.reactions)
-      let nodes = []
-      for (let i = 0; i < metabolites.length; i++) {
-        nodes.push({ label: metabolites[i].id })
-      }
-      reactionNodes.map(node => {
-        return nodes.push(node)
-      })
-      let edges = this.generateReactionEdges(this.props.reactions, nodes)
-      this.setState({ nodes, edges })
+      this.gen()
     }
     if (prevState !== this.state) {
-      const nodes = this.state.nodes
-      const edges = this.state.edges
-      this.self.set(nodes, edges, 'force')
-      this.self.draw()
+      this.graph.set(this.state.nodes, this.state.edges, 'force')
+      this.graph.draw()
     }
   }
 
-  // componentWillUnmount() {
-  //   this.self.remove()
-  // }
+  componentWillUnmount() {
+    this.graph.remove()
+  }
 
   render() {
     return (
@@ -162,7 +170,7 @@ class Graph extends React.Component {
             <GraphLegend />
           </UncontrolledTooltip>
         </h4>
-        <canvas ref="graph" width="600" height="550" className="graph-canvas" />
+        <canvas id="graph" width="600" height="550" className="graph-canvas" />
       </div>
     )
   }

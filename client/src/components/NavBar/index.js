@@ -37,6 +37,11 @@ function NavBar(props) {
             Import Model
           </Button>
         </NavItem>
+        <NavItem>
+          <Button color="info" onClick={props.savedModels}>
+            Saved Models
+          </Button>
+        </NavItem>
       </Nav>
     </Navbar>
   )

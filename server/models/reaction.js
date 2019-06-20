@@ -20,12 +20,12 @@ module.exports = db.define(
       field: 'reversible',
     },
     reactants: {
-      type: Sequelize.ARRAY(Sequelize.TEXT),
+      type: Sequelize.ARRAY(Sequelize.JSONB),
       allowNull: false,
       field: 'reactants',
     },
     products: {
-      type: Sequelize.ARRAY(Sequelize.TEXT),
+      type: Sequelize.ARRAY(Sequelize.JSONB),
       allowNull: false,
       field: 'products',
     },

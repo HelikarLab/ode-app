@@ -1,6 +1,7 @@
 import React from 'react'
 import { useStoreState, useStoreActions } from 'easy-peasy'
 import { Row, Col, Button, Modal, ModalHeader, ModalBody } from 'reactstrap'
+import { toast } from 'react-toastify'
 import Graph from '../Graph'
 import ReactionsList from '../ReactionsList'
 import MetabolitesList from '../MetabolitesList'
@@ -38,8 +39,10 @@ function ModelTab() {
           <br />
           <Button
             color="primary"
-            onClick={() => {
-              saveModel()
+            onClick={async () => {
+              const temp = await saveModel()
+              if (temp.error) toast.error(temp.message)
+              else toast.success(temp.message)
               setModal(!modal)
             }}
           >

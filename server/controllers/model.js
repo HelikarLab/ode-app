@@ -4,7 +4,7 @@ const Metabolite = require('../models/metabolite')
 const Reaction = require('../models/reaction')
 const SbmlFile = require('../models/sbmlFile')
 
-module.exports = function(req, res) {
+exports.addModel = function(req, res) {
   const file = req.files.file
   const model = JSON.parse(req.fields.model)
   Model.create({
@@ -58,4 +58,18 @@ module.exports = function(req, res) {
     })
 
   res.status(200).send('Successfully saved model.')
+}
+
+exports.getModel = function(req, res) {
+  Model.findByPk(req.params.id)
+    .then(model => {
+      res.status(200).send(model)
+    })
+    .catch(err => res.status(500).send('Something went wrong.'))
+}
+
+exports.getAllModels = function(req, res) {
+  Model.findAll({ attributes: ['id', 'name', 'createdAt'] })
+    .then(models => res.status(200).send(models))
+    .catch(err => res.status(500).send('Something went wrong.'))
 }

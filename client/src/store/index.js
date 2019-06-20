@@ -29,12 +29,17 @@ const model = {
     const formData = new FormData()
     formData.append('file', state.currentModelFile, state.currentModelFile.name)
     formData.append('model', JSON.stringify(state.currentModel))
-    axios({
+    return axios({
       method: 'post',
       url: `${API_URL}/api/model/add`,
       data: formData,
     })
-      .then(res => console.log(res))
+      .then(res => ({ message: 'Successfully saved.', error: false }))
+      .catch(err => ({ message: 'Something went wrong.', error: true }))
+  }),
+  getModel: thunk((actions, payload) => {
+    axios({ method: 'get', url: `${API_URL}/api/model/get/${payload}` })
+      .then(res => actions.setCurrentModel(res.data.jsonModel))
       .catch(err => console.log(err))
   }),
   //actions
