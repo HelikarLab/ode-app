@@ -1,6 +1,7 @@
 import React from 'react'
 import { Formik } from 'formik'
 import { useStoreActions } from 'easy-peasy'
+import { toast } from 'react-toastify'
 import { Button, Form, FormText, FormGroup } from 'reactstrap'
 
 function ImportSbmlForm({ closeModal }) {
@@ -10,10 +11,13 @@ function ImportSbmlForm({ closeModal }) {
     <React.Fragment>
       <Formik
         initialValues={{ file: '' }}
-        onSubmit={(values, actions) => {
+        onSubmit={async (values, actions) => {
           if (values.file) {
-            importSbml(values.file)
-            closeModal()
+            const data = await importSbml(values.file)
+            if (data.error) toast.error(data.message)
+            else {
+              closeModal()
+            }
           }
         }}
         render={props => (

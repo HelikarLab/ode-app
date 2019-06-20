@@ -2,7 +2,6 @@ const fs = require('fs')
 const Model = require('../models/model')
 const Metabolite = require('../models/metabolite')
 const Reaction = require('../models/reaction')
-const SbmlFile = require('../models/sbmlFile')
 
 exports.addModel = function(req, res) {
   const file = req.files.file
@@ -40,17 +39,6 @@ exports.addModel = function(req, res) {
           res.status(500).send('Something went wrong.')
         })
       })
-      SbmlFile.create({
-        fileBytes: file,
-        modelId: data.id,
-      })
-        .then(() => {
-          fs.unlinkSync(file.path)
-        })
-        .catch(error => {
-          fs.unlinkSync(file.path)
-          res.status(500).send('Something went wrong.')
-        })
     })
     .catch(error => {
       fs.unlinkSync(file.path)

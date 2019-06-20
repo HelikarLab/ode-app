@@ -2,6 +2,7 @@ import React from 'react'
 import axios from 'axios'
 import { useStoreActions } from 'easy-peasy'
 import { format } from 'date-fns'
+import { toast } from 'react-toastify'
 import { ListGroup, ListGroupItem } from 'reactstrap'
 
 const API_URL = 'http://localhost:5000' || process.env.REACT_APP_API_URL
@@ -13,7 +14,7 @@ function SavedModels() {
   React.useEffect(() => {
     axios({ method: 'get', url: `${API_URL}/api/model/get/all` })
       .then(res => setData(res.data))
-      .catch(err => console.log(err))
+      .catch(err => console.error(err))
   }, [])
 
   if (data) {
@@ -23,7 +24,11 @@ function SavedModels() {
           <ListGroupItem
             tag="button"
             action
-            onClick={() => getModel(item.id)}
+            onClick={() => {
+              const data = getModel(item.id)
+              if (data.error) toast.error(data.message)
+              else toast.success(data.message)
+            }}
             key={item.id}
           >
             {item.name} -{' '}
