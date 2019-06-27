@@ -27,7 +27,7 @@ function NavBar(props) {
             }}
             href="/#/simulation"
           >
-            Simulations
+            Simulation
           </NavLink>
         </NavItem>
       </Nav>

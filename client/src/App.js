@@ -7,7 +7,7 @@ import NavBar from './components/NavBar'
 import ImportSbmlForm from './components/ImportSbmlForm'
 import SavedModels from './components/SavedModels'
 import ModelTab from './components/ModelTab'
-import SimulationTab from './components/SimulationTab'
+import SimulationTab from './components/SimulationTab/new'
 
 toast.configure({
   position: toast.POSITION.BOTTOM_RIGHT,

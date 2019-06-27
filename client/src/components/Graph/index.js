@@ -5,6 +5,7 @@ import { Icon } from 'react-icons-kit'
 import { infoCircle } from 'react-icons-kit/fa/infoCircle'
 import GraphLegend from './GraphLegend'
 import './style.scss'
+
 class Graph extends React.Component {
   state = {
     nodes: [],
@@ -115,6 +116,9 @@ class Graph extends React.Component {
         },
         reactionNode: {
           color: 'rgb(200, 0, 0)',
+          label: {
+            color: 'rgb(255, 255, 255)',
+          },
         },
         reactantEdge: {
           color: 'rgb(89, 249, 2)',

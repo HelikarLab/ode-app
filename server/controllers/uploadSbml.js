@@ -12,6 +12,7 @@ module.exports = async function(req, res) {
 
   const options = {
     args: [file.name],
+    scriptPath: './python/',
   }
 
   PythonShell.run('sbmlParser.py', options, function(err, data) {

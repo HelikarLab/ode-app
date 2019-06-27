@@ -16,7 +16,7 @@ function ModelTab() {
     state => state.currentModel
   )
 
-  const saveModel = useStoreActions(action => action.saveModel)
+  const saveModel = useStoreActions(actions => actions.saveModel)
 
   return (
     <React.Fragment>

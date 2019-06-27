@@ -5,7 +5,7 @@ import { toast } from 'react-toastify'
 import { Button, Form, FormText, FormGroup } from 'reactstrap'
 
 function ImportSbmlForm({ closeModal }) {
-  const importSbml = useStoreActions(action => action.importSbml)
+  const importSbml = useStoreActions(actions => actions.importSbml)
 
   return (
     <React.Fragment>
