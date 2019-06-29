@@ -16,6 +16,7 @@ function MetabolitesPanel() {
   const { metabolites, run, icmin, icmax } = useStoreState(
     state => state.simulation
   )
+  // const { metabolites } = useStoreState(state => state.currentModel)
 
   const updateIc = useStoreActions(actions => actions.updateIc)
 

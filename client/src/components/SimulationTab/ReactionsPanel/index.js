@@ -1,5 +1,5 @@
 import React from 'react'
-import { useStoreState } from 'easy-peasy'
+import { useStoreState, useStoreActions } from 'easy-peasy'
 import {
   Card,
   CardBody,
@@ -9,7 +9,10 @@ import {
 } from 'reactstrap'
 
 function ReactionsPanel() {
-  const reactions = useStoreState(state => state.simulation.reactions)
+  const reactions = useStoreState(state => state.currentModel.reactions)
+
+  const { switchReaction } = useStoreActions(actions => actions)
+
   return (
     <Card>
       <CardBody>
@@ -19,7 +22,13 @@ function ReactionsPanel() {
         <ListGroup flush style={{ overflowY: 'auto', maxHeight: 200 }}>
           {reactions.map(reaction => (
             <ListGroupItem style={{ display: 'flex' }} key={reaction.id}>
-              <CustomInput type="checkbox" id={reaction.id} />
+              <CustomInput
+                type="switch"
+                id={reaction.id}
+                onChange={() => {
+                  switchReaction(reaction)
+                }}
+              />
               <span style={{ marginRight: 20 }}>
                 {reaction.id}: {reaction.reactionString}
               </span>

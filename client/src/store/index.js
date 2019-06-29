@@ -1,11 +1,15 @@
 import { createStore, action, thunk } from 'easy-peasy'
 import axios from 'axios'
+import _ from 'lodash'
 
 const API_URL = 'http://localhost:5000' || process.env.REACT_APP_API_URL
 
 const model = {
   // Model tab state
-  currentModel: {},
+  currentModel: {
+    metabolites: [],
+    reactions: [],
+  },
   //thunks
   importSbml: thunk((actions, file) => {
     const formData = new FormData()
@@ -64,21 +68,40 @@ const model = {
     run: false,
   },
   //thunks
-
+  simulate: thunk((actions, payload, { getStoreState }) => {
+    const state = getStoreState()
+    return axios({
+      method: 'post',
+      url: `${API_URL}/api/simulation`,
+      data: state.simulation,
+    })
+      .then(res => {
+        console.log(res)
+      })
+      .then(() => {
+        return { error: false }
+      })
+      .catch(err => ({ message: 'Something went wrong.', error: true }))
+  }),
+  //Switches (on/off) the reaction in the simulation
+  switchReaction: thunk(async (actions, payload, { getStoreState }) => {
+    let state = getStoreState()
+    state.simulation.reactions = await _.map(
+      state.simulation.reactions,
+      reaction => {
+        if (reaction.id === payload.id)
+          return { ...reaction, checked: !reaction.checked }
+        else return reaction
+      }
+    )
+    actions.updateMetabolites()
+  }),
   //actions
   initSimulation: action(state => {
     state.simulation.reactions = state.currentModel.reactions.map(reaction => ({
       ...reaction,
-      selected: false,
+      checked: false,
     }))
-
-    state.simulation.metabolites = state.currentModel.metabolites.map(
-      metabolite => ({
-        ...metabolite,
-        selected: false,
-        present: true,
-      })
-    )
   }),
   setTimestamp: action(
     (state, payload) => (state.simulation.timestamp = payload)
@@ -96,9 +119,40 @@ const model = {
     state.simulation.run = !state.simulation.run
   }),
   updateIc: action((state, payload) => {
+    /*eslint-disable-next-line*/
     state.simulation.metabolites.map(metabolite => {
       if (metabolite.id === payload.id) {
         metabolite.initialConcentration = payload.initialConcentration
+      }
+    })
+  }),
+  // Updates the metabolites list
+  updateMetabolites: action((state, payload) => {
+    state.simulation.metabolites = []
+    /*eslint-disable-next-line*/
+    state.simulation.reactions.map(reaction => {
+      if (reaction.checked) {
+        reaction.reactants.map(reactant => {
+          /*eslint-disable-next-line*/
+          return state.currentModel.metabolites.map(metabolite => {
+            /*eslint-disable-next-line*/
+            if (reactant.id === metabolite.id) {
+              if (!_.includes(state.simulation.metabolites, metabolite)) {
+                state.simulation.metabolites.push(metabolite)
+              }
+            }
+          })
+        })
+        reaction.products.map(product => {
+          /*eslint-disable-next-line*/
+          return state.currentModel.metabolites.map(metabolite => {
+            if (product.id === metabolite.id) {
+              if (!_.includes(state.simulation.metabolites, metabolite)) {
+                state.simulation.metabolites.push(metabolite)
+              }
+            }
+          })
+        })
       }
     })
   }),

@@ -14,6 +14,7 @@ app.use(cors())
 // API Route Imports
 const uploadSbmlApi = require('./routes/uploadSbml')
 const modelApi = require('./routes/model')
+const simulationApi = require('./routes/simulation')
 
 // Sanitize Data
 app.use(helmet())
@@ -47,6 +48,7 @@ connectDb()
 // APIs
 app.use('/api/uploadSbml', uploadSbmlApi)
 app.use('/api/model', modelApi)
+app.use('/api/simulation', simulationApi)
 
 // Error Handling
 app.use((err, req, res, next) => {

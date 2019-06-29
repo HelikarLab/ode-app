@@ -4,7 +4,7 @@ import { Card, CardBody, Form, FormGroup, Label, Input, Col } from 'reactstrap'
 import Button from '../../Button'
 
 function SettingsPanel() {
-  const { setRun, setIcmin, setIcmax, setTimestep } = useStoreActions(
+  const { simulate, setIcmin, setIcmax, setTimestep } = useStoreActions(
     actions => actions
   )
 
@@ -69,7 +69,7 @@ function SettingsPanel() {
               </Input>
             </Col>
           </FormGroup>
-          <Button className="btn btn-success" onClick={() => setRun()}>
+          <Button className="btn btn-success" onClick={() => simulate()}>
             Run
           </Button>
         </Form>

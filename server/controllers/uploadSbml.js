@@ -15,7 +15,7 @@ module.exports = async function(req, res) {
     scriptPath: './python/',
   }
 
-  PythonShell.run('sbmlParser.py', options, function(err, data) {
+  PythonShell.run('parse.py', options, function(err, data) {
     if (err) {
       console.error(err)
       res.status(500).send('Something went wrong.')

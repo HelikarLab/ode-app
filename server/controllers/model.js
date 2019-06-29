@@ -59,5 +59,8 @@ exports.getModel = function(req, res) {
 exports.getAllModels = function(req, res) {
   Model.findAll({ attributes: ['id', 'name', 'createdAt'] })
     .then(models => res.status(200).send(models))
-    .catch(err => res.status(500).send('Something went wrong.'))
+    .catch(err => {
+      console.log(err)
+      res.status(500).send('Something went wrong.')
+    })
 }
