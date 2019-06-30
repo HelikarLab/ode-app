@@ -31,12 +31,10 @@ const model = {
   }),
   saveModel: thunk((actions, payload, { getStoreState }) => {
     const state = getStoreState()
-    const formData = new FormData()
-    formData.append('model', JSON.stringify(state.currentModel))
     return axios({
       method: 'post',
       url: `${API_URL}/api/model/add`,
-      data: formData,
+      data: state.currentModel,
     })
       .then(res => ({ message: 'Successfully saved.', error: false }))
       .catch(err => ({ message: 'Something went wrong.', error: true }))
@@ -58,28 +56,33 @@ const model = {
   }),
   //Simulation tab state
   simulation: {
-    timestamp: 0,
     icmin: 0,
     icmax: 100,
-    globalRateLaw: '',
     reactions: [],
     metabolites: [],
-    modelMetadata: {},
-    run: false,
+    showSwitches: false,
+    graphData: {},
   },
   //thunks
   simulate: thunk((actions, payload, { getStoreState }) => {
-    const state = getStoreState()
+    let state = getStoreState()
+    const newReactions = state.simulation.reactions.filter(
+      reaction => reaction.checked === true
+    )
+    const simulationPayload = {
+      time: payload.time,
+      globalRatelaw: payload.globalRatelaw,
+      reactions: newReactions,
+      metabolites: state.simulation.metabolites,
+    }
     return axios({
       method: 'post',
       url: `${API_URL}/api/simulation`,
-      data: state.simulation,
+      data: simulationPayload,
     })
       .then(res => {
-        console.log(res)
-      })
-      .then(() => {
-        return { error: false }
+        const data = JSON.parse(res.data)
+        return (state.simulation.graphData = data)
       })
       .catch(err => ({ message: 'Something went wrong.', error: true }))
   }),
@@ -100,23 +103,15 @@ const model = {
   initSimulation: action(state => {
     state.simulation.reactions = state.currentModel.reactions.map(reaction => ({
       ...reaction,
+      rateLaw: 'rl1',
       checked: false,
     }))
   }),
-  setTimestamp: action(
-    (state, payload) => (state.simulation.timestamp = payload)
-  ),
   setIcmin: action((state, payload) => {
     state.simulation.icmin = payload
   }),
   setIcmax: action((state, payload) => {
     state.simulation.icmax = payload
-  }),
-  setGlobalRatelaw: action((state, payload) => {
-    state.simulation.globalRatelaw = payload
-  }),
-  setRun: action(state => {
-    state.simulation.run = !state.simulation.run
   }),
   updateIc: action((state, payload) => {
     /*eslint-disable-next-line*/

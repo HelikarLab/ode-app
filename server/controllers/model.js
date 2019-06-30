@@ -1,11 +1,9 @@
-const fs = require('fs')
 const Model = require('../models/model')
 const Metabolite = require('../models/metabolite')
 const Reaction = require('../models/reaction')
 
 exports.addModel = function(req, res) {
-  const file = req.files.file
-  const model = JSON.parse(req.fields.model)
+  const model = req.body
   Model.create({
     name: model.name,
     sbmlId: model.id,
@@ -22,7 +20,6 @@ exports.addModel = function(req, res) {
           initialConcentration: metabolite.initialConcentration,
           modelId: data.id,
         }).catch(error => {
-          fs.unlinkSync(file.path)
           res.status(500).send('Something went wrong.')
         })
       })
@@ -35,13 +32,11 @@ exports.addModel = function(req, res) {
           products: reaction.products,
           modelId: data.id,
         }).catch(error => {
-          fs.unlinkSync(file.path)
           res.status(500).send('Something went wrong.')
         })
       })
     })
     .catch(error => {
-      fs.unlinkSync(file.path)
       res.status(500).send('Something went wrong.')
     })
 

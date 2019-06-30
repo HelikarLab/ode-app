@@ -100,6 +100,7 @@ class Graph extends React.Component {
           texture: require('../../assets/circle.png'),
           label: {
             color: 'rgb(0, 0, 0)',
+            hideSize: 16,
           },
         },
         edge: {
@@ -117,7 +118,7 @@ class Graph extends React.Component {
         reactionNode: {
           color: 'rgb(200, 0, 0)',
           label: {
-            color: 'rgb(255, 255, 255)',
+            hideSize: 16,
           },
         },
         reactantEdge: {

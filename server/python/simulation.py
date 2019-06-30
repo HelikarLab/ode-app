@@ -2,71 +2,104 @@ import stimator
 import sys
 import json
 import random
+import numpy as np
+
+
+def dec2(num):
+    return "{0:.2f}".format(num)
+
 
 data = json.loads(sys.argv[1])
 
-print(data)
+metabolites = data["metabolites"]
+reactions = data["reactions"]
+time = data["time"]
 
-# metabolites = data["metabolites"]
-# reactions = data["reactions"]
+reactionStrings = []
 
-# reactionStrings = []
+for i in range(len(reactions)):
+    if reactions[i]["checked"]:
+        temp = "r" + str(i) + ": "
+        j = 0
+        for reactant in reactions[i]["reactants"]:
+            if j == len(reactions[i]["reactants"]) - 1:
+                temp = temp + str(reactant["stoichiometry"]) + str(reactant["id"]) + " "
+            else:
+                temp = (
+                    temp + str(reactant["stoichiometry"]) + str(reactant["id"]) + " + "
+                )
+            j += 1
+        temp = temp + "-> "
+        k = 0
+        for product in reactions[i]["products"]:
+            if k == len(reactions[i]["products"]) - 1:
+                temp = temp + str(product["stoichiometry"]) + str(product["id"])
+            else:
+                temp = temp + str(product["stoichiometry"]) + str(product["id"]) + " + "
+            k += 1
+        if reactions[i]["reactants"][0]["id"]:
+            temp = temp + ", rate = k1 * " + str(reactions[i]["reactants"][0]["id"])
+        else:
+            temp = temp + ", rate = k1 * " + str(reactions[i]["products"][0]["id"])
+        reactionStrings.append(temp)
 
-# for i in range(len(reactions)):
-#     temp = "r" + str(i) + ": "
-#     for reactant in reactions[i]["reactants"]:
-#         temp = temp + reactant["stoichiometry"] + reactant["id"] + " "
+init = """init: ("""
 
-#     temp = temp + "-> "
+for i in range(len(metabolites)):
+    if i == len(metabolites) - 1:
+        temp = (
+            str(metabolites[i]["id"])
+            + " = "
+            + str(metabolites[i]["initialConcentration"])
+            + ")"
+        )
+    else:
+        temp = (
+            str(metabolites[i]["id"])
+            + " = "
+            + str(metabolites[i]["initialConcentration"])
+            + ", "
+        )
+    init = init + temp
 
-#     for product in reactions[i]["products"]:
-#         temp = temp + product["stoichiometry"] + product["id"] + " "
 
-#     reactionStrings.push(temp)
+model_string = """ 
 
-# print(reactionStrings)
+title test
 
-# init = """init: ("""
+"""
 
-# for i in range(len(metabolites)):
-#     if i == len(metabolites) - 1:
-#         temp = (
-#             str(metabolites[i]["id"])
-#             + " = "
-#             + str(metabolites[i]["initialConcentration"])
-#             + ")"
-#         )
-#     else:
-#         temp = (
-#             str(metabolites[i]["id"])
-#             + " = "
-#             + str(metabolites[i]["initialConcentration"])
-#             + ", "
-#         )
-#     init = init + temp
 
-# print(init)
+for item in reactionStrings:
+    model_string += (
+        item
+        + """
+    """
+    )
 
-# model_description = """
+model_string += """ k1 = 0.1 
+"""
 
-# title A two-reaction chemical system
+model_string += (
+    init
+    + """
+"""
+)
 
-# r1: 2.5A -> B, rate = k1 * A
-# r2: B -> C, rate = k2 * B - k3 * C
+m = stimator.read_model(model_string)
 
-# k1 = 0.1
-# k2 = 2
-# k3 = 1
+concentrationData = []
+for var in m.varnames:
+    concentrationData.append({"name": var})
 
-# init: (A = 1, B = 0, C = 2)
+a = m.solve(tf=time - 1, npoints=time)
+for i in range(len(a)):
+    concentrationData[i]["data"] = a[i].tolist()
 
-# """
+for item in concentrationData:
+    item["data"] = list(map(dec2, item["data"]))
 
-# m = stimator.read_model(model_description)
+finalData = {"concentrationData": concentrationData}
 
-# print(m)
-
-# a = m.solve(tf=10, outputs=["A", "B", "C"])
-# print(a)
-# print(a[0], a[1], a[2])
-
+print(json.dumps(finalData))
+sys.stdout.flush()

@@ -4,6 +4,8 @@ Web Pipeline For Kinetic (ODE-Based) Models.
 
 ## To start the application (production)
 
+> This simulation functionality currently does not work in the docker container.
+
 This application makes use of docker and docker compose, so first install them. Learn more about this [here](https://www.docker.com/get-started).
 
 Run the following commands to start the application:
@@ -27,7 +29,8 @@ After this open up a browser and go to http://localhost:3000
     |- controllers      -> API controllers
     |- models           -> Sequelize(SQL) models
     |- config           -> Configuration files for the database
-    |- sbmlParser.py    -> Python script to parse a SBML file into a JSON object using libsbml
+    |- python           -> Python scripts to parse SBML files and simulate ODE models
+    |- scripts          -> Utility scripts
  |- docker-compose.yml  -> Docker Compose files that runs the application using docker
  |- package.json        -> The main package.json governing the yarn workspaces
  |- README.md           -> The main documentation file. Also this file :)
@@ -42,8 +45,11 @@ Follow the instructions below to get the app up and running in development:
 - First you will need to install the dependencies of the project. Do that by running this:
 
   ```bash
+  # inside the repo
   yarn # Node and React dependencies
-  pip install python-libsbml # Python dependency
+  # Python dependencies
+  pip install python-libsbml
+  python -m pip install server/python/lib/stimator-0.9.120-py3-none-any.whl
   ```
 
 - Next you have to setup an environment file (.env) with appropriate variables in the /server folder, an example .env would look like this:
@@ -75,6 +81,20 @@ Follow the instructions below to get the app up and running in development:
   ```bash
   # In /server
   yarn start
+  ```
+
+- To sync tables in the database, use:
+
+  ```bash
+  # In /server
+  yarn sync-tables
+  ```
+
+  With force option (will delete existing tables with the same names):
+
+  ```bash
+  # In /server
+  yarn sync-tables -f
   ```
 
 - To run the react client individually, use:

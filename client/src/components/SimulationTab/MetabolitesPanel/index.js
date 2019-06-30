@@ -13,10 +13,9 @@ import 'rc-slider/assets/index.css'
 const CSlider = Slider.createSliderWithTooltip(Slider)
 
 function MetabolitesPanel() {
-  const { metabolites, run, icmin, icmax } = useStoreState(
+  const { metabolites, icmin, icmax, showSwitches } = useStoreState(
     state => state.simulation
   )
-  // const { metabolites } = useStoreState(state => state.currentModel)
 
   const updateIc = useStoreActions(actions => actions.updateIc)
 
@@ -29,13 +28,14 @@ function MetabolitesPanel() {
         <ListGroup flush style={{ overflowY: 'auto', maxHeight: 255 }}>
           {metabolites.map(metabolite => (
             <ListGroupItem style={{ display: 'flex' }} key={metabolite.id}>
-              {run ? (
+              {showSwitches ? (
                 <CustomInput type="checkbox" id={metabolite.id} />
               ) : (
                 <React.Fragment />
               )}
               <span style={{ marginRight: 20 }}>{metabolite.id}</span>
               <CSlider
+                style={{ width: 300 }}
                 min={icmin}
                 max={icmax}
                 onChange={value => {
