@@ -9,9 +9,11 @@ import {
 } from 'reactstrap'
 
 function ReactionsPanel() {
-  const reactions = useStoreState(state => state.currentModel.reactions)
+  const reactions = useStoreState(
+    state => state.modelTab.currentModel.reactions
+  )
 
-  const { switchReaction } = useStoreActions(actions => actions)
+  const { switchReaction } = useStoreActions(actions => actions.simulationTab)
 
   return (
     <Card>

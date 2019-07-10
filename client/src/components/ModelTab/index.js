@@ -2,10 +2,10 @@ import React from 'react'
 import { useStoreState, useStoreActions } from 'easy-peasy'
 import { Row, Col, Button, Modal, ModalHeader, ModalBody } from 'reactstrap'
 import { toast } from 'react-toastify'
-import Graph from '../Graph'
-import ReactionsList from '../ReactionsList'
-import MetabolitesList from '../MetabolitesList'
-import InfoPanel from '../InfoPanel'
+import Graph from './Graph'
+import ReactionsList from './ReactionsList'
+import MetabolitesList from './MetabolitesList'
+import InfoPanel from './InfoPanel'
 
 function ModelTab() {
   const [type, setType] = React.useState('')
@@ -13,10 +13,10 @@ function ModelTab() {
   const [modal, setModal] = React.useState(false)
 
   const { reactions, metabolites, name } = useStoreState(
-    state => state.currentModel
+    state => state.modelTab.currentModel
   )
 
-  const saveModel = useStoreActions(actions => actions.saveModel)
+  const saveModel = useStoreActions(actions => actions.modelTab.saveModel)
 
   return (
     <React.Fragment>

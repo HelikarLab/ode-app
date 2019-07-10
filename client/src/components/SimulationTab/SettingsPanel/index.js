@@ -14,8 +14,10 @@ const settingsSchema = Yup.object().shape({
 })
 
 function SettingsPanel() {
-  const { simulate, setIcmin, setIcmax } = useStoreActions(actions => actions)
-  const { icmin, icmax } = useStoreState(state => state.simulation)
+  const { simulate, setIcmin, setIcmax } = useStoreActions(
+    actions => actions.simulationTab
+  )
+  const { icmin, icmax } = useStoreState(state => state.simulationTab)
 
   return (
     <Card>

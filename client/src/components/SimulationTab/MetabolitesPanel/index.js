@@ -9,12 +9,12 @@ const CSlider = Slider.createSliderWithTooltip(Slider)
 
 function MetabolitesPanel() {
   const { metabolites, icstep, icmin, icmax } = useStoreState(
-    state => state.simulation
+    state => state.simulationTab
   )
 
-  const toggleMetabolite = useStoreActions(actions => actions.toggleMetabolite)
-
-  const updateIc = useStoreActions(actions => actions.updateIc)
+  const { toggleMetabolite, updateIc } = useStoreActions(
+    actions => actions.simulationTab
+  )
 
   return (
     <Card>

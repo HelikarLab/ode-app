@@ -3,7 +3,7 @@ import Chart from 'react-apexcharts'
 import { useStoreState } from 'easy-peasy'
 
 function Plot() {
-  const data = useStoreState(state => state.simulation)
+  const data = useStoreState(state => state.simulationTab)
   if (data.graphData) {
     return (
       <Chart
