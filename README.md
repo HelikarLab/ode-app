@@ -4,8 +4,6 @@ Web Pipeline For Kinetic (ODE-Based) Models.
 
 ## To start the application (production)
 
-> The simulation functionality currently does not work in the docker container.
-
 This application makes use of docker and docker compose, so first install them. Learn more about this [here](https://www.docker.com/get-started).
 
 Run the following commands to start the application:

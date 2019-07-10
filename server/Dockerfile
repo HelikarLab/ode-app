@@ -1,4 +1,4 @@
-FROM statebait/python-libsbml
+FROM statebait/python-libsbml:with-stimator
 
 RUN apk add --no-cache nodejs yarn bash
 
