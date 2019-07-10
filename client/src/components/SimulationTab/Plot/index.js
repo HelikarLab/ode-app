@@ -3,8 +3,8 @@ import Chart from 'react-apexcharts'
 import { useStoreState } from 'easy-peasy'
 
 function Plot() {
-  const data = useStoreState(state => state.simulation.graphData)
-  if (data.concentrationData) {
+  const data = useStoreState(state => state.simulation)
+  if (data.graphData) {
     return (
       <Chart
         options={{
@@ -16,7 +16,7 @@ function Plot() {
             tickAmount: 10,
           },
         }}
-        series={data.concentrationData}
+        series={data.graphData}
         type="line"
         width={550}
         height={600}

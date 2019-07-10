@@ -1,4 +1,4 @@
-import { createStore, action, thunk } from 'easy-peasy'
+import { createStore, action, thunk, computed } from 'easy-peasy'
 import axios from 'axios'
 import _ from 'lodash'
 
@@ -40,15 +40,15 @@ const model = {
       .catch(err => ({ message: 'Something went wrong.', error: true }))
   }),
   getModel: thunk((actions, payload) => {
-    axios({ method: 'get', url: `${API_URL}/api/model/get/${payload}` })
+    return axios({ method: 'get', url: `${API_URL}/api/model/get/${payload}` })
       .then(res => {
         actions.setCurrentModel(res.data.jsonModel)
       })
       .then(() => {
         actions.initSimulation()
-        return { error: false }
+        return { error: false, message: 'Successfully retrieved model.' }
       })
-      .catch(err => ({ message: 'Something went wrong.', error: true }))
+      .catch(() => ({ error: true, message: 'Something went wrong.' }))
   }),
   //actions
   setCurrentModel: action((state, payload) => {
@@ -58,11 +58,29 @@ const model = {
   simulation: {
     icmin: 0,
     icmax: 100,
+    icstep: computed(state => {
+      return (state.icmax - state.icmin) / 100
+    }),
     reactions: [],
     metabolites: [],
-    showSwitches: false,
-    graphData: {},
+    resultData: [],
+    graphData: computed(state => {
+      return state.resultData.filter(item => {
+        if (item.checked) return true
+        else return false
+      })
+    }),
   },
+  toggleMetabolite: action((state, payload) => {
+    state.simulation.resultData = state.simulation.resultData.map(item => {
+      if (item.name === payload) {
+        return { ...item, checked: !item.checked }
+      } else return item
+    })
+  }),
+  updateResult: action((state, payload) => {
+    state.simulation.resultData = payload
+  }),
   //thunks
   simulate: thunk((actions, payload, { getStoreState }) => {
     let state = getStoreState()
@@ -82,7 +100,11 @@ const model = {
     })
       .then(res => {
         const data = JSON.parse(res.data)
-        return (state.simulation.graphData = data)
+        const modifiedData = data.concentrationData.map(item => ({
+          ...item,
+          checked: true,
+        }))
+        return actions.updateResult(modifiedData)
       })
       .catch(err => ({ message: 'Something went wrong.', error: true }))
   }),

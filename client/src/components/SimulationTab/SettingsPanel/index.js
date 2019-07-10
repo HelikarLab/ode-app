@@ -38,7 +38,7 @@ function SettingsPanel() {
             })
             actions.setSubmitting(false)
           }}
-          render={({ handleSubmit, isSubmitting, errors }) => (
+          render={({ handleSubmit, isSubmitting, errors, setFieldValue }) => (
             <Form onSubmit={handleSubmit}>
               <FormGroup row>
                 <Label for="time" sm={5}>
@@ -63,7 +63,10 @@ function SettingsPanel() {
                     className="form-control"
                     type="number"
                     name="icmin"
-                    onChange={e => setIcmin(e.target.value)}
+                    onChange={e => {
+                      setFieldValue('icmin', e.target.value)
+                      setIcmin(Number(e.target.value))
+                    }}
                   />
                 </Col>
               </FormGroup>
@@ -76,7 +79,10 @@ function SettingsPanel() {
                     className="form-control"
                     type="number"
                     name="icmax"
-                    onChange={e => setIcmax(e.target.value)}
+                    onChange={e => {
+                      setFieldValue('icmax', e.target.value)
+                      setIcmax(Number(e.target.value))
+                    }}
                   />
                 </Col>
               </FormGroup>

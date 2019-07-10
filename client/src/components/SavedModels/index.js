@@ -24,8 +24,8 @@ function SavedModels() {
           <ListGroupItem
             tag="button"
             action
-            onClick={() => {
-              const data = getModel(item.id)
+            onClick={async () => {
+              const data = await getModel(item.id)
               if (data.error) toast.error(data.message)
               else toast.success(data.message)
             }}

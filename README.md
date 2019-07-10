@@ -4,7 +4,7 @@ Web Pipeline For Kinetic (ODE-Based) Models.
 
 ## To start the application (production)
 
-> This simulation functionality currently does not work in the docker container.
+> The simulation functionality currently does not work in the docker container.
 
 This application makes use of docker and docker compose, so first install them. Learn more about this [here](https://www.docker.com/get-started).
 
@@ -56,10 +56,10 @@ Follow the instructions below to get the app up and running in development:
 
   ```js
   SERVER_PORT = /* Specifiy a port here (Optional) */
+  DB_HOST = /* Your database host (Optional) */
   DB_NAME = /* Your database name */
   DB_USER = /* Your database user */
   DB_PASSWORD = /* Your database user's password */
-  DB_HOST = /* Your database host (Optional) */
   ```
 
 - Then run the following command to start both the React Client and Node Server(concurrently):

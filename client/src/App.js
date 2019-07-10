@@ -11,6 +11,7 @@ import SimulationTab from './components/SimulationTab/'
 
 toast.configure({
   position: toast.POSITION.BOTTOM_RIGHT,
+  autoClose: 2000,
 })
 
 function App() {

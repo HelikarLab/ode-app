@@ -1,5 +1,7 @@
-/* WARNING: On running this file with the -f flag, all existing
-tables with names defined in the models will be dropped from the db */
+/*
+! WARNING: On running this file with the -f flag, all existing tables
+! with names defined in the models will be dropped from the db
+*/
 
 const db = require('../config/database')
 const Metabolite = require('../models/metabolite')
