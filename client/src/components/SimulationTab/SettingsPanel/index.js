@@ -14,7 +14,7 @@ const settingsSchema = Yup.object().shape({
 })
 
 function SettingsPanel() {
-  const { simulate, setIcmin, setIcmax } = useStoreActions(
+  const { simulate, setIcmin, setIcmax, setGlobalRatelaw } = useStoreActions(
     actions => actions.simulationTab
   )
   const { icmin, icmax } = useStoreState(state => state.simulationTab)
@@ -97,6 +97,10 @@ function SettingsPanel() {
                     className=" form-control"
                     component="select"
                     name="globalRatelaw"
+                    onChange={e => {
+                      setFieldValue('globalRatelaw', e.target.value)
+                      setGlobalRatelaw(e.target.value)
+                    }}
                   >
                     <option value="rl1">Ratelaw 1</option>
                     <option value="rl2">Ratelaw 2</option>

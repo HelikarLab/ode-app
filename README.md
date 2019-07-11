@@ -21,12 +21,12 @@ After this open up a browser and go to http://localhost:3000
  |- client              -> Contains the code of the react client
     |- src              -> Source files of the react client
         |- components   -> React components
-        |- store        -> Redux store
+        |- store        -> global store
  |- server              -> Contains the code of the node server
     |- routes           -> API routes
     |- controllers      -> API controllers
     |- models           -> Sequelize(SQL) models
-    |- config           -> Configuration files for the database
+    |- config           -> Configuration files
     |- python           -> Python scripts to parse SBML files and simulate ODE models
     |- scripts          -> Utility scripts
  |- docker-compose.yml  -> Docker Compose files that runs the application using docker

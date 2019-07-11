@@ -8,6 +8,7 @@ const model = {
   /*
    * Common global state
    */
+  modelMetadata: {},
 
   //thunks
   importSbml: thunk((actions, file) => {
@@ -31,7 +32,14 @@ const model = {
   getModel: thunk((actions, payload) => {
     return axios({ method: 'get', url: `${API_URL}/api/model/get/${payload}` })
       .then(res => {
-        actions.modelTab.setCurrentModel(res.data.jsonModel)
+        const data = res.data.jsonModel
+        actions.modelTab.setCurrentModel(data)
+        actions.setModelMetadata({
+          name: data.name,
+          id: data.id,
+          sbmlVersion: data.sbmlVersion,
+          sbmlLevel: data.sbmlLevel,
+        })
       })
       .then(() => {
         actions.initSimulation()
@@ -47,12 +55,20 @@ const model = {
     state.simulationTab.reactions = state.modelTab.currentModel.reactions.map(
       reaction => ({
         ...reaction,
-        rateLaw: 'rl1',
+        ratelaw: '',
         checked: false,
       })
     )
     state.simulationTab.metabolitesFromModel =
       state.modelTab.currentModel.metabolites
+  }),
+  setModelMetadata: action((state, payload) => {
+    state.modelMetadata = {
+      name: payload.name,
+      id: payload.id,
+      sbmlVersion: payload.sbmlVersion,
+      sbmlLevel: payload.sbmlLevel,
+    }
   }),
 
   /*
@@ -89,6 +105,7 @@ const model = {
     icmin: 0,
     icmax: 100,
     icstep: computed(state => (state.icmax - state.icmin) / 100),
+    globalRatelaw: 'rl1',
     reactions: [],
     metabolitesFromModel: [],
     metabolites: [],
@@ -101,13 +118,17 @@ const model = {
     }),
     //thunks
     simulate: thunk((actions, payload, { getStoreState }) => {
-      let state = getStoreState()
-      const newReactions = state.simulationTab.reactions.filter(
-        reaction => reaction.checked === true
-      )
+      const state = getStoreState()
+      let newReactions = []
+      state.simulationTab.reactions.forEach(reaction => {
+        if (reaction.checked === true) {
+          if (reaction.ratelaw === '') {
+            newReactions.push({ ...reaction, ratelaw: payload.globalRatelaw })
+          } else newReactions.push(reaction)
+        }
+      })
       const simulationPayload = {
         time: payload.time,
-        globalRatelaw: payload.globalRatelaw,
         reactions: newReactions,
         metabolites: state.simulationTab.metabolites,
       }
@@ -139,6 +160,13 @@ const model = {
       actions.updateMetabolites()
     }),
     //actions
+    setRatelaw: action((state, payload) => {
+      state.reactions = state.reactions.map(reaction => {
+        if (payload.id === reaction.id) {
+          return { ...reaction, ratelaw: payload.ratelaw }
+        } else return reaction
+      })
+    }),
     toggleMetabolite: action((state, payload) => {
       state.resultData = state.resultData.map(item => {
         if (item.name === payload) {
@@ -148,6 +176,9 @@ const model = {
     }),
     updateResult: action((state, payload) => {
       state.resultData = payload
+    }),
+    setGlobalRatelaw: action((state, payload) => {
+      state.globalRatelaw = payload
     }),
     setIcmin: action((state, payload) => {
       state.icmin = payload

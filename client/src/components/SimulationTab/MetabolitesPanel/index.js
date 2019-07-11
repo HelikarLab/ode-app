@@ -23,7 +23,7 @@ function MetabolitesPanel() {
           Metabolites
         </h4>
         <div style={{ overflowY: 'scroll', height: 255 }}>
-          <Table borderless>
+          <Table borderless hover>
             <thead>
               <tr>
                 <th>ID</th>
