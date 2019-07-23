@@ -56,6 +56,7 @@ const model = {
       reaction => ({
         ...reaction,
         ratelaw: '',
+        parameters: [],
         checked: false,
       })
     )
@@ -105,7 +106,6 @@ const model = {
     icmin: 0,
     icmax: 100,
     icstep: computed(state => (state.icmax - state.icmin) / 100),
-    globalRatelaw: 'rl1',
     reactions: [],
     metabolitesFromModel: [],
     metabolites: [],
@@ -123,12 +123,13 @@ const model = {
       state.simulationTab.reactions.forEach(reaction => {
         if (reaction.checked === true) {
           if (reaction.ratelaw === '') {
-            newReactions.push({ ...reaction, ratelaw: payload.globalRatelaw })
+            throw new Error('Ratelaw found empty for reaction: ' + reaction.id)
           } else newReactions.push(reaction)
         }
       })
       const simulationPayload = {
         time: payload.time,
+        dataPoints: payload.dataPoints,
         reactions: newReactions,
         metabolites: state.simulationTab.metabolites,
       }
@@ -163,7 +164,11 @@ const model = {
     setRatelaw: action((state, payload) => {
       state.reactions = state.reactions.map(reaction => {
         if (payload.id === reaction.id) {
-          return { ...reaction, ratelaw: payload.ratelaw }
+          return {
+            ...reaction,
+            ratelaw: payload.ratelaw,
+            parameters: payload.parameters,
+          }
         } else return reaction
       })
     }),
@@ -176,9 +181,6 @@ const model = {
     }),
     updateResult: action((state, payload) => {
       state.resultData = payload
-    }),
-    setGlobalRatelaw: action((state, payload) => {
-      state.globalRatelaw = payload
     }),
     setIcmin: action((state, payload) => {
       state.icmin = payload

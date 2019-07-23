@@ -5,7 +5,7 @@
   "main": "index.js",
   "license": "UNLICENSED",
   "scripts": {
-    "start": "nodemon server.js",
+    "start": "nodemon index.js",
     "sync-tables": "node ./scripts/syncTables.js"
   },
   "dependencies": {
@@ -21,8 +21,8 @@
     "sequelize": "^5.8.10"
   },
   "devDependencies": {
-    "eslint": "^5.16.0",
-    "eslint-config-prettier": "^5.0.0",
+    "eslint": "^6.1.0",
+    "eslint-config-prettier": "^6.0.0",
     "nodemon": "^1.19.1"
   }
 }

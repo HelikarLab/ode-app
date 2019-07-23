@@ -2,6 +2,7 @@ import React from 'react'
 import { useStoreActions, useStoreState } from 'easy-peasy'
 import { Formik, Field } from 'formik'
 import { Card, CardBody, Form, FormGroup, Label, Col } from 'reactstrap'
+import { toast } from 'react-toastify'
 import * as Yup from 'yup'
 import Button from '../../Button'
 
@@ -10,11 +11,14 @@ const settingsSchema = Yup.object().shape({
     .min(2)
     .max(1000)
     .required('Required'),
-  globalRatelaw: Yup.string().required('Required'),
+  dataPoints: Yup.number()
+    .min(2)
+    .max(5000)
+    .required('Required'),
 })
 
 function SettingsPanel() {
-  const { simulate, setIcmin, setIcmax, setGlobalRatelaw } = useStoreActions(
+  const { simulate, setIcmin, setIcmax } = useStoreActions(
     actions => actions.simulationTab
   )
   const { icmin, icmax } = useStoreState(state => state.simulationTab)
@@ -28,16 +32,20 @@ function SettingsPanel() {
         <Formik
           initialValues={{
             time: 0,
+            dataPoints: 500,
             icmin,
             icmax,
-            globalRatelaw: 'rl1',
           }}
           validationSchema={settingsSchema}
           onSubmit={async (values, actions) => {
-            await simulate({
-              time: values.time,
-              globalRatelaw: values.globalRatelaw,
-            })
+            try {
+              await simulate({
+                time: values.time,
+                dataPoints: values.dataPoints,
+              })
+            } catch (err) {
+              toast.error(err.message)
+            }
             actions.setSubmitting(false)
           }}
           render={({ handleSubmit, isSubmitting, errors, setFieldValue }) => (
@@ -53,6 +61,20 @@ function SettingsPanel() {
                     }`}
                     type="number"
                     name="time"
+                  />
+                </Col>
+              </FormGroup>
+              <FormGroup row>
+                <Label for="dataPoints" sm={5}>
+                  Data Points:
+                </Label>
+                <Col sm={7}>
+                  <Field
+                    className={`form-control ${
+                      errors.dataPoints ? 'is-invalid' : ''
+                    }`}
+                    type="number"
+                    name="dataPoints"
                   />
                 </Col>
               </FormGroup>
@@ -86,26 +108,6 @@ function SettingsPanel() {
                       setIcmax(Number(e.target.value))
                     }}
                   />
-                </Col>
-              </FormGroup>
-              <FormGroup row>
-                <Label for="globalRatelaw" sm={5}>
-                  Global Ratelaw:
-                </Label>
-                <Col sm={7}>
-                  <Field
-                    className=" form-control"
-                    component="select"
-                    name="globalRatelaw"
-                    onChange={e => {
-                      setFieldValue('globalRatelaw', e.target.value)
-                      setGlobalRatelaw(e.target.value)
-                    }}
-                  >
-                    <option value="rl1">Ratelaw 1</option>
-                    <option value="rl2">Ratelaw 2</option>
-                    <option value="rl3">Ratelaw 3</option>
-                  </Field>
                 </Col>
               </FormGroup>
               <Button
