@@ -149,6 +149,7 @@ class Graph extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
+    this.graph.draw()
     if (
       prevProps.reactions !== this.props.reactions ||
       prevProps.metabolites !== this.props.metabolites

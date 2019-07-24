@@ -5,14 +5,16 @@ import { format } from 'date-fns'
 import { toast } from 'react-toastify'
 import { ListGroup, ListGroupItem } from 'reactstrap'
 
-const API_URL = 'http://localhost:5000' || process.env.REACT_APP_API_URL
+const API_URL = process.env.REACT_APP_API_URL
+  ? process.env.REACT_APP_API_URL
+  : 'http://localhost:5000/'
 
 function SavedModels() {
   const [data, setData] = React.useState([])
   const getModel = useStoreActions(actions => actions.getModel)
 
   React.useEffect(() => {
-    axios({ method: 'get', url: `${API_URL}/api/model/get/all` })
+    axios({ method: 'get', url: `${API_URL}api/model/get/all` })
       .then(res => setData(res.data))
       .catch(err => console.error(err))
   }, [])

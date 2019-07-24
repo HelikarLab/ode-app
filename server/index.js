@@ -58,6 +58,9 @@ app.use((err, req, res, next) => {
     .json({ message: 'Uncaught Internal Server Error, Something Broke.' })
 })
 
+// Serving the react client
+app.use(express.static('public'))
+
 // Starting the server
 const port = process.env.SERVER_PORT || 5000
 app.listen(port, () => console.log('Server Running On Port: ', port))

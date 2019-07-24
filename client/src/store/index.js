@@ -2,7 +2,9 @@ import { createStore, action, thunk, computed } from 'easy-peasy'
 import axios from 'axios'
 import _ from 'lodash'
 
-const API_URL = 'http://localhost:5000' || process.env.REACT_APP_API_URL
+const API_URL = process.env.REACT_APP_API_URL
+  ? process.env.REACT_APP_API_URL
+  : 'http://localhost:5000/'
 
 const model = {
   /*
@@ -16,7 +18,7 @@ const model = {
     formData.append('file', file, file.name)
     return axios({
       method: 'post',
-      url: `${API_URL}/api/uploadSbml`,
+      url: `${API_URL}api/uploadSbml`,
       data: formData,
     })
       .then(res => {
@@ -30,7 +32,7 @@ const model = {
       .catch(err => ({ message: 'Something went wrong.', error: true }))
   }),
   getModel: thunk((actions, payload) => {
-    return axios({ method: 'get', url: `${API_URL}/api/model/get/${payload}` })
+    return axios({ method: 'get', url: `${API_URL}api/model/get/${payload}` })
       .then(res => {
         const data = res.data.jsonModel
         actions.modelTab.setCurrentModel(data)
@@ -86,7 +88,7 @@ const model = {
       const state = getStoreState()
       return axios({
         method: 'post',
-        url: `${API_URL}/api/model/add`,
+        url: `${API_URL}api/model/add`,
         data: state.modelTab.currentModel,
       })
         .then(res => ({ message: 'Successfully saved.', error: false }))
@@ -135,7 +137,7 @@ const model = {
       }
       return axios({
         method: 'post',
-        url: `${API_URL}/api/simulation`,
+        url: `${API_URL}api/simulation`,
         data: simulationPayload,
       })
         .then(res => {

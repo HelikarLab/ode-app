@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "Web Pipeline For Kinetic (ODE-Based) Models",
   "repository": "https://github.com/HelikarLab/ode-app.git",
-  "author": "Mohamed Shadab <shadabdragon@gmail.com>",
+  "author": "Mohamed Shadab <mohamedshadab78@gmail.com>",
   "license": "UNLICENSED",
   "private": true,
   "workspaces": [
@@ -13,9 +13,11 @@
   "scripts": {
     "client": "cd client&&yarn start",
     "server": "cd server&&yarn start",
-    "dev": "concurrently \"yarn client\" \"yarn server\""
+    "dev": "concurrently \"yarn client\" \"yarn server\"",
+    "docker-build": "node build.js && docker-compose build"
   },
   "devDependencies": {
-    "concurrently": "^4.1.0"
+    "concurrently": "^4.1.0",
+    "shelljs": "^0.8.3"
   }
 }
