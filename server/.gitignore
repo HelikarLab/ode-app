@@ -91,7 +91,7 @@ typings/
 .vscode
 
 # Upload directory
-uploads/n
+uploads/
 
 # React client
 public/

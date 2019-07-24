@@ -10,13 +10,13 @@ services:
     ports:
       - 5432:5432
   server:
-    build: server/
+    build: ./
     environment:
       DB_PASSWORD: postgres
       DB_USER: postgres
       DB_NAME: ode-app
       DB_HOST: db
-    command: bash -c "yarn sync-tables && yarn start"
+    command: bash -c "cd server && yarn sync-tables && yarn start"
     depends_on:
       - db
     ports:

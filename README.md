@@ -15,6 +15,18 @@ docker-compose up
 
 After this open up a browser and go to http://localhost:3000
 
+To run the containers in the background run:
+
+```bash
+docker-compose up -d
+```
+
+To stop the above containers run:
+
+```bash
+docker-compose stop
+```
+
 ## Repository Structure
 
 ```

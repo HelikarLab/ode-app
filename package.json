@@ -13,11 +13,15 @@
   "scripts": {
     "client": "cd client&&yarn start",
     "server": "cd server&&yarn start",
-    "dev": "concurrently \"yarn client\" \"yarn server\"",
-    "docker-build": "node build.js && docker-compose build"
+    "dev": "concurrently \"yarn client\" \"yarn server\""
   },
   "devDependencies": {
     "concurrently": "^4.1.0",
-    "shelljs": "^0.8.3"
+    "husky": "^3.0.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "cd client && yarn build && cd .. && git add ./client/build"
+    }
   }
 }
