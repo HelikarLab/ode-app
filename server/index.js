@@ -63,6 +63,8 @@ app.use(express.static('public'))
 
 // Starting the server
 const port = process.env.SERVER_PORT || 5000
-app.listen(port, () => console.log('Server Running On Port: ', port))
-
-module.exports = app
+const server = app.listen(port, () =>
+  console.log('Server Running On Port: ', port)
+)
+// Setting the server global timeout to 10 minutes (600000 msec)
+server.setTimeout(600000)
