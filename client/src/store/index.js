@@ -62,8 +62,9 @@ const model = {
         checked: false,
       })
     )
-    state.simulationTab.metabolitesFromModel =
-      state.modelTab.currentModel.metabolites
+    state.simulationTab.metabolitesFromModel = state.modelTab.currentModel.metabolites.map(
+      metabolite => ({ ...metabolite, initialConcentration: 0 })
+    )
   }),
   setModelMetadata: action((state, payload) => {
     state.modelMetadata = {
@@ -82,6 +83,7 @@ const model = {
     currentModel: {
       metabolites: [],
       reactions: [],
+      compartments: [],
     },
     //thunks
     saveModel: thunk((actions, payload, { getStoreState }) => {
@@ -146,7 +148,8 @@ const model = {
             ...item,
             checked: true,
           }))
-          return actions.updateResult(modifiedData)
+          actions.updateResult(modifiedData)
+          return { error: false, message: 'Simulation successfull.' }
         })
         .catch(err => ({ message: 'Something went wrong.', error: true }))
     }),

@@ -1,6 +1,8 @@
 import sys
 import json
 import libsbml
+from pydash.collections import includes
+from pydash.arrays import concat
 
 path = "uploads/" + sys.argv[1]
 reader = libsbml.SBMLReader()
@@ -9,6 +11,31 @@ model = document.getModel()
 
 listOfSpecies = model.getListOfSpecies()
 listOfReactions = model.getListOfReactions()
+listOfCompartments = model.getListOfCompartments()
+
+
+def generateCompartments(reaction, metabolites):
+    compartments = []
+    allReactionMetabolites = concat(reaction["reactants"], reaction["products"])
+    for reactionMetabolite in allReactionMetabolites:
+        for metabolite in metabolites:
+            if reactionMetabolite["id"] == metabolite["id"]:
+                if not includes(compartments, metabolite["compartment"]):
+                    compartments.append(metabolite["compartment"])
+    return compartments
+
+
+compartments = []
+
+for compartment in listOfCompartments:
+    compartments.append(
+        {
+            "id": compartment.getId(),
+            "name": compartment.getName(),
+            "spatialDimensions": compartment.getSpatialDimensions(),
+            "size": compartment.getSize(),
+        }
+    )
 
 metabolites = []
 
@@ -17,8 +44,8 @@ for specie in listOfSpecies:
         {
             "id": specie.getId(),
             "name": specie.getName(),
-            "charge": specie.getCharge(),
             "initialConcentration": specie.getInitialConcentration(),
+            "compartment": specie.getCompartment(),
         }
     )
 
@@ -74,6 +101,7 @@ for reaction in listOfReactions:
             )
         i += 1
 
+    tempObject["compartments"] = generateCompartments(tempObject, metabolites)
     tempObject["reactionString"] = reactionString
     reactions.append(tempObject)
 
@@ -84,9 +112,9 @@ data = {
     "sbmlVersion": model.getVersion(),
     "metabolites": metabolites,
     "reactions": reactions,
+    "compartments": compartments,
 }
 
 print(json.dumps(data))
 
 sys.stdout.flush()
-

@@ -39,10 +39,12 @@ function SettingsPanel() {
           validationSchema={settingsSchema}
           onSubmit={async (values, actions) => {
             try {
-              await simulate({
+              const data = await simulate({
                 time: values.time,
                 dataPoints: values.dataPoints,
               })
+              if (data.error) toast.error(data.message)
+              else toast.success(data.message)
             } catch (err) {
               toast.error(err.message)
             }

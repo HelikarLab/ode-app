@@ -14,15 +14,15 @@ module.exports = db.define(
       allowNull: false,
       field: 'sbml_id',
     },
-    charge: {
-      type: Sequelize.BIGINT,
-      allowNull: false,
-      field: 'charge',
-    },
     initialConcentration: {
       type: Sequelize.STRING,
       allowNull: false,
       field: 'initial_concentration',
+    },
+    compartment: {
+      type: Sequelize.STRING,
+      allowNull: false,
+      field: 'compartment',
     },
     modelId: {
       type: Sequelize.BIGINT,

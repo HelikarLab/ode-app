@@ -1,6 +1,13 @@
 import React from 'react'
 import ccNetViz from 'ccnetviz'
-import { UncontrolledTooltip } from 'reactstrap'
+import _ from 'lodash'
+import {
+  UncontrolledTooltip,
+  Dropdown,
+  DropdownMenu,
+  DropdownItem,
+  DropdownToggle,
+} from 'reactstrap'
 import { Icon } from 'react-icons-kit'
 import { infoCircle } from 'react-icons-kit/fa/infoCircle'
 import GraphLegend from './GraphLegend'
@@ -10,21 +17,53 @@ class Graph extends React.Component {
   state = {
     nodes: [],
     edges: [],
+    compartments: [],
+    currentCompartment: 'all',
+    dropdown: false,
+  }
+
+  toggle = () => {
+    this.setState({ dropdown: !this.state.dropdown })
+  }
+
+  selectCompartment = compartment => {
+    this.setState({ currentCompartment: compartment })
   }
 
   gen = () => {
-    const { reactions, metabolites } = this.props
+    const { reactions, metabolites, compartments } = this.props
+    const { currentCompartment } = this.state
+    this.setState({ compartments })
     try {
-      let reactionNodes = this.generateReactionNodes(reactions)
-      let nodes = []
-      for (let i = 0; i < metabolites.length; i++) {
-        nodes.push({ label: metabolites[i].id })
+      if (currentCompartment === 'all') {
+        let reactionNodes = this.generateReactionNodes(reactions)
+        let metabolitesNodes = metabolites.reduce((result, metabolite) => {
+          result.push({ label: metabolite.id })
+          return result
+        }, [])
+        let nodes = _.concat(reactionNodes, metabolitesNodes)
+        let edges = this.generateReactionEdges(reactions, nodes)
+        this.setState({ nodes, edges })
+      } else {
+        let compartmentReactions = reactions.filter(reaction => {
+          if (
+            _.includes(reaction.compartments, currentCompartment) &&
+            reaction.compartments.length === 1
+          ) {
+            return true
+          } else return false
+        })
+        let reactionNodes = this.generateReactionNodes(compartmentReactions)
+        let metaboliteNodes = metabolites.reduce((result, metabolite) => {
+          if (metabolite.compartment === currentCompartment) {
+            result.push({ label: metabolite.id })
+          }
+          return result
+        }, [])
+        let nodes = _.concat(reactionNodes, metaboliteNodes)
+        let edges = this.generateReactionEdges(compartmentReactions, nodes)
+        this.setState({ nodes, edges })
       }
-      reactionNodes.map(node => {
-        return nodes.push(node)
-      })
-      let edges = this.generateReactionEdges(reactions, nodes)
-      this.setState({ nodes, edges })
     } catch {}
   }
 
@@ -88,6 +127,7 @@ class Graph extends React.Component {
   }
 
   componentDidMount() {
+    this.setState({ compartments: this.props.compartments })
     this.graph = new ccNetViz(document.getElementById('graph'), {
       styles: {
         background: {
@@ -144,21 +184,32 @@ class Graph extends React.Component {
     })
 
     this.gen()
-    this.graph.set(this.state.nodes, this.state.edges, 'force')
-    this.graph.draw()
+    this.graph.set(this.state.nodes, this.state.edges, 'force').then(() => {
+      this.graph.draw()
+    })
   }
 
   componentDidUpdate(prevProps, prevState) {
-    this.graph.draw()
     if (
       prevProps.reactions !== this.props.reactions ||
       prevProps.metabolites !== this.props.metabolites
     ) {
+      this.setState({ currentCompartment: 'all' })
+    }
+    if (
+      prevProps.reactions !== this.props.reactions ||
+      prevProps.metabolites !== this.props.metabolites ||
+      prevState.currentCompartment !== this.state.currentCompartment
+    ) {
       this.gen()
     }
-    if (prevState !== this.state) {
-      this.graph.set(this.state.nodes, this.state.edges, 'force')
-      this.graph.draw()
+    if (
+      prevState.nodes !== this.state.nodes ||
+      prevState.edges !== this.state.edges
+    ) {
+      this.graph.set(this.state.nodes, this.state.edges, 'force').then(() => {
+        this.graph.draw()
+      })
     }
   }
 
@@ -167,6 +218,7 @@ class Graph extends React.Component {
   }
 
   render() {
+    const { compartments } = this.state
     return (
       <div>
         <h4 className="text-muted">
@@ -176,6 +228,29 @@ class Graph extends React.Component {
             <GraphLegend />
           </UncontrolledTooltip>
         </h4>
+        <Dropdown isOpen={this.state.dropdown} toggle={this.toggle}>
+          <DropdownToggle color="success">Compartments</DropdownToggle>
+          <DropdownMenu>
+            <DropdownItem
+              onClick={() => {
+                this.selectCompartment('all')
+              }}
+            >
+              All
+            </DropdownItem>
+            {compartments.map(compartment => (
+              <DropdownItem
+                key={compartment.id}
+                onClick={() => {
+                  this.selectCompartment(compartment.id)
+                }}
+              >
+                {compartment.name}
+              </DropdownItem>
+            ))}
+          </DropdownMenu>
+        </Dropdown>
+        <br />
         <canvas id="graph" width="600" height="550" className="graph-canvas" />
       </div>
     )

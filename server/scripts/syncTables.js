@@ -7,6 +7,7 @@ const db = require('../config/database')
 const Metabolite = require('../models/metabolite')
 const Model = require('../models/model')
 const Reaction = require('../models/reaction')
+const Compartment = require('../models/compartment')
 
 if (process.argv[2] === '-f') {
   console.warn('Force option has been used.')

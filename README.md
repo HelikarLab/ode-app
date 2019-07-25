@@ -15,7 +15,7 @@ docker-compose up
 
 After this open up a browser and go to http://localhost:3000
 
-To run the containers in the background run:
+To run the containers in the background, use:
 
 ```bash
 docker-compose up -d
@@ -31,15 +31,18 @@ docker-compose stop
 
 ```
  |- client              -> Contains the code of the react client
+    |- build            -> Build of the react client
     |- src              -> Source files of the react client
         |- components   -> React components
-        |- store        -> global store
+        |- store        -> Global store
+        |- assets       -> Static assets
  |- server              -> Contains the code of the node server
     |- routes           -> API routes
     |- controllers      -> API controllers
     |- models           -> Sequelize(SQL) models
     |- config           -> Configuration files
     |- python           -> Python scripts to parse SBML files and simulate ODE models
+        |- lib          -> Custom stimator library wheel package
     |- scripts          -> Utility scripts
  |- docker-compose.yml  -> Docker Compose files that runs the application using docker
  |- package.json        -> The main package.json governing the yarn workspaces

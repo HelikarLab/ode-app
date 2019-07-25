@@ -1,6 +1,7 @@
 const Model = require('../models/model')
 const Metabolite = require('../models/metabolite')
 const Reaction = require('../models/reaction')
+const Compartment = require('../models/compartment')
 
 exports.addModel = function(req, res) {
   const model = req.body
@@ -16,8 +17,8 @@ exports.addModel = function(req, res) {
         Metabolite.create({
           name: metabolite.name,
           sbmlId: metabolite.id,
-          charge: metabolite.charge,
-          initialConcentration: metabolite.initialConcentration,
+          initialConcentration: String(metabolite.initialConcentration),
+          compartment: metabolite.compartment,
           modelId: data.id,
         }).catch(error => {
           res.status(500).send('Something went wrong.')
@@ -30,17 +31,30 @@ exports.addModel = function(req, res) {
           reversible: reaction.reversible,
           reactants: reaction.reactants,
           products: reaction.products,
+          compartments: reaction.compartments,
+          modelId: data.id,
+        }).catch(error => {
+          res.status(500).send('Something went wrong.')
+        })
+      })
+      model.compartments.map(compartment => {
+        Compartment.create({
+          name: compartment.name,
+          sbmlId: compartment.id,
+          spatialDimensions: compartment.spatialDimensions,
+          size: compartment.size,
           modelId: data.id,
         }).catch(error => {
           res.status(500).send('Something went wrong.')
         })
       })
     })
+    .then(() => {
+      res.status(200).send('Successfully saved model.')
+    })
     .catch(error => {
       res.status(500).send('Something went wrong.')
     })
-
-  res.status(200).send('Successfully saved model.')
 }
 
 exports.getModel = function(req, res) {

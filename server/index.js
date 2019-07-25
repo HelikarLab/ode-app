@@ -23,7 +23,7 @@ app.use(helmet())
 app.use(morgan('tiny'))
 
 // JSON Payload Parsers
-app.use(express.json())
+app.use(express.json({ limit: '5mb' }))
 
 // Establishing and testing database connection
 const connectDb = async (retries = 5) => {

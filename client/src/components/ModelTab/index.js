@@ -12,7 +12,7 @@ function ModelTab() {
   const [info, setInfo] = React.useState({})
   const [modal, setModal] = React.useState(false)
 
-  const { reactions, metabolites, name } = useStoreState(
+  const { reactions, metabolites, name, compartments } = useStoreState(
     state => state.modelTab.currentModel
   )
 
@@ -56,7 +56,11 @@ function ModelTab() {
       </Modal>
       <Row style={{ padding: 20 }}>
         <Col md="5">
-          <Graph reactions={reactions} metabolites={metabolites} />
+          <Graph
+            reactions={reactions}
+            metabolites={metabolites}
+            compartments={compartments}
+          />
         </Col>
         <Col md="7">
           <Row>
