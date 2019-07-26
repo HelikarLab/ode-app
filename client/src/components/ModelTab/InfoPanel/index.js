@@ -11,8 +11,8 @@ function InfoPanel(props) {
           <dt className="col-sm-5">Metabolite Name</dt>
           <dd className="col-sm-7">{props.data.name}</dd>
 
-          <dt className="col-sm-5">Charge</dt>
-          <dd className="col-sm-7">{props.data.charge}</dd>
+          <dt className="col-sm-5">Compartment</dt>
+          <dd className="col-sm-7">{props.data.compartment}</dd>
 
           <dt className="col-sm-5">Initial Concentration</dt>
           <dd className="col-sm-7">{props.data.initialConcentration}</dd>

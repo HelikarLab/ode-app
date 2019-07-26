@@ -199,6 +199,11 @@ const model = {
           metabolite.initialConcentration = payload.initialConcentration
         }
       })
+      state.metabolitesFromModel.forEach(metabolite => {
+        if (metabolite.id === payload.id) {
+          metabolite.initialConcentration = payload.initialConcentration
+        }
+      })
     }),
     // Updates the metabolites list
     updateMetabolites: action((state, payload) => {
