@@ -29,6 +29,11 @@ module.exports = db.define(
       allowNull: false,
       field: 'products',
     },
+    modifiers: {
+      type: Sequelize.ARRAY(Sequelize.STRING),
+      allowNull: false,
+      field: 'modifiers',
+    },
     compartments: {
       type: Sequelize.ARRAY(Sequelize.STRING),
       allowNull: true,

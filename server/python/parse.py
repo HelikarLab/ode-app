@@ -58,10 +58,14 @@ for reaction in listOfReactions:
         "reversible": reaction.getReversible(),
         "reactants": [],
         "products": [],
+        "modifiers": [],
         "reactionString": "",
     }
+    listOfModifiers = reaction.getListOfModifiers()
     listOfProducts = reaction.getListOfProducts()
     listOfReactants = reaction.getListOfReactants()
+    for modifier in listOfModifiers:
+        tempObject["modifiers"].append(modifier.getSpecies())
     for reactant in listOfReactants:
         tempObject["reactants"].append(
             {"id": reactant.getSpecies(), "stoichiometry": reactant.getStoichiometry()}

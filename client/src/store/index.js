@@ -169,11 +169,18 @@ const model = {
     setRatelaw: action((state, payload) => {
       state.reactions = state.reactions.map(reaction => {
         if (payload.id === reaction.id) {
-          return {
-            ...reaction,
-            ratelaw: payload.ratelaw,
-            parameters: payload.parameters,
-          }
+          if (payload.ratelaw === 'custom-rate') {
+            return {
+              ...reaction,
+              ratelaw: payload.ratelaw,
+              rate: payload.rate,
+            }
+          } else
+            return {
+              ...reaction,
+              ratelaw: payload.ratelaw,
+              parameters: payload.parameters,
+            }
         } else return reaction
       })
     }),

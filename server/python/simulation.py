@@ -13,6 +13,114 @@ def dec2(num):
     return "{0:.2f}".format(num)
 
 
+# Custom Rate
+def customRate(reaction, reactionStrings):
+    global reactionNo
+    temp = "r" + str(reactionNo) + ": "
+    j = 0
+    for reactant in reaction["reactants"]:
+        if j == len(reaction["reactants"]) - 1:
+            temp = temp + str(reactant["stoichiometry"]) + str(reactant["id"])
+        else:
+            temp = temp + str(reactant["stoichiometry"]) + str(reactant["id"]) + " + "
+        j += 1
+    temp = temp + " -> "
+    k = 0
+    for product in reaction["products"]:
+        if k == len(reaction["products"]) - 1:
+            temp = temp + str(product["stoichiometry"]) + str(product["id"])
+        else:
+            temp = temp + str(product["stoichiometry"]) + str(product["id"]) + " + "
+        k += 1
+    temp = temp + ", rate = " + reaction["rate"]
+    reactionStrings.append(temp)
+    reactionNo += 1
+
+
+# Michaelis-menten Ratelaw
+def michaelisMenten(reaction, reactionsStrings, rateStrings):
+    global reactionNo
+    if reaction["reversible"]:
+        rateStrings.append(
+            "k" + str(reactionNo) + " = " + str(reaction["parameters"][0])
+        )
+        rateStrings.append(
+            "k" + str(reactionNo + 1) + " = " + str(reaction["parameters"][1])
+        )
+        rateStrings.append(
+            "k" + str(reactionNo + 2) + " = " + str(reaction["parameters"][2])
+        )
+        rateStrings.append(
+            "k" + str(reactionNo + 3) + " = " + str(reaction["parameters"][3])
+        )
+        tempReaction = (
+            "r"
+            + str(reactionNo)
+            + ": "
+            + str(reaction["reactants"][0]["id"])
+            + " -> "
+            + str(reaction["products"][0]["id"])
+        )
+        tempRate = (
+            "(k"
+            + str(reactionNo)
+            + "*"
+            + str(reaction["reactants"][0]["id"])
+            + " / k"
+            + str(reactionNo + 2)
+            + " - k"
+            + str(reactionNo + 1)
+            + "*"
+            + str(reaction["products"][0]["id"])
+            + " / k"
+            + str(reactionNo + 3)
+            + ")"
+            + " / "
+            + "(1 + ("
+            + str(reaction["reactants"][0]["id"])
+            + " / "
+            + "k"
+            + str(reactionNo + 2)
+            + ") + ("
+            + str(reaction["products"][0]["id"])
+            + " / "
+            + "k"
+            + str(reactionNo + 3)
+            + "))"
+        )
+        reactionStrings.append(tempReaction + ", rate = " + tempRate)
+        reactionNo += 4
+    else:
+        rateStrings.append(
+            "k" + str(reactionNo) + " = " + str(reaction["parameters"][0])
+        )
+        rateStrings.append(
+            "k" + str(reactionNo + 1) + " = " + str(reaction["parameters"][1])
+        )
+        tempReaction = (
+            "r"
+            + str(reactionNo)
+            + ": "
+            + str(reaction["reactants"][0]["id"])
+            + " -> "
+            + str(reaction["products"][0]["id"])
+        )
+        tempRate = (
+            "(k"
+            + str(reactionNo)
+            + " * "
+            + str(reaction["reactants"][0]["id"])
+            + ") / "
+            + "(k"
+            + str(reactionNo + 1)
+            + " + "
+            + str(reaction["reactants"][0]["id"])
+            + ")"
+        )
+        reactionStrings.append(tempReaction + ", rate = " + tempRate)
+        reactionNo += 2
+
+
 # Mass Action Ratelaw
 def massAction(reaction, reactionStrings, rateStrings):
     global reactionNo
@@ -71,7 +179,6 @@ def massAction(reaction, reactionStrings, rateStrings):
         temp = temp + ", rate = " + str(rate)
         reactionStrings.append(temp)
         reactionNo += 1
-        # return reactionNo
     else:
         rateStrings.append(
             "k" + str(reactionNo) + " = " + str(reaction["parameters"][0])
@@ -100,7 +207,6 @@ def massAction(reaction, reactionStrings, rateStrings):
         temp = temp + ", rate = " + str(rate)
         reactionStrings.append(temp)
         reactionNo += 1
-        # return reactionNo
 
 
 data = json.loads(sys.argv[1])
@@ -116,6 +222,10 @@ for i in range(len(reactions)):
     if reactions[i]["checked"]:
         if reactions[i]["ratelaw"] == "mass-action":
             massAction(reactions[i], reactionStrings, rateStrings)
+        elif reactions[i]["ratelaw"] == "michaelis-menten":
+            michaelisMenten(reactions[i], reactionStrings, rateStrings)
+        elif reactions[i]["ratelaw"] == "custom-rate":
+            customRate(reactions[i], reactionStrings)
 
 init = """init: ("""
 
@@ -163,6 +273,8 @@ model_string += (
     + """
 """
 )
+
+# print(model_string)
 
 m = stimator.read_model(model_string)
 
