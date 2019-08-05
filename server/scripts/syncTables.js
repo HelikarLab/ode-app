@@ -3,7 +3,7 @@
 ! with names defined in the models will be dropped from the db
 */
 
-const db = require('../config/database')
+import db from '../config/database'
 const Metabolite = require('../models/metabolite')
 const Model = require('../models/model')
 const Reaction = require('../models/reaction')

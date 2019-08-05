@@ -1,9 +1,10 @@
-const express = require('express')
-const modelController = require('../controllers/model')
+import express from 'express'
+import { addModel, getAllModels, getModel } from '../controllers/model'
+
 const router = express.Router()
 
-router.post('/add', modelController.addModel)
-router.get('/get/all', modelController.getAllModels)
-router.get('/get/:id', modelController.getModel)
+router.post('/add', addModel)
+router.get('/get/all', getAllModels)
+router.get('/get/:id', getModel)
 
-module.exports = router
+export default router

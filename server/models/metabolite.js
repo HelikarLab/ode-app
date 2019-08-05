@@ -1,7 +1,7 @@
-const Sequelize = require('sequelize')
-const db = require('../config/database')
+import Sequelize from 'sequelize'
+import db from '../config/database'
 
-module.exports = db.define(
+const Metabolite = db.define(
   'metabolite',
   {
     name: {
@@ -38,3 +38,5 @@ module.exports = db.define(
     tableName: 'metabolites',
   }
 )
+
+export default Metabolite

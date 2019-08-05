@@ -1,9 +1,10 @@
-const Model = require('../models/model')
-const Metabolite = require('../models/metabolite')
-const Reaction = require('../models/reaction')
-const Compartment = require('../models/compartment')
+// const Model = require('../models/model')
+import Model from '../models/model'
+import Metabolite from '../models/metabolite'
+import Reaction from '../models/reaction'
+import Compartment from '../models/compartment'
 
-exports.addModel = function(req, res) {
+export function addModel(res, req) {
   const model = req.body
   Model.create({
     name: model.name,
@@ -57,7 +58,7 @@ exports.addModel = function(req, res) {
     })
 }
 
-exports.getModel = function(req, res) {
+export function getModel(req, res) {
   Model.findByPk(req.params.id)
     .then(model => {
       res.status(200).send(model)
@@ -65,7 +66,7 @@ exports.getModel = function(req, res) {
     .catch(err => res.status(500).send('Something went wrong.'))
 }
 
-exports.getAllModels = function(req, res) {
+export function getAllModels(req, res) {
   Model.findAll({ attributes: ['id', 'name', 'createdAt'] })
     .then(models => res.status(200).send(models))
     .catch(err => {

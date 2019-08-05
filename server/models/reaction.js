@@ -1,7 +1,6 @@
-const Sequelize = require('sequelize')
-const db = require('../config/database')
-
-module.exports = db.define(
+import Sequelize from 'sequelize'
+import db from '../config/database'
+const Reaction = db.define(
   'reaction',
   {
     name: {
@@ -53,3 +52,5 @@ module.exports = db.define(
     tableName: 'reactions',
   }
 )
+
+export default Reaction

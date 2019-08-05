@@ -1,9 +1,12 @@
 // Dependencies
-const express = require('express')
-const morgan = require('morgan')
-const helmet = require('helmet')
-const cors = require('cors')
-const db = require('./config/database')
+// const express = require('express')
+import express from 'express'
+import morgan from 'morgan'
+import helmet from 'helmet'
+import cors from 'cors'
+import db from './config/database'
+
+// Adds support for .env environment files
 require('dotenv').config()
 
 const app = express()
@@ -12,9 +15,9 @@ const app = express()
 app.use(cors())
 
 // API Route Imports
-const uploadSbmlApi = require('./routes/uploadSbml')
-const modelApi = require('./routes/model')
-const simulationApi = require('./routes/simulation')
+import uploadSbmlApi from './routes/uploadSbml'
+import modelApi from './routes/model'
+import simulationApi from './routes/simulation'
 
 // Sanitize Data
 app.use(helmet())

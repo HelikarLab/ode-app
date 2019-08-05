@@ -93,10 +93,18 @@ Follow the instructions below to get the app up and running in development:
 
   ```bash
   # In /server
-  yarn start
+  yarn start:dev
   ```
 
-- To sync tables in the database, use:
+- To run the server in production mode, use:
+
+  ```bash
+  # In /server
+  yarn build # To build the server
+  yarn start:prod # To run the build
+  ```
+
+* To sync tables in the database, use:
 
   ```bash
   # In /server
@@ -110,7 +118,7 @@ Follow the instructions below to get the app up and running in development:
   yarn sync-tables -f
   ```
 
-- To run the react client individually, use:
+* To run the react client individually, use:
 
   ```bash
   yarn client
@@ -123,21 +131,21 @@ Follow the instructions below to get the app up and running in development:
   yarn start
   ```
 
-- To run tests on the react client, use:
+* To run tests on the react client, use:
 
   ```bash
   # In /client
   yarn test
   ```
 
-- To build a production react client, use:
+* To build a production react client, use:
 
   ```bash
   # In /client
   yarn build
   ```
 
-- To eject the configuartion and scripts from the react-scripts package, use:
+* To eject the configuartion and scripts from the react-scripts package, use:
 
   ```bash
   # In /client

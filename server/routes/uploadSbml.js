@@ -1,6 +1,7 @@
-const express = require('express')
-const formidableMiddleware = require('express-formidable')
-const uploadSbmlController = require('../controllers/uploadSbml')
+import express from 'express'
+import formidableMiddleware from 'express-formidable'
+import uploadSbmlController from '../controllers/uploadSbml'
+
 const router = express.Router()
 
 // Formidable middleware for uploading files
@@ -8,4 +9,4 @@ router.use(formidableMiddleware({ uploadDir: './' }))
 
 router.post('/', uploadSbmlController)
 
-module.exports = router
+export default router

@@ -16,7 +16,7 @@ services:
       DB_USER: postgres
       DB_NAME: ode-app
       DB_HOST: db
-    command: bash -c "cd server && yarn sync-tables && yarn start"
+    command: bash -c "cd server && yarn sync-tables && yarn start:prod"
     depends_on:
       - db
     ports:

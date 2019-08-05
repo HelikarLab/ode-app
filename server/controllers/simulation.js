@@ -1,6 +1,6 @@
-const { PythonShell } = require('python-shell')
+import { PythonShell } from 'python-shell'
 
-exports.simulate = function(req, res) {
+export function simulate(req, res) {
   let options = {
     args: [JSON.stringify(req.body)],
     scriptPath: './python/',

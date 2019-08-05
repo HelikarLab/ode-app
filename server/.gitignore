@@ -95,3 +95,6 @@ uploads/
 
 # React client
 public/
+
+# Build
+build/

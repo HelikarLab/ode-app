@@ -1,7 +1,7 @@
-const { PythonShell } = require('python-shell')
-const fs = require('fs')
+import { PythonShell } from 'python-shell'
+import fs from 'fs'
 
-module.exports = async function(req, res) {
+const uploadSbmlController = function(req, res) {
   const file = req.files.file
 
   if (!fs.existsSync('./uploads')) {
@@ -25,3 +25,5 @@ module.exports = async function(req, res) {
     }
   })
 }
+
+export default uploadSbmlController

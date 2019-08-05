@@ -1,7 +1,7 @@
-const Sequelize = require('sequelize')
-const db = require('../config/database')
+import db from '../config/database'
+import Sequelize from 'sequelize'
 
-module.exports = db.define(
+const Compartment = db.define(
   'compartment',
   {
     name: {
@@ -38,3 +38,5 @@ module.exports = db.define(
     tableName: 'compartments',
   }
 )
+
+export default Compartment
