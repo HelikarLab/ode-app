@@ -4,7 +4,7 @@ import Metabolite from '../models/metabolite'
 import Reaction from '../models/reaction'
 import Compartment from '../models/compartment'
 
-export function addModel(res, req) {
+export function addModel(req, res) {
   const model = req.body
   Model.create({
     name: model.name,
