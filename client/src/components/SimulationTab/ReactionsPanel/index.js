@@ -100,6 +100,16 @@ function ReactionsPanel() {
                             Michaelis Menten
                           </option>
                         )}
+                        {reaction.modifiers.length === 0 ||
+                        (reaction.reactants.length > 1 ||
+                          reaction.products.length > 1) ||
+                        reaction.reversible ? (
+                          <React.Fragment />
+                        ) : (
+                          <option value="hill-equation">
+                            Hill Kinetics Equation
+                          </option>
+                        )}
                         <option value="custom-rate">Custom Rate</option>
                       </Input>
                     </th>

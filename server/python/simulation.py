@@ -4,13 +4,44 @@ import json
 import random
 import numpy as np
 
-
 # Global variables
 reactionNo = 0
 
 # Utitlity function to convert a number to decimal with 2 points precision
 def dec2(num):
     return "{0:.2f}".format(num)
+
+
+# Hill Kinetics
+def hillEquation(reaction, reactionStrings):
+    global reactionNo
+    tempReaction = (
+        "r"
+        + str(reactionNo)
+        + ": "
+        + str(reaction["reactants"][0]["id"])
+        + " -> "
+        + str(reaction["products"][0]["id"])
+    )
+    tempRate = (
+        "("
+        + str(reaction["parameters"][0])
+        + " * "
+        + str(reaction["reactants"][0]["id"])
+        + "**"
+        + str(reaction["parameters"][2])
+        + ") / ("
+        + str(reaction["parameters"][1])
+        + "**"
+        + str(reaction["parameters"][2])
+        + " + "
+        + str(reaction["reactants"][0]["id"])
+        + "**"
+        + str(reaction["parameters"][2])
+        + ")"
+    )
+    reactionStrings.append(tempReaction + ", rate = " + tempRate)
+    reactionNo += 1
 
 
 # Custom Rate
@@ -226,6 +257,8 @@ for i in range(len(reactions)):
             michaelisMenten(reactions[i], reactionStrings, rateStrings)
         elif reactions[i]["ratelaw"] == "custom-rate":
             customRate(reactions[i], reactionStrings)
+        elif reactions[i]["ratelaw"] == "hill-equation":
+            hillEquation(reactions[i], reactionStrings)
 
 init = """init: ("""
 
@@ -273,8 +306,6 @@ model_string += (
     + """
 """
 )
-
-# print(model_string)
 
 m = stimator.read_model(model_string)
 

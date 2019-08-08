@@ -31,7 +31,7 @@ function SettingsPanel() {
         </h4>
         <Formik
           initialValues={{
-            time: 0,
+            time: 10,
             dataPoints: 500,
             icmin,
             icmax,

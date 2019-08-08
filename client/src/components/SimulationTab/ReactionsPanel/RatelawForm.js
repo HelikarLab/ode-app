@@ -53,6 +53,20 @@ function RatelawForm({ ratelaw, reaction, closeModal }) {
         )
       }
       break
+    case 'hill-equation':
+      element = (
+        <React.Fragment>
+          <Label>Vmax:</Label>
+          <Field className="form-control" name="k1" type="number" />
+          <Label>
+            K<sub>0.5</sub>:
+          </Label>
+          <Field className="form-control" name="k2" type="number" />
+          <Label>Hill coefficient:</Label>
+          <Field className="form-control" name="k3" type="number" />
+        </React.Fragment>
+      )
+      break
     case 'custom-rate':
       element = (
         <React.Fragment>
