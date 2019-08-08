@@ -14,7 +14,11 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
+<<<<<<< HEAD
   "/precache-manifest.b07066e027c3006e69a8c53f4c003841.js"
+=======
+  "/precache-manifest.aa2159c43ba086d7543da0be425a8103.js"
+>>>>>>> resizable panel setup
 );
 
 self.addEventListener('message', (event) => {
