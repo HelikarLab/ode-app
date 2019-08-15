@@ -1,6 +1,7 @@
 import React from 'react'
 import ccNetViz from 'ccnetviz'
 import _ from 'lodash'
+import { WidthProvider } from 'react-grid-layout'
 import {
   UncontrolledTooltip,
   Dropdown,
@@ -20,6 +21,7 @@ class Graph extends React.Component {
     compartments: [],
     currentCompartment: 'all',
     dropdown: false,
+    canvasWidth: 0,
   }
 
   toggle = () => {
@@ -211,6 +213,9 @@ class Graph extends React.Component {
         this.graph.draw()
       })
     }
+    if (prevProps.width !== this.props.width) {
+      this.setState({ canvasWidth: this.props.width })
+    }
   }
 
   componentWillUnmount() {
@@ -218,7 +223,7 @@ class Graph extends React.Component {
   }
 
   render() {
-    const { compartments } = this.state
+    const { compartments, canvasWidth } = this.state
     return (
       <div>
         <h4 className="text-muted">
@@ -251,10 +256,15 @@ class Graph extends React.Component {
           </DropdownMenu>
         </Dropdown>
         <br />
-        <canvas id="graph" width="600" height="550" className="graph-canvas" />
+        <canvas
+          id="graph"
+          width={canvasWidth}
+          height="550"
+          className="nonDraggableArea"
+        />
       </div>
     )
   }
 }
 
-export default Graph
+export default WidthProvider(Graph)

@@ -6,7 +6,11 @@ function ReactionsList(props) {
     return (
       <div>
         <h4 className="text-muted">Reactions</h4>
-        <ListGroup style={{ height: '250px', overflowY: 'scroll' }}>
+        <ListGroup
+          flush
+          style={{ height: '250px', overflowY: 'auto' }}
+          className="nonDraggableArea"
+        >
           {props.reactions.map(reaction => (
             <ListGroupItem
               key={reaction.id}

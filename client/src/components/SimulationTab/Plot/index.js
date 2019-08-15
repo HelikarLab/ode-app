@@ -1,8 +1,9 @@
 import React from 'react'
 import Chart from 'react-apexcharts'
 import { useStoreState } from 'easy-peasy'
+import { WidthProvider } from 'react-grid-layout'
 
-function Plot() {
+function Plot(props) {
   const data = useStoreState(state => state.simulationTab)
   const modelMetadata = useStoreState(state => state.modelMetadata)
 
@@ -28,6 +29,12 @@ function Plot() {
     exportAnchorElement.setAttribute('download', 'model.json')
   })
 
+  let width
+  React.useEffect(() => {
+    // eslint-disable-next-line
+    width = (props.width * 35) / 100
+  }, [props.width])
+
   if (data.graphData) {
     return (
       <div>
@@ -43,7 +50,7 @@ function Plot() {
           }}
           series={data.graphData}
           type="line"
-          width={550}
+          width={width}
           height={600}
         />
         <a
@@ -59,4 +66,4 @@ function Plot() {
   } else return <div />
 }
 
-export default Plot
+export default WidthProvider(Plot)

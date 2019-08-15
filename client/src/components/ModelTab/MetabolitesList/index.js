@@ -6,7 +6,7 @@ function MetabolitesList(props) {
     return (
       <div>
         <h4 className="text-muted">Metabolites</h4>
-        <ListGroup style={{ height: '250px', overflowY: 'scroll' }}>
+        <ListGroup flush style={{ height: '250px', overflowY: 'auto' }}>
           {props.metabolites.map(metabolite => (
             <ListGroupItem
               key={metabolite.id}

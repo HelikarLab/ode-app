@@ -1,11 +1,14 @@
 import React from 'react'
 import { useStoreState, useStoreActions } from 'easy-peasy'
-import { Row, Col, Button, Modal, ModalHeader, ModalBody } from 'reactstrap'
+import { Button, Modal, ModalHeader, ModalBody } from 'reactstrap'
 import { toast } from 'react-toastify'
+import { Responsive, WidthProvider } from 'react-grid-layout'
 import Graph from './Graph'
 import ReactionsList from './ReactionsList'
 import MetabolitesList from './MetabolitesList'
 import InfoPanel from './InfoPanel'
+
+const ResponsiveGridLayout = WidthProvider(Responsive)
 
 function ModelTab() {
   const [type, setType] = React.useState('')
@@ -15,6 +18,15 @@ function ModelTab() {
   const { reactions, metabolites, name, compartments } = useStoreState(
     state => state.modelTab.currentModel
   )
+
+  let layouts = {
+    lg: [
+      { i: 'graph', x: 0, y: 0, w: 6, h: 14, minW: 5, minH: 14, static: true },
+      { i: 'reactions', x: 6, y: 0, w: 3, h: 7, minW: 3, minH: 7 },
+      { i: 'metabolites', x: 9, y: 0, w: 3, h: 7, minW: 4, minH: 7 },
+      { i: 'info', x: 6, y: 7, w: 6, h: 5, minW: 7, minH: 7 },
+    ],
+  }
 
   const saveModel = useStoreActions(actions => actions.modelTab.saveModel)
 
@@ -54,52 +66,50 @@ function ModelTab() {
           </Button>
         </ModalBody>
       </Modal>
-      <Row style={{ padding: 20 }}>
-        <Col md="5">
+      <ResponsiveGridLayout
+        className="layout"
+        layouts={layouts}
+        breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
+        cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
+        rowHeight={40}
+        items={4}
+        onLayoutChange={() => {}}
+        draggableCancel=".nonDraggableArea"
+      >
+        <div key="graph">
           <Graph
             reactions={reactions}
             metabolites={metabolites}
             compartments={compartments}
           />
-        </Col>
-        <Col md="7">
-          <Row>
-            <Col>
-              <ReactionsList
-                reactions={reactions}
-                setInfo={setInfo}
-                setType={setType}
-              />
-            </Col>
-            <Col>
-              <MetabolitesList
-                metabolites={metabolites}
-                setInfo={setInfo}
-                setType={setType}
-              />
-            </Col>
-          </Row>
-          <Row style={{ marginTop: 30 }}>
-            <Col>
-              <InfoPanel type={type} data={info} />
-            </Col>
-            <Col>
-              <Button
-                style={{ float: 'right' }}
-                outline
-                color="success"
-                onClick={() => setModal(!modal)}
-                disabled={name ? false : true}
-              >
-                Save Model
-              </Button>
-            </Col>
-          </Row>
-          <Row>
-            <Col />
-          </Row>
-        </Col>
-      </Row>
+        </div>
+        <div key="reactions">
+          <ReactionsList
+            reactions={reactions}
+            setInfo={setInfo}
+            setType={setType}
+          />
+        </div>
+        <div key="metabolites">
+          <MetabolitesList
+            metabolites={metabolites}
+            setInfo={setInfo}
+            setType={setType}
+          />
+        </div>
+        <div key="info">
+          <InfoPanel type={type} data={info} />
+          <Button
+            style={{ float: 'right' }}
+            outline
+            color="success"
+            onClick={() => setModal(!modal)}
+            disabled={name ? false : true}
+          >
+            Save Model
+          </Button>
+        </div>
+      </ResponsiveGridLayout>
     </React.Fragment>
   )
 }

@@ -1,48 +1,54 @@
 import React from 'react'
-import { Navbar, NavbarBrand, Nav, NavItem, NavLink, Button } from 'reactstrap'
+import {
+  Collapse,
+  Navbar,
+  NavbarToggler,
+  NavbarBrand,
+  Nav,
+  NavItem,
+  NavLink,
+  UncontrolledDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+} from 'reactstrap'
 
 function NavBar(props) {
-  const [active, setActive] = React.useState('model')
+  const [toggle, setToggle] = React.useState(false)
 
   return (
     <Navbar color="dark" dark expand="md">
       <NavbarBrand href="/">ODE App</NavbarBrand>
-      <Nav navbar>
-        <NavItem>
-          <NavLink
-            active={active === 'model' ? true : false}
-            onClick={() => {
-              setActive('model')
-            }}
-            href="/#/model"
-          >
-            Model
-          </NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink
-            active={active === 'simulation' ? true : false}
-            onClick={() => {
-              setActive('simulation')
-            }}
-            href="/#/simulation"
-          >
-            Simulation
-          </NavLink>
-        </NavItem>
-      </Nav>
-      <Nav className="ml-auto" navbar>
-        <NavItem style={{ marginRight: 20 }}>
-          <Button color="primary" onClick={props.importModel}>
-            Import Model
-          </Button>
-        </NavItem>
-        <NavItem>
-          <Button color="info" onClick={props.savedModels}>
-            Saved Models
-          </Button>
-        </NavItem>
-      </Nav>
+      <NavbarToggler
+        onClick={() => {
+          setToggle(c => !c)
+        }}
+      />
+      <Collapse isOpen={toggle} navbar>
+        <Nav className="ml-auto" navbar>
+          <NavItem>
+            <NavLink href="/#/model">Model</NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink href="/#/simulation">Simulation</NavLink>
+          </NavItem>
+        </Nav>
+        <Nav className="ml-auto" navbar>
+          <UncontrolledDropdown nav inNavbar>
+            <DropdownToggle nav caret>
+              Options
+            </DropdownToggle>
+            <DropdownMenu right>
+              <DropdownItem onClick={props.importModel}>
+                Import Model
+              </DropdownItem>
+              <DropdownItem onClick={props.savedModels}>
+                Saved Models
+              </DropdownItem>
+            </DropdownMenu>
+          </UncontrolledDropdown>
+        </Nav>
+      </Collapse>
     </Navbar>
   )
 }
