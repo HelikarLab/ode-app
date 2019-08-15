@@ -1,8 +1,8 @@
 import Sequelize from 'sequelize'
 import db from '../config/database'
 
-const Metabolite = db.define(
-  'metabolite',
+const Specie = db.define(
+  'specie',
   {
     name: {
       type: Sequelize.STRING,
@@ -35,8 +35,8 @@ const Metabolite = db.define(
     },
   },
   {
-    tableName: 'metabolites',
+    tableName: 'species',
   }
 )
 
-export default Metabolite
+export default Specie

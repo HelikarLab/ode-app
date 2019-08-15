@@ -2,14 +2,14 @@ import React from 'react'
 import { prettyPrint } from '../../../utils'
 
 function InfoPanel(props) {
-  if (props.type === 'metabolite') {
+  if (props.type === 'specie') {
     return (
       <div>
         <dl className="row nonDraggableArea">
-          <dt className="col-sm-5">Metabolite ID</dt>
+          <dt className="col-sm-5">Specie ID</dt>
           <dd className="col-sm-7">{props.data.id}</dd>
 
-          <dt className="col-sm-5">Metabolite Name</dt>
+          <dt className="col-sm-5">Specie Name</dt>
           <dd className="col-sm-7">{props.data.name}</dd>
 
           <dt className="col-sm-5">Compartment</dt>

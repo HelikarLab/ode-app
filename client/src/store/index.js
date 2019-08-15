@@ -62,8 +62,8 @@ const model = {
         checked: false,
       })
     )
-    state.simulationTab.metabolitesFromModel = state.modelTab.currentModel.metabolites.map(
-      metabolite => ({ ...metabolite, initialConcentration: 0 })
+    state.simulationTab.speciesFromModel = state.modelTab.currentModel.species.map(
+      specie => ({ ...specie, initialConcentration: 0 })
     )
   }),
   setModelMetadata: action((state, payload) => {
@@ -81,7 +81,7 @@ const model = {
 
   modelTab: {
     currentModel: {
-      metabolites: [],
+      species: [],
       reactions: [],
       compartments: [],
     },
@@ -111,8 +111,8 @@ const model = {
     icmax: 100,
     icstep: computed(state => (state.icmax - state.icmin) / 100),
     reactions: [],
-    metabolitesFromModel: [],
-    metabolites: [],
+    speciesFromModel: [],
+    species: [],
     resultData: [],
     graphData: computed(state => {
       return state.resultData.filter(item => {
@@ -135,7 +135,7 @@ const model = {
         time: payload.time,
         dataPoints: payload.dataPoints,
         reactions: newReactions,
-        metabolites: state.simulationTab.metabolites,
+        species: state.simulationTab.species,
       }
       return axios({
         method: 'post',
@@ -163,7 +163,7 @@ const model = {
           else return reaction
         }
       )
-      actions.updateMetabolites()
+      actions.updateSpecies()
     }),
     //actions
     setRatelaw: action((state, payload) => {
@@ -184,7 +184,7 @@ const model = {
         } else return reaction
       })
     }),
-    toggleMetabolite: action((state, payload) => {
+    toggleSpecie: action((state, payload) => {
       state.resultData = state.resultData.map(item => {
         if (item.name === payload) {
           return { ...item, checked: !item.checked }
@@ -201,27 +201,27 @@ const model = {
       state.icmax = payload
     }),
     updateIc: action((state, payload) => {
-      state.metabolites.forEach(metabolite => {
-        if (metabolite.id === payload.id) {
-          metabolite.initialConcentration = payload.initialConcentration
+      state.species.forEach(specie => {
+        if (specie.id === payload.id) {
+          specie.initialConcentration = payload.initialConcentration
         }
       })
-      state.metabolitesFromModel.forEach(metabolite => {
-        if (metabolite.id === payload.id) {
-          metabolite.initialConcentration = payload.initialConcentration
+      state.speciesFromModel.forEach(specie => {
+        if (specie.id === payload.id) {
+          specie.initialConcentration = payload.initialConcentration
         }
       })
     }),
-    // Updates the metabolites list
-    updateMetabolites: action((state, payload) => {
-      state.metabolites = []
+    // Updates the species list
+    updateSpecies: action((state, payload) => {
+      state.species = []
       state.reactions.map(reaction => {
         if (reaction.checked) {
           reaction.reactants.map(reactant => {
-            return state.metabolitesFromModel.map(metabolite => {
-              if (reactant.id === metabolite.id) {
-                if (!_.includes(state.metabolites, metabolite)) {
-                  return state.metabolites.push(metabolite)
+            return state.speciesFromModel.map(specie => {
+              if (reactant.id === specie.id) {
+                if (!_.includes(state.species, specie)) {
+                  return state.species.push(specie)
                 } else {
                   return false
                 }
@@ -231,10 +231,10 @@ const model = {
             })
           })
           return reaction.products.map(product => {
-            return state.metabolitesFromModel.map(metabolite => {
-              if (product.id === metabolite.id) {
-                if (!_.includes(state.metabolites, metabolite)) {
-                  return state.metabolites.push(metabolite)
+            return state.speciesFromModel.map(specie => {
+              if (product.id === specie.id) {
+                if (!_.includes(state.species, specie)) {
+                  return state.species.push(specie)
                 } else {
                   return false
                 }

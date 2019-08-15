@@ -19,7 +19,7 @@ function Plot(props) {
     const modelData = {
       ...modelMetadata,
       reactions: newReactions,
-      metabolites: data.metabolites,
+      species: data.species,
     }
     const dataString =
       'data:text/json;charset=utf-8,' +

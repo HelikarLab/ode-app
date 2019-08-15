@@ -71,12 +71,12 @@ function RatelawForm({ ratelaw, reaction, closeModal }) {
       element = (
         <React.Fragment>
           <div>
-            Metabolites available:{' '}
+            Species available:{' '}
             {prettyPrint(_.concat(reaction.reactants, reaction.products), 'id')}
           </div>
           <Label>Custom Rate:</Label>
           <Field className="form-control" name="rate" type="text" />
-          <p>For example: 0.5 * some_metabolite</p>
+          <p>For example: 0.5 * some_specie</p>
         </React.Fragment>
       )
       break

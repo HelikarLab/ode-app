@@ -1,23 +1,23 @@
 import React from 'react'
 import { ListGroup, ListGroupItem } from 'reactstrap'
 
-function MetabolitesList(props) {
-  if (props.metabolites) {
+function SpeciesList(props) {
+  if (props.species) {
     return (
       <div>
-        <h4 className="text-muted">Metabolites</h4>
+        <h4 className="text-muted">Species</h4>
         <ListGroup flush style={{ height: '250px', overflowY: 'auto' }}>
-          {props.metabolites.map(metabolite => (
+          {props.species.map(specie => (
             <ListGroupItem
-              key={metabolite.id}
+              key={specie.id}
               tag="button"
               action
               onClick={() => {
-                props.setInfo(metabolite)
-                props.setType('metabolite')
+                props.setInfo(specie)
+                props.setType('specie')
               }}
             >
-              {metabolite.id} - {metabolite.name}
+              {specie.id} - {specie.name}
             </ListGroupItem>
           ))}
         </ListGroup>
@@ -28,4 +28,4 @@ function MetabolitesList(props) {
   }
 }
 
-export default MetabolitesList
+export default SpeciesList

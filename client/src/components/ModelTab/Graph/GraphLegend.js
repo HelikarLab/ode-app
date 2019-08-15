@@ -4,7 +4,7 @@ function GraphLegend() {
   return (
     <React.Fragment>
       <div className="flex">
-        <div className="circle-icon blue" />- Metabolite Nodes
+        <div className="circle-icon blue" />- Specie Nodes
       </div>
       <div className="flex">
         <div className="circle-icon red" />- Reaction Nodes

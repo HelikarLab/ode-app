@@ -5,7 +5,7 @@ import { toast } from 'react-toastify'
 import { Responsive, WidthProvider } from 'react-grid-layout'
 import Graph from './Graph'
 import ReactionsList from './ReactionsList'
-import MetabolitesList from './MetabolitesList'
+import SpeciesList from './SpeciesList'
 import InfoPanel from './InfoPanel'
 
 const ResponsiveGridLayout = WidthProvider(Responsive)
@@ -15,7 +15,7 @@ function ModelTab() {
   const [info, setInfo] = React.useState({})
   const [modal, setModal] = React.useState(false)
 
-  const { reactions, metabolites, name, compartments } = useStoreState(
+  const { reactions, species, name, compartments } = useStoreState(
     state => state.modelTab.currentModel
   )
 
@@ -23,7 +23,7 @@ function ModelTab() {
     lg: [
       { i: 'graph', x: 0, y: 0, w: 6, h: 14, minW: 5, minH: 14, static: true },
       { i: 'reactions', x: 6, y: 0, w: 3, h: 7, minW: 3, minH: 7 },
-      { i: 'metabolites', x: 9, y: 0, w: 3, h: 7, minW: 4, minH: 7 },
+      { i: 'species', x: 9, y: 0, w: 3, h: 7, minW: 4, minH: 7 },
       { i: 'info', x: 6, y: 7, w: 6, h: 5, minW: 7, minH: 7 },
     ],
   }
@@ -79,7 +79,7 @@ function ModelTab() {
         <div key="graph">
           <Graph
             reactions={reactions}
-            metabolites={metabolites}
+            species={species}
             compartments={compartments}
           />
         </div>
@@ -90,12 +90,8 @@ function ModelTab() {
             setType={setType}
           />
         </div>
-        <div key="metabolites">
-          <MetabolitesList
-            metabolites={metabolites}
-            setInfo={setInfo}
-            setType={setType}
-          />
+        <div key="species">
+          <SpeciesList species={species} setInfo={setInfo} setType={setType} />
         </div>
         <div key="info">
           <InfoPanel type={type} data={info} />

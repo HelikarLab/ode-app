@@ -4,7 +4,7 @@
 */
 
 import db from '../config/database'
-const Metabolite = require('../models/metabolite')
+const Specie = require('../models/specie')
 const Model = require('../models/model')
 const Reaction = require('../models/reaction')
 const Compartment = require('../models/compartment')

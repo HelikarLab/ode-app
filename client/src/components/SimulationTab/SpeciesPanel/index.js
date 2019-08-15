@@ -7,19 +7,19 @@ import CustomSwitch from './CustomSwitch'
 
 const CSlider = Slider.createSliderWithTooltip(Slider)
 
-function MetabolitesPanel() {
-  const { metabolites, icstep, icmin, icmax } = useStoreState(
+function SpeciesPanel() {
+  const { species, icstep, icmin, icmax } = useStoreState(
     state => state.simulationTab
   )
 
-  const { toggleMetabolite, updateIc } = useStoreActions(
+  const { toggleSpecie, updateIc } = useStoreActions(
     actions => actions.simulationTab
   )
 
   return (
     <React.Fragment>
       <h4 className="text-muted" style={{ marginBottom: 20 }}>
-        Metabolites
+        Species
       </h4>
       <div
         style={{ overflowY: 'auto', height: '90%' }}
@@ -34,9 +34,9 @@ function MetabolitesPanel() {
             </tr>
           </thead>
           <tbody>
-            {metabolites.map(metabolite => (
-              <tr key={metabolite.id}>
-                <th>{metabolite.id}</th>
+            {species.map(specie => (
+              <tr key={specie.id}>
+                <th>{specie.id}</th>
                 <th>
                   <CSlider
                     style={{ width: 200 }}
@@ -45,17 +45,14 @@ function MetabolitesPanel() {
                     max={icmax}
                     onChange={value => {
                       updateIc({
-                        id: metabolite.id,
+                        id: specie.id,
                         initialConcentration: value,
                       })
                     }}
                   />
                 </th>
                 <th>
-                  <CustomSwitch
-                    metaboliteId={metabolite.id}
-                    toggle={toggleMetabolite}
-                  />
+                  <CustomSwitch specieId={specie.id} toggle={toggleSpecie} />
                 </th>
               </tr>
             ))}
@@ -66,4 +63,4 @@ function MetabolitesPanel() {
   )
 }
 
-export default MetabolitesPanel
+export default SpeciesPanel

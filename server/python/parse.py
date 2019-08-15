@@ -14,14 +14,14 @@ listOfReactions = model.getListOfReactions()
 listOfCompartments = model.getListOfCompartments()
 
 
-def generateCompartments(reaction, metabolites):
+def generateCompartments(reaction, species):
     compartments = []
-    allReactionMetabolites = concat(reaction["reactants"], reaction["products"])
-    for reactionMetabolite in allReactionMetabolites:
-        for metabolite in metabolites:
-            if reactionMetabolite["id"] == metabolite["id"]:
-                if not includes(compartments, metabolite["compartment"]):
-                    compartments.append(metabolite["compartment"])
+    allReactionSpecies = concat(reaction["reactants"], reaction["products"])
+    for reactionSpecie in allReactionSpecies:
+        for specie in species:
+            if reactionSpecie["id"] == specie["id"]:
+                if not includes(compartments, specie["compartment"]):
+                    compartments.append(specie["compartment"])
     return compartments
 
 
@@ -37,10 +37,10 @@ for compartment in listOfCompartments:
         }
     )
 
-metabolites = []
+species = []
 
 for specie in listOfSpecies:
-    metabolites.append(
+    species.append(
         {
             "id": specie.getId(),
             "name": specie.getName(),
@@ -105,7 +105,7 @@ for reaction in listOfReactions:
             )
         i += 1
 
-    tempObject["compartments"] = generateCompartments(tempObject, metabolites)
+    tempObject["compartments"] = generateCompartments(tempObject, species)
     tempObject["reactionString"] = reactionString
     reactions.append(tempObject)
 
@@ -114,7 +114,7 @@ data = {
     "name": model.getName(),
     "sbmlLevel": model.getLevel(),
     "sbmlVersion": model.getVersion(),
-    "metabolites": metabolites,
+    "species": species,
     "reactions": reactions,
     "compartments": compartments,
 }

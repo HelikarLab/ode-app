@@ -1,6 +1,6 @@
 // const Model = require('../models/model')
 import Model from '../models/model'
-import Metabolite from '../models/metabolite'
+import Specie from '../models/specie'
 import Reaction from '../models/reaction'
 import Compartment from '../models/compartment'
 
@@ -14,12 +14,12 @@ export function addModel(req, res) {
     jsonModel: model,
   })
     .then(data => {
-      model.metabolites.map(metabolite => {
-        Metabolite.create({
-          name: metabolite.name,
-          sbmlId: metabolite.id,
-          initialConcentration: String(metabolite.initialConcentration),
-          compartment: metabolite.compartment,
+      model.species.map(specie => {
+        Specie.create({
+          name: specie.name,
+          sbmlId: specie.id,
+          initialConcentration: String(specie.initialConcentration),
+          compartment: specie.compartment,
           modelId: data.id,
         }).catch(error => {
           res.status(500).send('Something went wrong.')

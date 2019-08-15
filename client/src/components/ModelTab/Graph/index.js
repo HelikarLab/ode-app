@@ -33,17 +33,17 @@ class Graph extends React.Component {
   }
 
   gen = () => {
-    const { reactions, metabolites, compartments } = this.props
+    const { reactions, species, compartments } = this.props
     const { currentCompartment } = this.state
     this.setState({ compartments })
     try {
       if (currentCompartment === 'all') {
         let reactionNodes = this.generateReactionNodes(reactions)
-        let metabolitesNodes = metabolites.reduce((result, metabolite) => {
-          result.push({ label: metabolite.id })
+        let speciesNodes = species.reduce((result, specie) => {
+          result.push({ label: specie.id })
           return result
         }, [])
-        let nodes = _.concat(reactionNodes, metabolitesNodes)
+        let nodes = _.concat(reactionNodes, speciesNodes)
         let edges = this.generateReactionEdges(reactions, nodes)
         this.setState({ nodes, edges })
       } else {
@@ -56,13 +56,13 @@ class Graph extends React.Component {
           } else return false
         })
         let reactionNodes = this.generateReactionNodes(compartmentReactions)
-        let metaboliteNodes = metabolites.reduce((result, metabolite) => {
-          if (metabolite.compartment === currentCompartment) {
-            result.push({ label: metabolite.id })
+        let specieNodes = species.reduce((result, specie) => {
+          if (specie.compartment === currentCompartment) {
+            result.push({ label: specie.id })
           }
           return result
         }, [])
-        let nodes = _.concat(reactionNodes, metaboliteNodes)
+        let nodes = _.concat(reactionNodes, specieNodes)
         let edges = this.generateReactionEdges(compartmentReactions, nodes)
         this.setState({ nodes, edges })
       }
@@ -194,13 +194,13 @@ class Graph extends React.Component {
   componentDidUpdate(prevProps, prevState) {
     if (
       prevProps.reactions !== this.props.reactions ||
-      prevProps.metabolites !== this.props.metabolites
+      prevProps.species !== this.props.species
     ) {
       this.setState({ currentCompartment: 'all' })
     }
     if (
       prevProps.reactions !== this.props.reactions ||
-      prevProps.metabolites !== this.props.metabolites ||
+      prevProps.species !== this.props.species ||
       prevState.currentCompartment !== this.state.currentCompartment
     ) {
       this.gen()

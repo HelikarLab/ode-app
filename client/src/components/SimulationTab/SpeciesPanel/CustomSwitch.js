@@ -1,16 +1,16 @@
 import React from 'react'
 import { CustomInput } from 'reactstrap'
 
-function CustomSwitch({ metaboliteId, toggle }) {
+function CustomSwitch({ specieId, toggle }) {
   const [switched, setSwitched] = React.useState(true)
 
   return (
     <CustomInput
       type="switch"
-      id={metaboliteId}
+      id={specieId}
       onChange={e => {
         setSwitched(s => !s)
-        toggle(metaboliteId)
+        toggle(specieId)
       }}
       checked={switched}
     />

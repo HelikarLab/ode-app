@@ -242,7 +242,7 @@ def massAction(reaction, reactionStrings, rateStrings):
 
 data = json.loads(sys.argv[1])
 
-metabolites = data["metabolites"]
+species = data["species"]
 reactions = data["reactions"]
 time = data["time"]
 dataPoints = data["dataPoints"]
@@ -262,19 +262,19 @@ for i in range(len(reactions)):
 
 init = """init: ("""
 
-for i in range(len(metabolites)):
-    if i == len(metabolites) - 1:
+for i in range(len(species)):
+    if i == len(species) - 1:
         temp = (
-            str(metabolites[i]["id"])
+            str(species[i]["id"])
             + " = "
-            + str(metabolites[i]["initialConcentration"])
+            + str(species[i]["initialConcentration"])
             + ")"
         )
     else:
         temp = (
-            str(metabolites[i]["id"])
+            str(species[i]["id"])
             + " = "
-            + str(metabolites[i]["initialConcentration"])
+            + str(species[i]["initialConcentration"])
             + ", "
         )
     init = init + temp
