@@ -234,7 +234,9 @@ class Graph extends React.Component {
           </UncontrolledTooltip>
         </h4>
         <Dropdown isOpen={this.state.dropdown} toggle={this.toggle}>
-          <DropdownToggle color="success">Compartments</DropdownToggle>
+          <DropdownToggle data-test="compartment-button" color="success">
+            Compartments
+          </DropdownToggle>
           <DropdownMenu>
             <DropdownItem
               onClick={() => {

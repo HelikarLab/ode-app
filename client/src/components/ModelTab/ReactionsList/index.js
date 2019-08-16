@@ -10,6 +10,7 @@ function ReactionsList(props) {
           flush
           style={{ height: '250px', overflowY: 'auto' }}
           className="nonDraggableArea"
+          data-test="reactions-list"
         >
           {props.reactions.map(reaction => (
             <ListGroupItem

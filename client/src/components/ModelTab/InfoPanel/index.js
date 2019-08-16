@@ -4,7 +4,7 @@ import { prettyPrint } from '../../../utils'
 function InfoPanel(props) {
   if (props.type === 'specie') {
     return (
-      <div>
+      <div data-test="info-panel">
         <dl className="row nonDraggableArea">
           <dt className="col-sm-5">Specie ID</dt>
           <dd className="col-sm-7">{props.data.id}</dd>
@@ -22,7 +22,7 @@ function InfoPanel(props) {
     )
   } else if (props.type === 'reaction') {
     return (
-      <div>
+      <div data-test="info-panel">
         <dl className="row nonDraggableArea">
           <dt className="col-sm-4">Reaction ID</dt>
           <dd className="col-sm-8">{props.data.id}</dd>

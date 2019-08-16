@@ -24,6 +24,7 @@ function ImportSbmlForm({ closeModal }) {
           <Form onSubmit={props.handleSubmit}>
             <FormGroup>
               <input
+                className="chooseFile"
                 required
                 type="file"
                 name="file"
@@ -37,7 +38,7 @@ function ImportSbmlForm({ closeModal }) {
                 level 2 SBML for kinetic (ODE) models.
               </FormText>
             </FormGroup>
-            <Button color="primary" type="submit">
+            <Button color="primary" type="submit" className="submit">
               Submit
             </Button>
           </Form>

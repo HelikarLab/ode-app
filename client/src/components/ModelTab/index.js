@@ -50,6 +50,7 @@ function ModelTab() {
           <br />
           <br />
           <Button
+            data-test="confirm-save-button"
             color="primary"
             onClick={async () => {
               const temp = await saveModel()
@@ -96,6 +97,7 @@ function ModelTab() {
         <div key="info">
           <InfoPanel type={type} data={info} />
           <Button
+            data-test="save-model-button"
             style={{ float: 'right' }}
             outline
             color="success"

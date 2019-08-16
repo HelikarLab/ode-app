@@ -6,7 +6,11 @@ function SpeciesList(props) {
     return (
       <div>
         <h4 className="text-muted">Species</h4>
-        <ListGroup flush style={{ height: '250px', overflowY: 'auto' }}>
+        <ListGroup
+          flush
+          style={{ height: '250px', overflowY: 'auto' }}
+          data-test="species-list"
+        >
           {props.species.map(specie => (
             <ListGroupItem
               key={specie.id}
