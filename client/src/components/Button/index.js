@@ -29,6 +29,7 @@ function Button(props) {
       className={classes.join(' ')}
       disabled={props.loading}
       onClick={props.onClick}
+      {...props}
     >
       {buttonContent}
     </button>

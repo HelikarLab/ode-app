@@ -166,6 +166,19 @@ const model = {
       actions.updateSpecies()
     }),
     //actions
+    reset: thunk((actions, payload, { getStoreState }) => {
+      const { simulationTab } = getStoreState()
+      simulationTab.reactions = simulationTab.reactions.map(reaction => ({
+        ...reaction,
+        checked: false,
+        ratelaw: '',
+        parameters: [],
+      }))
+      simulationTab.icmin = 0
+      simulationTab.icmax = 100
+      simulationTab.resultData = []
+      actions.updateSpecies()
+    }),
     setRatelaw: action((state, payload) => {
       state.reactions = state.reactions.map(reaction => {
         if (payload.id === reaction.id) {

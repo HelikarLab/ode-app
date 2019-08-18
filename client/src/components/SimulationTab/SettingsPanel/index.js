@@ -1,5 +1,5 @@
 import React from 'react'
-import { useStoreActions, useStoreState } from 'easy-peasy'
+import { useStoreActions } from 'easy-peasy'
 import { Formik, Field } from 'formik'
 import { Form, FormGroup, Label, Col } from 'reactstrap'
 import { toast } from 'react-toastify'
@@ -18,10 +18,9 @@ const settingsSchema = Yup.object().shape({
 })
 
 function SettingsPanel() {
-  const { simulate, setIcmin, setIcmax } = useStoreActions(
+  const { simulate, setIcmin, setIcmax, reset } = useStoreActions(
     actions => actions.simulationTab
   )
-  const { icmin, icmax } = useStoreState(state => state.simulationTab)
 
   return (
     <React.Fragment>
@@ -29,12 +28,11 @@ function SettingsPanel() {
         Settings
       </h4>
       <Formik
-        className="nonDraggableArea"
         initialValues={{
           time: 10,
           dataPoints: 500,
-          icmin,
-          icmax,
+          icmin: 0,
+          icmax: 100,
         }}
         validationSchema={settingsSchema}
         onSubmit={async (values, actions) => {
@@ -50,8 +48,14 @@ function SettingsPanel() {
           }
           actions.setSubmitting(false)
         }}
-        render={({ handleSubmit, isSubmitting, errors, setFieldValue }) => (
-          <Form onSubmit={handleSubmit}>
+        render={({
+          handleSubmit,
+          isSubmitting,
+          errors,
+          setFieldValue,
+          resetForm,
+        }) => (
+          <Form onSubmit={handleSubmit} className="nonDraggableArea">
             <FormGroup row>
               <Label for="time" sm={5}>
                 Time:
@@ -114,8 +118,19 @@ function SettingsPanel() {
               type="submit"
               loading={isSubmitting}
               className="btn btn-success"
+              data-test="run-button"
             >
               Run
+            </Button>{' '}
+            <Button
+              className="btn btn-warning"
+              onClick={() => {
+                reset()
+                resetForm()
+              }}
+              data-test="reset-button"
+            >
+              Reset
             </Button>
           </Form>
         )}

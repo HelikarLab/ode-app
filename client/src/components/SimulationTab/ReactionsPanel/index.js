@@ -19,9 +19,7 @@ function ReactionsPanel() {
   const [reactionForRatelaw, setReactionForRatelaw] = React.useState({})
   const [ratelaw, setRatelaw] = React.useState('')
 
-  const reactions = useStoreState(
-    state => state.modelTab.currentModel.reactions
-  )
+  const reactions = useStoreState(state => state.simulationTab.reactions)
 
   const { switchReaction } = useStoreActions(actions => actions.simulationTab)
   return (
@@ -50,7 +48,7 @@ function ReactionsPanel() {
           style={{ overflowY: 'auto', height: '85%' }}
           className="shadow-inner nonDraggableArea"
         >
-          <Table borderless hover>
+          <Table borderless hover data-test="reactions-table">
             <thead>
               <tr>
                 <th>Toggle</th>
@@ -65,6 +63,7 @@ function ReactionsPanel() {
                     <CustomInput
                       type="switch"
                       id={reaction.id}
+                      checked={reaction.checked}
                       onChange={() => {
                         switchReaction(reaction)
                       }}
@@ -88,6 +87,7 @@ function ReactionsPanel() {
                         setRatelaw(e.target.value)
                         setReactionForRatelaw(reaction)
                       }}
+                      value={reaction.ratelaw}
                       type="select"
                     >
                       <option value="">Set a ratelaw!</option>

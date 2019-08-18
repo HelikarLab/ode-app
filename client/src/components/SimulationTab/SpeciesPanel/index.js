@@ -25,7 +25,7 @@ function SpeciesPanel() {
         style={{ overflowY: 'auto', height: '90%' }}
         className="nonDraggableArea shadow-inner"
       >
-        <Table borderless hover>
+        <Table borderless hover data-test="species-table">
           <thead>
             <tr>
               <th>ID</th>

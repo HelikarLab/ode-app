@@ -23,8 +23,8 @@ function ModelTab() {
     lg: [
       { i: 'graph', x: 0, y: 0, w: 6, h: 14, minW: 5, minH: 14, static: true },
       { i: 'reactions', x: 6, y: 0, w: 3, h: 7, minW: 3, minH: 7 },
-      { i: 'species', x: 9, y: 0, w: 3, h: 7, minW: 4, minH: 7 },
-      { i: 'info', x: 6, y: 7, w: 6, h: 5, minW: 7, minH: 7 },
+      { i: 'species', x: 9, y: 0, w: 3, h: 7, minW: 3, minH: 7 },
+      { i: 'info', x: 6, y: 7, w: 6, h: 5, minW: 6, minH: 5 },
     ],
   }
 
