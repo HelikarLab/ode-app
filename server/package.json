@@ -5,8 +5,7 @@
   "main": "index.js",
   "license": "UNLICENSED",
   "scripts": {
-    "start:dev": "nodemon --exec babel-node -- index.js",
-    "start:prod": "cd build && node index.js",
+    "start": "nodemon --exec babel-node -- index.js",
     "build": "babel-node scripts/build.js",
     "sync-tables": "babel-node ./scripts/syncTables.js"
   },

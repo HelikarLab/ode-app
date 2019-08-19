@@ -89,6 +89,7 @@ function ReactionsPanel() {
                       }}
                       value={reaction.ratelaw}
                       type="select"
+                      id={`${reaction.id}-select`}
                     >
                       <option value="">Set a ratelaw!</option>
                       <option value="mass-action">Mass Action</option>

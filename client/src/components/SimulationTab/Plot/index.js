@@ -52,9 +52,10 @@ function Plot(props) {
           type="line"
           width={width}
           height={600}
+          className="nonDraggableArea"
         />
         <a
-          className="btn btn-dark"
+          className="btn btn-dark nonDraggableArea"
           style={{ float: 'right' }}
           id="exportAnchorElement"
           href="/"

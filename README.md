@@ -44,6 +44,7 @@ docker-compose stop
     |- python           -> Python scripts to parse SBML files and simulate ODE models
         |- lib          -> Custom stimator library wheel package
     |- scripts          -> Utility scripts
+ |- cypress             -> Contains all the tests for the project
  |- docker-compose.yml  -> Docker Compose files that runs the application using docker
  |- package.json        -> The main package.json governing the yarn workspaces
  |- README.md           -> The main documentation file. Also this file :)
@@ -81,30 +82,51 @@ Follow the instructions below to get the app up and running in development:
   yarn dev
   ```
 
+## Testing
+
+This project uses [cypress](https://www.cypress.io/) for testing.
+
+- To run tests for the project, use:
+
+  ```bash
+  yarn test
+  ```
+
+- To open cypress only, use:
+
+  ```bash
+  yarn cypress
+  ```
+
 ## Other Scripts
 
 - To run the node server individually, use:
 
   ```bash
-  yarn server
+  yarn server:start
   ```
 
   ---OR---
 
   ```bash
   # In /server
-  yarn start:dev
+  yarn start
   ```
 
-- To run the server in production mode, use:
+- To build the server for production, use:
+
+  ```bash
+  yarn server:build
+  ```
+
+  ---OR---
 
   ```bash
   # In /server
-  yarn build # To build the server
-  yarn start:prod # To run the build
+  yarn build
   ```
 
-* To sync tables in the database, use:
+- To sync tables in the database, use:
 
   ```bash
   # In /server
@@ -118,10 +140,10 @@ Follow the instructions below to get the app up and running in development:
   yarn sync-tables -f
   ```
 
-* To run the react client individually, use:
+- To run the react client individually, use:
 
   ```bash
-  yarn client
+  yarn client:start
   ```
 
   ---OR---
@@ -131,21 +153,20 @@ Follow the instructions below to get the app up and running in development:
   yarn start
   ```
 
-* To run tests on the react client, use:
+- To build a production react client, use:
 
   ```bash
-  # In /client
-  yarn test
+  yarn client:build
   ```
 
-* To build a production react client, use:
+  ---OR---
 
   ```bash
   # In /client
   yarn build
   ```
 
-* To eject the configuartion and scripts from the react-scripts package, use:
+- To eject the configuartion and scripts from the react-scripts package, use:
 
   ```bash
   # In /client

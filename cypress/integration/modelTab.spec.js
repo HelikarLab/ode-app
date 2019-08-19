@@ -3,20 +3,20 @@ const fileName = 'carbo2013.xml'
 describe('Model Tab Tests', () => {
   before(() => {
     cy.visit('/')
-      .get('.options')
+      .get('[data-test="options"]')
       .click()
-      .get('.importOption')
+      .get('[data-test="importOption"]')
       .click()
       .fixture(fileName)
       .then(fileContent => {
-        cy.get('.chooseFile').upload({
+        cy.get('input[type="file"]').upload({
           encoding: 'utf-8',
           fileContent,
           fileName,
           mimeType: 'application/xml',
         })
       })
-      .get('.submit')
+      .get('[data-test="import-submit-button"]')
       .click()
   })
 

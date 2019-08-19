@@ -7,19 +7,24 @@ RUN pip3 install pydash
 RUN apk add --no-cache nodejs yarn bash git
 
 # Set the work directory
-WORKDIR /usr/src/app/server
+WORKDIR /usr/src/app
 
 # Copy the required files
 COPY . .
 
-# Install the dependencies of the server
-RUN yarn
+# Install the dependencies of the server and build the server
+RUN yarn \
+  && cd server \
+  && yarn build
 
-# Build the server
-RUN cd server && yarn build
+# Prepare the build folder
+RUN cp server/build/. build/ -R \
+  && cp client/build build/public -R 
 
-# Copy the react client build to the public folder of the server and delete unnecessary files
-RUN cp client/build server/build/public -R && rm client -rf
+# Delete unnecessary files
+RUN rm cypress -rf \
+  && rm client -rf \
+  && rm server -rf 
 
 # Expose port 5000
 EXPOSE 5000
