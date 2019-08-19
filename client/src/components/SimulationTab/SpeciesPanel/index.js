@@ -40,6 +40,7 @@ function SpeciesPanel() {
                 <th>
                   <CSlider
                     style={{ width: 200 }}
+                    className="specie-slider"
                     step={icstep}
                     min={icmin}
                     max={icmax}

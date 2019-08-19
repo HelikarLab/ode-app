@@ -35,13 +35,13 @@ function NavBar(props) {
         </Nav>
         <Nav className="ml-auto" navbar>
           <UncontrolledDropdown nav inNavbar>
-            <DropdownToggle nav caret className="options">
+            <DropdownToggle nav caret data-test="options">
               Options
             </DropdownToggle>
             <DropdownMenu right>
               <DropdownItem
                 onClick={props.importModel}
-                className="importOption"
+                data-test="importOption"
               >
                 Import Model
               </DropdownItem>

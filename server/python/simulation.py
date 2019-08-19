@@ -47,25 +47,74 @@ def hillEquation(reaction, reactionStrings):
 # Custom Rate
 def customRate(reaction, reactionStrings):
     global reactionNo
-    temp = "r" + str(reactionNo) + ": "
-    j = 0
-    for reactant in reaction["reactants"]:
-        if j == len(reaction["reactants"]) - 1:
-            temp = temp + str(reactant["stoichiometry"]) + str(reactant["id"])
-        else:
-            temp = temp + str(reactant["stoichiometry"]) + str(reactant["id"]) + " + "
-        j += 1
-    temp = temp + " -> "
-    k = 0
-    for product in reaction["products"]:
-        if k == len(reaction["products"]) - 1:
-            temp = temp + str(product["stoichiometry"]) + str(product["id"])
-        else:
-            temp = temp + str(product["stoichiometry"]) + str(product["id"]) + " + "
-        k += 1
-    temp = temp + ", rate = " + reaction["rate"]
-    reactionStrings.append(temp)
-    reactionNo += 1
+    if reaction["reversible"]:
+        temp = "r" + str(reactionNo) + ": "
+        j = 0
+        for reactant in reaction["reactants"]:
+            if j == len(reaction["reactants"]) - 1:
+                temp = temp + str(reactant["stoichiometry"]) + str(reactant["id"])
+            else:
+                temp = (
+                    temp + str(reactant["stoichiometry"]) + str(reactant["id"]) + " + "
+                )
+            j += 1
+        temp = temp + " -> "
+        k = 0
+        for product in reaction["products"]:
+            if k == len(reaction["products"]) - 1:
+                temp = temp + str(product["stoichiometry"]) + str(product["id"])
+            else:
+                temp = temp + str(product["stoichiometry"]) + str(product["id"]) + " + "
+            k += 1
+        temp = temp + ", rate = " + reaction["rateForward"]
+        reactionStrings.append(temp)
+        reactionNo += 1
+        temp = "r" + str(reactionNo) + ": "
+        k = 0
+        for product in reaction["products"]:
+            if k == len(reaction["products"]) - 1:
+                temp = temp + str(product["stoichiometry"]) + str(product["id"])
+            else:
+                temp = temp + str(product["stoichiometry"]) + str(product["id"]) + " + "
+            k += 1
+
+        temp = temp + " -> "
+
+        j = 0
+        for reactant in reaction["reactants"]:
+            if j == len(reaction["reactants"]) - 1:
+                temp = temp + str(reactant["stoichiometry"]) + str(reactant["id"])
+            else:
+                temp = (
+                    temp + str(reactant["stoichiometry"]) + str(reactant["id"]) + " + "
+                )
+            j += 1
+
+        temp = temp + ", rate = " + reaction["rateBackward"]
+        reactionStrings.append(temp)
+        reactionNo += 1
+    else:
+        temp = "r" + str(reactionNo) + ": "
+        j = 0
+        for reactant in reaction["reactants"]:
+            if j == len(reaction["reactants"]) - 1:
+                temp = temp + str(reactant["stoichiometry"]) + str(reactant["id"])
+            else:
+                temp = (
+                    temp + str(reactant["stoichiometry"]) + str(reactant["id"]) + " + "
+                )
+            j += 1
+        temp = temp + " -> "
+        k = 0
+        for product in reaction["products"]:
+            if k == len(reaction["products"]) - 1:
+                temp = temp + str(product["stoichiometry"]) + str(product["id"])
+            else:
+                temp = temp + str(product["stoichiometry"]) + str(product["id"]) + " + "
+            k += 1
+        temp = temp + ", rate = " + reaction["rate"]
+        reactionStrings.append(temp)
+        reactionNo += 1
 
 
 # Michaelis-menten Ratelaw

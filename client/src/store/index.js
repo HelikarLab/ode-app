@@ -149,7 +149,7 @@ const model = {
             checked: true,
           }))
           actions.updateResult(modifiedData)
-          return { error: false, message: 'Simulation successfull.' }
+          return { error: false, message: 'Simulation successful.' }
         })
         .catch(err => ({ message: 'Something went wrong.', error: true }))
     }),
@@ -176,13 +176,20 @@ const model = {
       }))
       simulationTab.icmin = 0
       simulationTab.icmax = 100
-      simulationTab.resultData = []
       actions.updateSpecies()
     }),
     setRatelaw: action((state, payload) => {
       state.reactions = state.reactions.map(reaction => {
         if (payload.id === reaction.id) {
           if (payload.ratelaw === 'custom-rate') {
+            if (reaction.reversible) {
+              return {
+                ...reaction,
+                ratelaw: payload.ratelaw,
+                rateForward: payload.rateForward,
+                rateBackward: payload.rateBackward,
+              }
+            }
             return {
               ...reaction,
               ratelaw: payload.ratelaw,

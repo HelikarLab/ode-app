@@ -68,17 +68,40 @@ function RatelawForm({ ratelaw, reaction, closeModal }) {
       )
       break
     case 'custom-rate':
-      element = (
-        <React.Fragment>
-          <div>
-            Species available:{' '}
-            {prettyPrint(_.concat(reaction.reactants, reaction.products), 'id')}
-          </div>
-          <Label>Custom Rate:</Label>
-          <Field className="form-control" name="rate" type="text" />
-          <p>For example: 0.5 * some_specie</p>
-        </React.Fragment>
-      )
+      if (reaction.reversible) {
+        element = (
+          <React.Fragment>
+            <div>
+              Species available:{' '}
+              {prettyPrint(
+                _.concat(reaction.reactants, reaction.products),
+                'id'
+              )}
+            </div>
+            <Label>Custom Forward Rate:</Label>
+            <Field className="form-control" name="rateForward" type="text" />
+            <p>For example: 0.5 * some_specie</p>
+            <Label>Custom Backward Rate:</Label>
+            <Field className="form-control" name="rateBackward" type="text" />
+            <p>For example: 0.5 * some_specie</p>
+          </React.Fragment>
+        )
+      } else {
+        element = (
+          <React.Fragment>
+            <div>
+              Species available:{' '}
+              {prettyPrint(
+                _.concat(reaction.reactants, reaction.products),
+                'id'
+              )}
+            </div>
+            <Label>Custom Rate:</Label>
+            <Field className="form-control" name="rate" type="text" />
+            <p>For example: 0.5 * some_specie</p>
+          </React.Fragment>
+        )
+      }
       break
     default:
       break
@@ -93,14 +116,25 @@ function RatelawForm({ ratelaw, reaction, closeModal }) {
           k3: 0,
           k4: 0,
           rate: '',
+          rateForward: '',
+          rateBackward: '',
         }}
         onSubmit={async (values, actions) => {
           if (ratelaw === 'custom-rate') {
-            setRatelaw({
-              id: reaction.id,
-              ratelaw,
-              rate: values.rate,
-            })
+            if (reaction.reversible) {
+              setRatelaw({
+                id: reaction.id,
+                ratelaw,
+                rateForward: values.rateForward,
+                rateBackward: values.rateBackward,
+              })
+            } else {
+              setRatelaw({
+                id: reaction.id,
+                ratelaw,
+                rate: values.rate,
+              })
+            }
           } else {
             let parameters = values
             let parametersArr = []
@@ -119,10 +153,14 @@ function RatelawForm({ ratelaw, reaction, closeModal }) {
           closeModal()
         }}
         render={({ handleSubmit }) => (
-          <Form onSubmit={handleSubmit}>
+          <Form onSubmit={handleSubmit} data-test="ratelaw-form">
             {element}
             <br />
-            <Button type="submit" className="btn btn-success">
+            <Button
+              type="submit"
+              className="btn btn-success"
+              data-test="ratelaw-submit-button"
+            >
               Submit
             </Button>
           </Form>
