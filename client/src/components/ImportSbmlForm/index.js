@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Formik } from 'formik'
 import { useStoreActions } from 'easy-peasy'
 import { toast } from 'react-toastify'
@@ -49,6 +50,16 @@ function ImportSbmlForm({ closeModal }) {
       />
     </React.Fragment>
   )
+}
+
+ImportSbmlForm.propTypes = {
+  closeModal: PropTypes.func,
+}
+
+ImportSbmlForm.defaultProps = {
+  closeModal: () => {
+    console.log('No function bound.')
+  },
 }
 
 export default ImportSbmlForm

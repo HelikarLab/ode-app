@@ -1,9 +1,18 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Button, Label } from 'reactstrap'
 import { Formik, Form, Field } from 'formik'
 import { useStoreActions } from 'easy-peasy'
 import _ from 'lodash'
 import { prettyPrint } from '../../../utils'
+
+/*
+Ratelaw Form Component:
+Displays a form to take in particular parameters from
+the user. These parameters depend upon the ratelaw
+used and if the reaction is reversible or not. If custom rate
+is selected takes in the rate equation instead.
+*/
 
 function RatelawForm({ ratelaw, reaction, closeModal }) {
   const { setRatelaw } = useStoreActions(actions => actions.simulationTab)
@@ -120,6 +129,7 @@ function RatelawForm({ ratelaw, reaction, closeModal }) {
           rateBackward: '',
         }}
         onSubmit={async (values, actions) => {
+          // if custom rate is selected the rate is individual set as object properties
           if (ratelaw === 'custom-rate') {
             if (reaction.reversible) {
               setRatelaw({
@@ -136,6 +146,10 @@ function RatelawForm({ ratelaw, reaction, closeModal }) {
               })
             }
           } else {
+            /**
+             * Takes all the parameters input and parses it into a single array
+             * This is appropriately handled in the backend
+             */
             let parameters = values
             let parametersArr = []
             for (let property in parameters) {
@@ -168,6 +182,18 @@ function RatelawForm({ ratelaw, reaction, closeModal }) {
       />
     </div>
   )
+}
+
+RatelawForm.propTypes = {
+  ratelaw: PropTypes.string,
+  reaction: PropTypes.object,
+  closeModal: PropTypes.func,
+}
+
+RatelawForm.defaultProps = {
+  ratelaw: '',
+  reaction: {},
+  closeModal: () => {},
 }
 
 export default RatelawForm

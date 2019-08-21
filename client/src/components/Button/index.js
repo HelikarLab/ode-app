@@ -3,33 +3,47 @@ import ReactLoading from 'react-loading'
 import PropTypes from 'prop-types'
 import './style.scss'
 
-function Button(props) {
+function Button({
+  className,
+  curved,
+  color,
+  children,
+  loading,
+  onClick,
+  type,
+  'data-test': dataTest,
+}) {
   let classes = []
-  classes.push(props.className)
-  if (props.curved) {
+
+  // Setting classes as per props recieved
+  classes.push(className)
+  if (curved) {
     classes.push('curved-button')
   }
+
   let buttonContent
-  if (props.loading) {
+
+  // If loading prop is true changes the button content to a loader
+  if (loading) {
     buttonContent = (
       <ReactLoading
         type={'bars'}
-        color={props.color}
+        color={color}
         height={'30px'}
         width={'30px'}
         className="button-loading-icon"
       />
     )
   } else {
-    buttonContent = props.children
+    buttonContent = children
   }
   return (
     <button
-      type={props.type}
+      type={type}
       className={classes.join(' ')}
-      disabled={props.loading}
-      onClick={props.onClick}
-      {...props}
+      disabled={loading}
+      onClick={onClick}
+      data-test={dataTest}
     >
       {buttonContent}
     </button>

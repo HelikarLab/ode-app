@@ -1,7 +1,9 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { prettyPrint } from '../../../utils'
 
 function InfoPanel(props) {
+  // If specie is clicked shows information species
   if (props.type === 'specie') {
     return (
       <div data-test="info-panel">
@@ -20,6 +22,7 @@ function InfoPanel(props) {
         </dl>
       </div>
     )
+    // If reaction is clicked shows information reaction
   } else if (props.type === 'reaction') {
     return (
       <div data-test="info-panel">
@@ -44,6 +47,16 @@ function InfoPanel(props) {
   } else {
     return <React.Fragment />
   }
+}
+
+InfoPanel.propTypes = {
+  type: PropTypes.string,
+  data: PropTypes.object,
+}
+
+InfoPanel.defaultProps = {
+  type: '',
+  data: {},
 }
 
 export default InfoPanel

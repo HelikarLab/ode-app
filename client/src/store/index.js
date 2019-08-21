@@ -12,7 +12,9 @@ const model = {
    */
   modelMetadata: {},
 
-  //thunks
+  /**
+   * Thunk to import an sbml file to the backend
+   */
   importSbml: thunk((actions, file) => {
     const formData = new FormData()
     formData.append('file', file, file.name)
@@ -22,7 +24,7 @@ const model = {
       data: formData,
     })
       .then(res => {
-        const json = JSON.parse(res.data)
+        const json = JSON.parse(res.data) // Parse the incoming data to JSON
         actions.modelTab.setCurrentModel(json)
       })
       .then(() => {
@@ -31,6 +33,9 @@ const model = {
       })
       .catch(err => ({ message: 'Something went wrong.', error: true }))
   }),
+  /**
+   * Thunk to fetch a model or all models from the backend
+   */
   getModel: thunk((actions, payload) => {
     return axios({ method: 'get', url: `${API_URL}api/model/get/${payload}` })
       .then(res => {
@@ -52,7 +57,9 @@ const model = {
         return { error: true, message: 'Something went wrong.' }
       })
   }),
-  //actions
+  /**
+   * Action to initialize the simulation tab state with the data of a sbml model
+   */
   initSimulation: action(state => {
     state.simulationTab.reactions = state.modelTab.currentModel.reactions.map(
       reaction => ({
@@ -66,6 +73,9 @@ const model = {
       specie => ({ ...specie, initialConcentration: 0 })
     )
   }),
+  /**
+   * Action to set the metadata of the model
+   */
   setModelMetadata: action((state, payload) => {
     state.modelMetadata = {
       name: payload.name,
@@ -85,7 +95,9 @@ const model = {
       reactions: [],
       compartments: [],
     },
-    //thunks
+    /**
+     * Thunk to save the model in the database
+     */
     saveModel: thunk((actions, payload, { getStoreState }) => {
       const state = getStoreState()
       return axios({
@@ -96,7 +108,9 @@ const model = {
         .then(res => ({ message: 'Successfully saved.', error: false }))
         .catch(err => ({ message: 'Something went wrong.', error: true }))
     }),
-    //actions
+    /**
+     * Action to initialize the state of the model tab with the data of a sbml model
+     */
     setCurrentModel: action((state, payload) => {
       state.currentModel = payload
     }),
@@ -109,18 +123,24 @@ const model = {
   simulationTab: {
     icmin: 0,
     icmax: 100,
-    icstep: computed(state => (state.icmax - state.icmin) / 100),
+    icstep: computed(state => (state.icmax - state.icmin) / 100), // Computes the optimum step with no of steps = 100
     reactions: [],
     speciesFromModel: [],
     species: [],
     resultData: [],
+    /**
+     * graphData is computed from resultData as the user can
+     * toggle species in the graph after a simulation
+     */
     graphData: computed(state => {
       return state.resultData.filter(item => {
         if (item.checked) return true
         else return false
       })
     }),
-    //thunks
+    /**
+     * Thunk to run the simulation in the backend
+     */
     simulate: thunk((actions, payload, { getStoreState }) => {
       const state = getStoreState()
       let newReactions = []
@@ -153,7 +173,9 @@ const model = {
         })
         .catch(err => ({ message: 'Something went wrong.', error: true }))
     }),
-    //Switches (on/off) the reaction in the simulation
+    /**
+     * Thunk to switch on/off a reaction in the simulation
+     */
     switchReaction: thunk((actions, payload, { getStoreState }) => {
       let state = getStoreState()
       state.simulationTab.reactions = state.simulationTab.reactions.map(
@@ -165,7 +187,9 @@ const model = {
       )
       actions.updateSpecies()
     }),
-    //actions
+    /**
+     * Thunk to reset all the configuration made in the simulation panel
+     */
     reset: thunk((actions, payload, { getStoreState }) => {
       const { simulationTab } = getStoreState()
       simulationTab.reactions = simulationTab.reactions.map(reaction => ({
@@ -178,6 +202,9 @@ const model = {
       simulationTab.icmax = 100
       actions.updateSpecies()
     }),
+    /**
+     * Action to set the ratelaw of a particular reaction
+     */
     setRatelaw: action((state, payload) => {
       state.reactions = state.reactions.map(reaction => {
         if (payload.id === reaction.id) {
@@ -204,6 +231,9 @@ const model = {
         } else return reaction
       })
     }),
+    /**
+     * Action to toggle a specie from the graph
+     */
     toggleSpecie: action((state, payload) => {
       state.resultData = state.resultData.map(item => {
         if (item.name === payload) {
@@ -211,15 +241,27 @@ const model = {
         } else return item
       })
     }),
+    /**
+     * Action to update the resultData after a simulation is run
+     */
     updateResult: action((state, payload) => {
       state.resultData = payload
     }),
+    /**
+     * Action to set the minimum initial concentration
+     */
     setIcmin: action((state, payload) => {
       state.icmin = payload
     }),
+    /**
+     * Action to set the maximum initial concentration
+     */
     setIcmax: action((state, payload) => {
       state.icmax = payload
     }),
+    /**
+     * Action to set the initial concentration of any particular specie
+     */
     updateIc: action((state, payload) => {
       state.species.forEach(specie => {
         if (specie.id === payload.id) {
@@ -232,7 +274,9 @@ const model = {
         }
       })
     }),
-    // Updates the species list
+    /**
+     * Action to update the species in the species panel according to all the checked reactions in the reaction panel
+     */
     updateSpecies: action((state, payload) => {
       state.species = []
       state.reactions.map(reaction => {

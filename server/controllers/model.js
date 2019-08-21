@@ -4,8 +4,12 @@ import Specie from '../models/specie'
 import Reaction from '../models/reaction'
 import Compartment from '../models/compartment'
 
+/**
+ * Controller function to add a model to the database
+ */
 export function addModel(req, res) {
   const model = req.body
+  // Enters the model in the database
   Model.create({
     name: model.name,
     sbmlId: model.id,
@@ -14,6 +18,7 @@ export function addModel(req, res) {
     jsonModel: model,
   })
     .then(data => {
+      // Enters all the species of the model in the database
       model.species.map(specie => {
         Specie.create({
           name: specie.name,
@@ -25,6 +30,7 @@ export function addModel(req, res) {
           res.status(500).send('Something went wrong.')
         })
       })
+      // Enters all the reactions of the model in the database
       model.reactions.map(reaction => {
         Reaction.create({
           name: reaction.name,
@@ -38,6 +44,7 @@ export function addModel(req, res) {
           res.status(500).send('Something went wrong.')
         })
       })
+      // Enters all the compartments of the model in the database
       model.compartments.map(compartment => {
         Compartment.create({
           name: compartment.name,
@@ -58,6 +65,9 @@ export function addModel(req, res) {
     })
 }
 
+/**
+ * Controller function to fetch a model by id from the database
+ */
 export function getModel(req, res) {
   Model.findByPk(req.params.id)
     .then(model => {
@@ -66,6 +76,9 @@ export function getModel(req, res) {
     .catch(err => res.status(500).send('Something went wrong.'))
 }
 
+/**
+ * Controller function to fetch all models in the database
+ */
 export function getAllModels(req, res) {
   Model.findAll({ attributes: ['id', 'name', 'createdAt'] })
     .then(models => res.status(200).send(models))

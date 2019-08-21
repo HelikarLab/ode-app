@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { ListGroup, ListGroupItem } from 'reactstrap'
 
 function ReactionsList(props) {
@@ -31,6 +32,18 @@ function ReactionsList(props) {
   } else {
     return <div>No data</div>
   }
+}
+
+ReactionsList.propTypes = {
+  reactions: PropTypes.array,
+  setInfo: PropTypes.func,
+  setType: PropTypes.func,
+}
+
+ReactionsList.defaultProps = {
+  reactions: [],
+  setInfo: () => {},
+  setType: () => {},
 }
 
 export default ReactionsList

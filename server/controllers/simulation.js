@@ -1,5 +1,8 @@
 import { PythonShell } from 'python-shell'
 
+/**
+ * Controller function to simulate a model
+ */
 export function simulate(req, res) {
   let options = {
     args: [JSON.stringify(req.body)],

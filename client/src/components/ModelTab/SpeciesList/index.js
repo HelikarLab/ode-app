@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { ListGroup, ListGroupItem } from 'reactstrap'
 
 function SpeciesList(props) {
@@ -30,6 +31,18 @@ function SpeciesList(props) {
   } else {
     return <div>No data</div>
   }
+}
+
+SpeciesList.propTypes = {
+  species: PropTypes.array,
+  setInfo: PropTypes.func,
+  setType: PropTypes.func,
+}
+
+SpeciesList.defaultProps = {
+  species: [],
+  setInfo: () => {},
+  setType: () => {},
 }
 
 export default SpeciesList

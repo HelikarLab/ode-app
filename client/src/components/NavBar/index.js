@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import {
   Collapse,
   Navbar,
@@ -54,6 +55,16 @@ function NavBar(props) {
       </Collapse>
     </Navbar>
   )
+}
+
+NavBar.propTypes = {
+  importModel: PropTypes.func,
+  savedModels: PropTypes.func,
+}
+
+NavBar.defaultProps = {
+  importModel: () => {},
+  savedModels: () => {},
 }
 
 export default NavBar

@@ -1,6 +1,9 @@
 import { PythonShell } from 'python-shell'
 import fs from 'fs'
 
+/**
+ * Controller function to a receive a sbml file and return the JSON of a model
+ */
 const uploadSbmlController = function(req, res) {
   const file = req.files.file
 

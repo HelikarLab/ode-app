@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import ccNetViz from 'ccnetviz'
 import _ from 'lodash'
 import { WidthProvider } from 'react-grid-layout'
@@ -24,14 +25,24 @@ class Graph extends React.Component {
     canvasWidth: 0,
   }
 
+  // Toggles the dropdown for the compartments button
   toggle = () => {
     this.setState({ dropdown: !this.state.dropdown })
   }
 
+  // Select handler for compartments
   selectCompartment = compartment => {
     this.setState({ currentCompartment: compartment })
   }
 
+  /*
+    Nodes/Edges generator function:
+    The function checks the currentCompartment state and if 'all'
+    is selected it takes all the reactions/species and creates
+    nodes/edges for them, if any other compartment is selected it
+    takes all of the reactions belonging only to that compartment
+    and generates nodes/egdes accordingly.  
+  */
   gen = () => {
     const { reactions, species, compartments } = this.props
     const { currentCompartment } = this.state
@@ -49,8 +60,8 @@ class Graph extends React.Component {
       } else {
         let compartmentReactions = reactions.filter(reaction => {
           if (
-            _.includes(reaction.compartments, currentCompartment) &&
-            reaction.compartments.length === 1
+            _.includes(reaction.compartments, currentCompartment) && // Checks if reaction is in compartment
+            reaction.compartments.length === 1 // Checks if the reaction has only that compartment
           ) {
             return true
           } else return false
@@ -69,6 +80,7 @@ class Graph extends React.Component {
     } catch {}
   }
 
+  // Generates nodes for reactions given to it
   generateReactionNodes = reactions => {
     const reactionNodes = reactions.map(reaction => {
       return {
@@ -79,6 +91,7 @@ class Graph extends React.Component {
     return reactionNodes
   }
 
+  // Finds the index of the node, given the label
   findNode = (object, nodes) => {
     let temp
     nodes.filter((node, index) => {
@@ -91,6 +104,11 @@ class Graph extends React.Component {
     return temp
   }
 
+  /* 
+  Function to generate edges for each reaction:
+  Every edge is given a referenced value of the nodes array instead of the node
+  itself, this is due to the API of ccNetViz. 
+  */
   generateReactionEdges = (reactions, nodes) => {
     const reactionsEdges = []
     reactions.map(reaction => {
@@ -131,6 +149,7 @@ class Graph extends React.Component {
   componentDidMount() {
     this.setState({ compartments: this.props.compartments })
     this.graph = new ccNetViz(document.getElementById('graph'), {
+      // Creates the ccNetViz graph object
       styles: {
         background: {
           color: 'rgb(255, 255, 255)',
@@ -185,7 +204,8 @@ class Graph extends React.Component {
       passiveEvts: true,
     })
 
-    this.gen()
+    this.gen() // Generates nodes/edges
+    // Sets the nodes and then draws the graph on the DOM
     this.graph.set(this.state.nodes, this.state.edges, 'force').then(() => {
       this.graph.draw()
     })
@@ -267,6 +287,18 @@ class Graph extends React.Component {
       </div>
     )
   }
+}
+
+Graph.propTypes = {
+  reactions: PropTypes.array,
+  species: PropTypes.array,
+  compartments: PropTypes.array,
+}
+
+Graph.defaultProps = {
+  reactions: [],
+  species: [],
+  compartments: [],
 }
 
 export default WidthProvider(Graph)

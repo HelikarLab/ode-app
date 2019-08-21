@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { CustomInput } from 'reactstrap'
 
 function CustomSwitch({ specieId, toggle }) {
@@ -15,6 +16,16 @@ function CustomSwitch({ specieId, toggle }) {
       checked={switched}
     />
   )
+}
+
+CustomSwitch.propTypes = {
+  specieId: PropTypes.string,
+  toggle: PropTypes.func,
+}
+
+CustomSwitch.defaultProps = {
+  specieId: '',
+  toggle: () => {},
 }
 
 export default CustomSwitch

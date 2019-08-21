@@ -13,8 +13,8 @@ listOfSpecies = model.getListOfSpecies()
 listOfReactions = model.getListOfReactions()
 listOfCompartments = model.getListOfCompartments()
 
-
-def generateCompartments(reaction, species):
+# Function to generate the compartments a reaction belongs too
+def generateCompartmentsOfReaction(reaction, species):
     compartments = []
     allReactionSpecies = concat(reaction["reactants"], reaction["products"])
     for reactionSpecie in allReactionSpecies:
@@ -105,7 +105,7 @@ for reaction in listOfReactions:
             )
         i += 1
 
-    tempObject["compartments"] = generateCompartments(tempObject, species)
+    tempObject["compartments"] = generateCompartmentsOfReaction(tempObject, species)
     tempObject["reactionString"] = reactionString
     reactions.append(tempObject)
 

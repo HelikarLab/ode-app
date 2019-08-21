@@ -13,11 +13,11 @@
   "scripts": {
     "client:start": "cd client&&yarn start",
     "client:build": "cd client&&yarn build",
+    "cypress": "cypress open",
+    "dev": "concurrently \"yarn client:start\" \"yarn server:start\"",
     "server:start": "cd server&&yarn start",
     "server:build": "cd server&&yarn build",
-    "cypress": "cypress open",
-    "test": "concurrently \"yarn client:start\" \"yarn server:start\" \"yarn cypress\"",
-    "dev": "concurrently \"yarn client:start\" \"yarn server:start\""
+    "test": "concurrently \"yarn client:start\" \"yarn server:start\" \"yarn cypress\""
   },
   "devDependencies": {
     "concurrently": "^4.1.0",
