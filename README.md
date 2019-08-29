@@ -1,6 +1,12 @@
 # ODE-APP
 
-Web Pipeline For Kinetic (ODE-Based) Models.
+Web Pipeline for visualizing and simulating kinetic(ODE-based) biological models.
+
+## Index
+
+1. [Usage](docs/usage.md)
+2. [Kinetic Laws](docs/kinetic-laws.md)
+3. [References](docs/references.md)
 
 ## To start the application (production)
 
