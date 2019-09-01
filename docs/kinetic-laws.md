@@ -4,7 +4,8 @@
 
 1. [README](../README.md)
 2. [Usage](usage.md)
-3. [References](references.md)
+3. [Application Architecture](architecture.md)
+4. [References](references.md)
 
 The simulations performed are basically applying a particular Kinetic Law to a reaction and devising a rate for the reaction.
 
@@ -14,7 +15,7 @@ There are 3 Kinetic Laws currently available to use in the application:
 - Michaelis-Menten Kinetics
 - Hill Kinetics
 
-Other than this you can define your own Custom Rate
+Other than this you can define your own Custom Rate in the application.
 
 ## _Law of Mass Action_
 
@@ -56,11 +57,11 @@ Rate of the above reaction according to Mass Action would be:
 
 ## _Michaelis-Menten Kinetics_
 
-> Even though variations of this law exist for reactions with multiple reactants/products this application only implements this law for reactions with a single reactant and product.
+> Even though variations of this law exist for reactions with multiple reactants/products, this application only implements this law for reactions with a single reactant and product.
 
 Michaelis–Menten kinetics is one of the best-known models of enzyme kinetics. The model takes the form of an equation describing the rate of enzymatic reactions, by relating reaction rate to the concentration of a substrate.
 
-Lets take the following reaction as a example:
+Lets take the following reaction as an example:
 
 ```
 Enzyme + Substrate ==> Intermediate (E + S) ==> Product + Enzyme
@@ -79,14 +80,18 @@ V = (Vmax * [Substrate]) / (Km + [Substrate])
 
 For reversible reactions:
 
-(Had to use an image, was to complex to write it in markdown 😋)
+Lets take the following reaction as an example:
+
+```
+Enzyme + Substrate <==> Intermediate (E + S) <==> Product + Enzyme
+```
 
 ![Michaelis-Menten Reversible Formula](assets/michaelis-menten-reversible.png)
 
 - [Substrate] is concentration of the Substrate
 - [Product] is concentration of the Product
 - V is the reaction rate
-- V<sup>f</sup>max & V<sup>r</sup>max represent the maximum rate achieved by the system in the forward and reverse manner respectively.
+- V<sup>f</sup>max and V<sup>r</sup>max represent the maximum rate achieved by the system in the forward and reverse manner respectively.
 - K<sup>S</sup>m and K<sup>P</sup>m is the Michaelis constant and is numerically equal to the substrate concentration at which the reaction rate is half of V<sup>f</sup>max and V<sup>r</sup>max respectively
 
 ## _Hill Kinetics_
@@ -95,10 +100,10 @@ For reversible reactions:
 
 Formula:
 
-![Hill Equation](assets\hill_equation.jpg)
+![Hill Equation](assets/hill_equation.jpg)
 
 - [S] is concentration of the Substrate
 - V is the reaction rate
 - Vmax represents the maximum rate achieved by the system
 - K<sub>0.5</sub> is the Michaelis constant and is numerically equal to the substrate concentration at which the reaction rate is half of Vmax
-- n is Hill's coefficient
+- n is Hill's co-efficient

@@ -6,7 +6,8 @@ Web Pipeline for visualizing and simulating kinetic(ODE-based) biological models
 
 1. [Usage](docs/usage.md)
 2. [Kinetic Laws](docs/kinetic-laws.md)
-3. [References](docs/references.md)
+3. [Application Architecture](docs/architecture.md)
+4. [References](docs/references.md)
 
 ## To start the application (production)
 
@@ -31,29 +32,6 @@ To stop the above containers run:
 
 ```bash
 docker-compose stop
-```
-
-## Repository Structure
-
-```
- |- client              -> Contains the code of the react client
-    |- build            -> Build of the react client
-    |- src              -> Source files of the react client
-        |- components   -> React components
-        |- store        -> Global store
-        |- assets       -> Static assets
- |- server              -> Contains the code of the node server
-    |- routes           -> API routes
-    |- controllers      -> API controllers
-    |- models           -> Sequelize(SQL) models
-    |- config           -> Configuration files
-    |- python           -> Python scripts to parse SBML files and simulate ODE models
-        |- lib          -> Custom stimator library wheel package
-    |- scripts          -> Utility scripts
- |- cypress             -> Contains all the tests for the project
- |- docker-compose.yml  -> Docker Compose files that runs the application using docker
- |- package.json        -> The main package.json governing the yarn workspaces
- |- README.md           -> The main documentation file. Also this file :)
 ```
 
 ## Development

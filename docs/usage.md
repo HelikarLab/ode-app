@@ -6,7 +6,8 @@ Please visit http://134.209.96.118:5000/#/ to use the application.
 
 1. [README](../README.md)
 2. [Kinetic Laws](kinetic-laws.md)
-3. [References](references.md)
+3. [Application Architecture](architecture.md)
+4. [References](references.md)
 
 ## General functions
 
@@ -14,13 +15,9 @@ Please visit http://134.209.96.118:5000/#/ to use the application.
 
 > Only .sbml/.xml files supported
 
-Navigate to the Navbar of the application > Find the 'Options' option > Click it to open a dropdown > Click on 'Import Model' > Selected a valid sbml/xml file > Click 'Open'.
-
 ![Import Model Demo](assets/demo-import-model.gif)
 
 ### Use a saved model
-
-Navigate to the Navbar of the application > Find the 'Options' option > Click it to open a dropdown > Click on 'Saved Models' > Click on the model you want to load.
 
 ![Saved Models Demo](assets/demo-saved-models.gif)
 
@@ -66,7 +63,7 @@ Play around with the plot panel.
 
 ### Toggle a specie from the plot
 
-![Toggle Demo](assets/demo-switch-specie.gif)
+![Toggle Demo](assets/demo-toggle-specie.gif)
 
 ### Download the plot
 
