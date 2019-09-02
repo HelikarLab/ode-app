@@ -1,4 +1,4 @@
-# Usage
+# Usage 🛸
 
 Please visit http://134.209.96.118:5000/#/ to use the application.
 

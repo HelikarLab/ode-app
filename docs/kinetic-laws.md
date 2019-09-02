@@ -1,4 +1,4 @@
-# Kinetic Laws
+# Kinetic Laws 💨
 
 ## Index
 
@@ -17,7 +17,7 @@ There are 3 Kinetic Laws currently available to use in the application:
 
 Other than this you can define your own Custom Rate in the application.
 
-## _Law of Mass Action_
+## _Law of Mass Action_ 💥
 
 The law of mass action is the proposition that the rate of a chemical reaction is directly proportional to the product of the activities or concentrations of the reactants.
 
@@ -55,7 +55,7 @@ Rate of the above reaction according to Mass Action would be:
 - k1 is the forward parameter
 - k2 is the backward parameter
 
-## _Michaelis-Menten Kinetics_
+## _Michaelis-Menten Kinetics_ 🌀
 
 > Even though variations of this law exist for reactions with multiple reactants/products, this application only implements this law for reactions with a single reactant and product.
 
@@ -94,7 +94,7 @@ Enzyme + Substrate <==> Intermediate (E + S) <==> Product + Enzyme
 - V<sup>f</sup>max and V<sup>r</sup>max represent the maximum rate achieved by the system in the forward and reverse manner respectively.
 - K<sup>S</sup>m and K<sup>P</sup>m is the Michaelis constant and is numerically equal to the substrate concentration at which the reaction rate is half of V<sup>f</sup>max and V<sup>r</sup>max respectively
 
-## _Hill Kinetics_
+## _Hill Kinetics_ 🌋
 
 > _Needs a description_
 

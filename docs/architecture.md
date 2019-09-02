@@ -127,3 +127,16 @@ This python script that takes in a SBML file as an argument, parses it using [py
 ### `simulation.py`
 
 This python script takes a JSON object which contains the reactions/species and some configuration. A custom version of [stimator](https://webpages.ciencias.ulisboa.pt/~aeferreira/stimator/) is used to simulate the model. The script forms a model string using all the reactions and then uses stimator to get the concentration data and then returns it.
+
+## PostgreSQL Database 🐘
+
+The database uses schemas made using [Sequelize](https://sequelize.org/) ORM present in the /server/models directory.
+
+There are 4 models currently which correspond to 4 tables:
+
+| Table        | Purpose                                             |
+| ------------ | --------------------------------------------------- |
+| Models       | Stores all the information relevant to a SBML Model |
+| Compartments | Stores the compartments present in all the models   |
+| Reactions    | Stores the reactions present in all the models      |
+| Species      | Stores the species present in all the models        |
