@@ -2,12 +2,9 @@
 
 Web Pipeline for visualizing and simulating kinetic(ODE-based) biological models.
 
-## Index
+Please read the [wiki](https://github.com/HelikarLab/ode-app/wiki) for documentation related to Usage, Kinetic Laws, Application Architecture and References.
 
-1. [Usage](docs/usage.md)
-2. [Kinetic Laws](docs/kinetic-laws.md)
-3. [Application Architecture](docs/architecture.md)
-4. [References](docs/references.md)
+You can visit the live version of the app at http://134.209.96.118:5000/#/ !
 
 ## To start the application (production)
 
