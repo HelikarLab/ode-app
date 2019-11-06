@@ -9,7 +9,7 @@ services:
       POSTGRES_DB: ode-app
     ports:
       - 5432:5432
-  server:
+  app:
     build: ./
     environment:
       DB_PASSWORD: postgres

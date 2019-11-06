@@ -4,8 +4,6 @@ Web Pipeline for visualizing and simulating kinetic(ODE-based) biological models
 
 Please read the [wiki](https://github.com/HelikarLab/ode-app/wiki) for documentation related to Usage, Kinetic Laws, Application Architecture and References.
 
-You can visit the live version of the app at http://134.209.96.118:5000/#/ !
-
 ## To start the application (production)
 
 This application makes use of docker and docker compose, so first install them. Learn more about this [here](https://www.docker.com/get-started).
@@ -49,12 +47,12 @@ Follow the instructions below to get the app up and running in development:
 
 - Next you have to setup an environment file (.env) with appropriate variables in the /server folder, an example .env would look like this:
 
-  ```js
-  SERVER_PORT = /* Specifiy a port here (Optional) */
-  DB_HOST = /* Your database host (Optional) */
-  DB_NAME = /* Your database name */
-  DB_USER = /* Your database user */
-  DB_PASSWORD = /* Your database user's password */
+  ```bash
+  SERVER_PORT = #Specifiy a port here (Optional)
+  DB_HOST = #Your database host (Optional)
+  DB_NAME = #Your database name
+  DB_USER = #Your database user
+  DB_PASSWORD = #Your database user's password
   ```
 
 - Then run the following command to start both the React Client and Node Server(concurrently):
