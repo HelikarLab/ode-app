@@ -3,19 +3,14 @@ version: '3'
 services:
   db:
     image: postgres:alpine
-    environment:
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_USER: postgres
-      POSTGRES_DB: ode-app
+    env_file:
+      - ./server/.env
     ports:
       - 5432:5432
   app:
     build: ./
     environment:
-      DB_PASSWORD: postgres
-      DB_USER: postgres
-      DB_NAME: ode-app
-      DB_HOST: db
+      POSTGRES_HOST: db
     command: bash -c "node build/scripts/syncTables.js && cd build && node index.js"
     depends_on:
       - db

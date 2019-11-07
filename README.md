@@ -48,11 +48,11 @@ Follow the instructions below to get the app up and running in development:
 - Next you have to setup an environment file (.env) with appropriate variables in the /server folder, an example .env would look like this:
 
   ```bash
-  SERVER_PORT = #Specifiy a port here (Optional)
-  DB_HOST = #Your database host (Optional)
-  DB_NAME = #Your database name
-  DB_USER = #Your database user
-  DB_PASSWORD = #Your database user's password
+  PORT=#Specifiy a port here (Optional)
+  POSTGRES_HOST=#Your database host (Optional)
+  POSTGRES_DB=#Your database name
+  POSTGRES_USER=#Your database user
+  POSTGRES_PASSWORD=#Your database user's password
   ```
 
 - Then run the following command to start both the React Client and Node Server(concurrently):

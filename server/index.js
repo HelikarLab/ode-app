@@ -1,5 +1,4 @@
 // Dependencies
-// const express = require('express')
 import express from 'express'
 import morgan from 'morgan'
 import helmet from 'helmet'
@@ -9,6 +8,7 @@ import db from './config/database'
 // Adds support for .env environment files
 require('dotenv').config()
 
+// Declaring the express app
 const app = express()
 
 // CORS
