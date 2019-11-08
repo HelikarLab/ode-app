@@ -4,12 +4,6 @@ require('dotenv').config()
 
 let db
 
-console.log(
-  process.env.POSTGRES_DB,
-  process.env.POSTGRES_USER,
-  process.env.POSTGRES_PASSWORD
-)
-
 if (process.env.DATABASE_URL) {
   db = new Sequelize(process.env.DATABASE_URL)
 } else {

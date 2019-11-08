@@ -35,11 +35,11 @@ Follow the instructions below to get the app up and running in development:
 
 - You need Node, Yarn and Python 3(alongside pip) to run this application. Download them here - [Node](https://nodejs.org/), [Yarn](https://yarnpkg.com) and [Python](https://www.python.org/downloads/). Further you also need a server of a postgresql database running. Learn more about postgresql [here](https://www.postgresql.org/).
 
-- First you will need to install the dependencies of the project. Do that by running this:
+- First you will need to install the dependencies of the project. Do that by running the following in the cloned folder:
 
   ```bash
-  # inside the repo
-  yarn # Node and React dependencies
+  # Node and React dependencies
+  yarn 
   # Python dependencies
   pip install python-libsbml
   python -m pip install server/python/lib/stimator-0.9.120-py3-none-any.whl

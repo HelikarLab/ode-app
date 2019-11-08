@@ -36,7 +36,7 @@ function SavedModels() {
             key={item.id}
           >
             {item.name} -{' '}
-            {format(new Date(item.createdAt), 'D MMMM YYYY - hh:mm:ss A')}
+            {format(new Date(item.createdAt), 'd MMM yyyy - hh:mm:ss a')}
           </ListGroupItem>
         ))}
       </ListGroup>

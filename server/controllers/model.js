@@ -41,6 +41,7 @@ export function addModel(req, res) {
           compartments: reaction.compartments,
           modelId: data.id,
         }).catch(error => {
+          console.log(error)
           res.status(500).send('Something went wrong.')
         })
       })
