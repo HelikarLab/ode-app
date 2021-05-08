@@ -17,7 +17,7 @@
     "date-fns": "^2.7.0",
     "easy-peasy": "^3.0.0",
     "formik": "^2.0.3",
-    "lodash": "^4.17.19",
+    "lodash": "^4.17.21",
     "node-sass": "^4.13.1",
     "prop-types": "^15.7.2",
     "rc-slider": "^8.6.13",
