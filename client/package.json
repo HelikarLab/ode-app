@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "apexcharts": "^3.8.1",
-    "axios": "^0.21.1",
+    "axios": "^0.21.2",
     "bootstrap": "^4.3.1",
     "ccnetviz": "https://github.com/HelikarLab/ccNetViz",
     "date-fns": "^2.7.0",
